@@ -930,8 +930,14 @@ ${state.vibes.length?`偏好：${state.vibes.map(v=>VIBES.find(x=>x.id===v)?.n).
 function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
 
 // ── INIT ──
-window.addEventListener('load',()=>{
-  setTimeout(()=>{document.getElementById('loader').classList.add('gone');initHero();initFeatured();},1800);
+// Use DOMContentLoaded so loader disappears immediately, not waiting for images
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const loader=document.getElementById('loader');
+    if(loader) loader.classList.add('gone');
+    initHero();
+    initFeatured();
+  },800);
 });
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',scrollY>60);});
 </script>
