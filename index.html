@@ -16,13 +16,7 @@
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans','Noto Sans SC',sans-serif;background:var(--off);color:var(--black);overflow-x:hidden;}
 
-/* LOADER */
-#loader{position:fixed;inset:0;z-index:2000;background:var(–black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 1s ease;}
-#loader.gone{opacity:0;pointer-events:none;display:none;}
-.l-word{font-family:‘Cormorant Garamond’,serif;font-size:4rem;font-weight:200;color:var(–off);letter-spacing:.3em;text-transform:uppercase;}
-.l-line{width:60px;height:1px;background:rgba(245,240,232,.15);overflow:hidden;position:relative;}
-.l-prog{position:absolute;inset:0;background:var(–gold);transform:translateX(-100%);animation:lprog 1.8s cubic-bezier(.4,0,.2,1) forwards;}
-@keyframes lprog{to{transform:translateX(0);}}
+/* LOADER - removed */
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:all .5s;}
@@ -308,13 +302,6 @@ nav,nav.solid{padding:1rem 1.5rem;}
 
 </head>
 <body>
-
-<!-- LOADER -->
-
-<div id="loader">
-  <div class="l-word">Rover</div>
-  <div class="l-line"><div class="l-prog"></div></div>
-</div>
 
 <!-- NAV -->
 
@@ -930,14 +917,9 @@ ${state.vibes.length?`偏好：${state.vibes.map(v=>VIBES.find(x=>x.id===v)?.n).
 function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
 
 // ── INIT ──
-// Use DOMContentLoaded so loader disappears immediately, not waiting for images
 document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(()=>{
-    const loader=document.getElementById('loader');
-    if(loader) loader.classList.add('gone');
-    initHero();
-    initFeatured();
-  },800);
+  initHero();
+  initFeatured();
 });
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',scrollY>60);});
 </script>
