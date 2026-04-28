@@ -41,7 +41,7 @@ nav.solid .nav-cta:hover{background:var(–sage);color:var(–off);}
 
 /* HERO */
 .hero{height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.hero-slides{position:absolute;inset:0;}
+.hero-slides{position:absolute;inset:0;background:linear-gradient(155deg,#0c201a 0%,#1e3a2f 50%,#2d5a3d 100%);}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease;}
 .hero-slide.active{opacity:1;}
 .hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.55) saturate(.8);transform:scale(1.08);transition:transform 9s ease-out;}
@@ -456,12 +456,12 @@ const FILTER_CHIPS={
 };
 
 const HERO_SLIDES=[
-  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1920&q=90&auto=format&fit=crop',loc:'大洋路 · 十二门徒岩',pos:'center 50%'},
-  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1920&q=90&auto=format&fit=crop',loc:'墨尔本 · Flinders Street车站',pos:'center 45%'},
-  {url:'https://images.unsplash.com/photo-1612825173281-9a193378527e?w=1920&q=90&auto=format&fit=crop',loc:'丹德农山脉 · 薄雾森林',pos:'center 40%'},
-  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1920&q=90&auto=format&fit=crop',loc:'Wilson Promontory · 澳洲最南端',pos:'center 38%'},
-  {url:'https://images.unsplash.com/photo-1566207474742-de921626ad0c?w=1920&q=90&auto=format&fit=crop',loc:'雅拉谷 · 葡萄酒产区',pos:'center 50%'},
-  {url:'https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=1920&q=90&auto=format&fit=crop',loc:'菲利普岛 · 小企鹅归巢',pos:'center 42%'},
+  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'大洋路 · 十二门徒岩',pos:'center 50%'},
+  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'墨尔本 · Flinders Street车站',pos:'center 45%'},
+  {url:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'维多利亚 · 原野大地',pos:'center 40%'},
+  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'Wilson Promontory · 澳洲最南端',pos:'center 38%'},
+  {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'格兰坪 · 国家公园',pos:'center 50%'},
+  {url:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'维多利亚海岸 · 壮阔南洋',pos:'center 42%'},
 ];
 
 // ── HERO SLIDESHOW ──
@@ -492,14 +492,14 @@ function goSlide(idx){
 
 // ── FEATURED DESTINATIONS ──
 const FEATURED=[
-  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=85&auto=format&fit=crop',wide:true},
-  {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1566207474742-de921626ad0c?w=600&q=85&auto=format&fit=crop'},
-  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=600&q=85&auto=format&fit=crop'},
-  {n:'丹德农山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1612825173281-9a193378527e?w=600&q=85&auto=format&fit=crop'},
-  {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1598214886806-c78d4a9a9b3e?w=600&q=85&auto=format&fit=crop'},
-  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&q=85&auto=format&fit=crop',wide:true},
-  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=85&auto=format&fit=crop'},
-  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=85&auto=format&fit=crop'},
+  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=80&auto=format&fit=crop',wide:true},
+  {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
+  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80&auto=format&fit=crop'},
+  {n:'丹德农山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop'},
+  {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80&auto=format&fit=crop'},
+  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=800&q=80&auto=format&fit=crop',wide:true},
+  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80&auto=format&fit=crop'},
+  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
 ];
 
 function initFeatured(){
