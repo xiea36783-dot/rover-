@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rover · Discover Victoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300&family=DM+Sans:wght@300;400;500&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a08;--off:#f5f0e8;--stone:#c8bfb0;--mist:#8a8478;
+  --gold:#c9973a;--ember:#b85c2a;--sage:#2d4a35;--leaf:#4a7a52;
+  --card:#ffffff;--border:#e8e0d0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans','Noto Sans SC',sans-serif;background:var(--off);color:var(--black);overflow-x:hidden;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:2000;background:var(–black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 1s ease;}
+#loader.gone{opacity:0;pointer-events:none;}
+.l-word{font-family:‘Cormorant Garamond’,serif;font-size:4rem;font-weight:200;color:var(–off);letter-spacing:.3em;text-transform:uppercase;}
+.l-line{width:60px;height:1px;background:rgba(245,240,232,.15);overflow:hidden;position:relative;}
+.l-prog{position:absolute;inset:0;background:var(–gold);transform:translateX(-100%);animation:lprog 1.8s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes lprog{to{transform:translateX(0);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:all .5s;}
+nav.solid{background:rgba(245,240,232,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(–border);padding:1rem 3rem;}
+.nav-brand{font-family:‘Cormorant Garamond’,serif;font-size:1.4rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(–off);transition:color .5s;}
+nav.solid .nav-brand{color:var(–black);}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-link{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.5);border:none;background:none;cursor:pointer;font-family:inherit;transition:color .3s;}
+nav.solid .nav-link{color:var(–mist);}
+.nav-link:hover{color:var(–off)!important;}
+nav.solid .nav-link:hover{color:var(–black)!important;}
+.nav-cta{padding:.45rem 1.2rem;border:1px solid rgba(245,240,232,.3);border-radius:100px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(–off);background:transparent;cursor:pointer;font-family:inherit;transition:all .3s;}
+nav.solid .nav-cta{border-color:var(–sage);color:var(–sage);}
+.nav-cta:hover{background:var(–off);color:var(–black);}
+nav.solid .nav-cta:hover{background:var(–sage);color:var(–off);}
+
+/* HERO */
+.hero{height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.hero-slides{position:absolute;inset:0;}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease;}
+.hero-slide.active{opacity:1;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.55) saturate(.8);transform:scale(1.08);transition:transform 9s ease-out;}
+.hero-slide.active img{transform:scale(1.0);}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(10,10,8,.6) 100%);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.85) 0%,rgba(10,10,8,.3) 40%,rgba(10,10,8,.1) 70%);}
+.hero-grain{position:absolute;inset:0;opacity:.03;background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=’.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);}
+
+.hero-content{position:relative;z-index:2;text-align:center;width:100%;max-width:800px;padding:0 2rem;}
+.hero-eyebrow{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem;}
+.eyebrow-dash{width:24px;height:1px;background:var(–gold);}
+.hero h1{font-family:‘Cormorant Garamond’,serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:200;line-height:.95;letter-spacing:.05em;color:var(–off);margin-bottom:1rem;text-transform:uppercase;}
+.hero h1 span{display:block;font-style:italic;font-weight:300;letter-spacing:.02em;font-size:clamp(2rem,5vw,4.5rem);}
+.hero-desc{font-size:.95rem;line-height:1.8;font-weight:300;color:rgba(245,240,232,.5);margin-bottom:3rem;max-width:420px;margin-left:auto;margin-right:auto;}
+
+/* SEARCH BOX */
+.search-wrap{position:relative;max-width:580px;margin:0 auto 1.5rem;}
+.search-box{width:100%;background:rgba(245,240,232,.08);backdrop-filter:blur(20px);border:1px solid rgba(245,240,232,.2);border-radius:100px;padding:1.1rem 1.5rem 1.1rem 3.2rem;font-family:‘DM Sans’,sans-serif;font-size:1rem;color:var(–off);outline:none;transition:all .3s;}
+.search-box::placeholder{color:rgba(245,240,232,.35);}
+.search-box:focus{background:rgba(245,240,232,.12);border-color:rgba(245,240,232,.4);}
+.search-icon{position:absolute;left:1.2rem;top:50%;transform:translateY(-50%);color:rgba(245,240,232,.4);pointer-events:none;font-size:.9rem;}
+.search-btn{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);padding:.6rem 1.4rem;background:var(–gold);color:var(–black);border:none;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.05em;}
+.search-btn:hover{background:#d4a84b;transform:translateY(-50%) scale(1.03);}
+.search-dropdown{position:absolute;top:calc(100%+8px);left:0;right:0;background:rgba(10,10,8,.92);backdrop-filter:blur(20px);border:1px solid rgba(245,240,232,.12);border-radius:16px;overflow:hidden;z-index:50;display:none;max-height:320px;overflow-y:auto;}
+.search-dropdown.open{display:block;}
+.sd-item{padding:.9rem 1.4rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;transition:background .15s;border-bottom:1px solid rgba(245,240,232,.06);}
+.sd-item:last-child{border-bottom:none;}
+.sd-item:hover{background:rgba(245,240,232,.06);}
+.sd-name{font-size:.88rem;color:var(–off);}
+.sd-region{font-size:.7rem;color:rgba(245,240,232,.4);}
+
+.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;}
+.htag{padding:.38rem .9rem;border:1px solid rgba(245,240,232,.18);border-radius:100px;font-size:.72rem;color:rgba(245,240,232,.55);cursor:pointer;transition:all .2s;letter-spacing:.05em;background:transparent;}
+.htag:hover{border-color:rgba(245,240,232,.4);color:var(–off);background:rgba(245,240,232,.06);}
+
+/* HERO FOOTER */
+.hero-footer{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;padding:2rem 3rem;}
+.hero-loc{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.35);display:flex;align-items:center;gap:.5rem;transition:opacity .4s;}
+.hero-loc::before{content:’’;width:16px;height:1px;background:var(–gold);}
+.hero-scroll-hint{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.25);display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.scroll-track{width:1px;height:40px;background:rgba(245,240,232,.1);position:relative;overflow:hidden;}
+.scroll-runner{position:absolute;top:0;left:0;right:0;height:40%;background:var(–gold);animation:run 2s ease infinite;}
+@keyframes run{0%{top:-40%}100%{top:120%}}
+.hero-dots{display:flex;gap:.5rem;align-items:center;}
+.hdot{width:5px;height:5px;border-radius:50%;background:rgba(245,240,232,.25);cursor:pointer;transition:all .3s;}
+.hdot.on{background:var(–gold);width:18px;border-radius:3px;}
+.hero-not-sure{margin-top:1.25rem;background:transparent;border:none;color:rgba(245,240,232,.45);font-family:‘DM Sans’,sans-serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:color .25s;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(245,240,232,.2);}
+.hero-not-sure:hover{color:rgba(245,240,232,.75);}
+
+/* FEATURED */
+.featured-sec{padding:5rem 3rem;max-width:1200px;margin:0 auto;}
+.feat-header{margin-bottom:2.5rem;}
+.feat-eyebrow{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(–gold);margin-bottom:.5rem;}
+.feat-title{font-family:‘Cormorant Garamond’,serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(–black);margin-bottom:.4rem;}
+.feat-title em{font-style:italic;color:var(–sage);}
+.feat-sub{font-size:.85rem;color:var(–mist);font-weight:300;}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;}
+.feat-card{border-radius:16px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:3/4;transition:transform .3s,box-shadow .3s;}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.15);}
+.feat-card img{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.85);transition:transform .5s,filter .5s;}
+.feat-card:hover img{transform:scale(1.05);filter:brightness(.8) saturate(.9);}
+.feat-card-body{position:absolute;bottom:0;left:0;right:0;padding:1.25rem;background:linear-gradient(to top,rgba(10,10,8,.85) 0%,transparent 100%);}
+.feat-region{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,240,232,.55);margin-bottom:.2rem;}
+.feat-name{font-family:‘Cormorant Garamond’,serif;font-size:1.1rem;font-weight:400;color:var(–off);line-height:1.2;}
+.feat-card-wide{grid-column:span 2;aspect-ratio:unset;height:320px;}
+
+/* WIZARD */
+#wizard{display:none;position:fixed;inset:0;z-index:200;background:var(–off);overflow-y:auto;}
+#wizard.show{display:block;animation:wizIn .4s ease;}
+@keyframes wizIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.wiz-top{position:sticky;top:0;z-index:10;background:rgba(245,240,232,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(–border);padding:1.1rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.wiz-back{display:flex;align-items:center;gap:.4rem;font-size:.75rem;letter-spacing:.08em;color:var(–mist);cursor:pointer;border:none;background:none;font-family:inherit;transition:color .2s;}
+.wiz-back:hover{color:var(–black);}
+.wiz-brand{font-family:‘Cormorant Garamond’,serif;font-size:1.1rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(–black);}
+.wiz-prog{display:flex;align-items:center;gap:.3rem;}
+.wp{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:500;border:1.5px solid var(–stone);color:var(–mist);background:white;transition:all .3s;}
+.wp.on{background:var(–sage);border-color:var(–sage);color:white;}
+.wp.done{background:var(–leaf);border-color:var(–leaf);color:white;}
+.wp-line{width:18px;height:1px;background:var(–border);transition:background .3s;}
+.wp-line.done{background:var(–leaf);}
+
+.wiz-body{max-width:1040px;margin:0 auto;padding:3rem 2rem 8rem;}
+
+/* Step headers */
+.sno{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(–gold);margin-bottom:.6rem;}
+.stitle{font-family:‘Cormorant Garamond’,serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;letter-spacing:-.01em;color:var(–black);margin-bottom:.4rem;line-height:1.1;}
+.stitle em{font-style:italic;color:var(–sage);}
+.ssub{font-size:.85rem;color:var(–mist);font-weight:300;margin-bottom:2.5rem;max-width:520px;}
+
+/* Vibes */
+.vibes{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2.5rem;}
+.vibe{padding:1.6rem 1.2rem;border:1px solid var(–border);border-radius:16px;background:white;cursor:pointer;text-align:center;transition:all .25s;}
+.vibe:hover{border-color:var(–sage);}
+.vibe.on{border-color:var(–sage);background:rgba(45,74,53,.03);}
+.vi{font-size:1.6rem;margin-bottom:.5rem;display:block;}
+.vn{font-size:.84rem;font-weight:500;margin-bottom:.15rem;}
+.vh{font-size:.68rem;color:var(–mist);}
+
+/* Dest recs */
+.dest-recs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+.drec{border:1.5px solid var(–border);border-radius:16px;overflow:hidden;background:white;cursor:pointer;transition:all .28s;}
+.drec:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.08);border-color:var(–stone);}
+.drec.on{border-color:var(–sage);}
+.drec-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;overflow:hidden;}
+.drec-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.85);}
+.drec-body{padding:.85rem 1rem;}
+.drec-region{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(–gold);margin-bottom:.2rem;}
+.drec-name{font-family:‘Cormorant Garamond’,serif;font-size:1rem;font-weight:400;margin-bottom:.2rem;}
+.drec-why{font-size:.7rem;color:var(–mist);line-height:1.5;}
+
+/* Dest search in wizard */
+.dest-field-wrap{position:relative;margin-bottom:2rem;}
+.dest-field{width:100%;font-family:‘DM Sans’,sans-serif;font-size:.95rem;padding:1rem 1.2rem 1rem 2.8rem;border:1px solid var(–border);border-radius:12px;background:white;color:var(–black);outline:none;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.dest-field:focus{border-color:var(–sage);box-shadow:0 0 0 3px rgba(45,74,53,.06);}
+.dest-field-ico{position:absolute;left:1rem;top:50%;transform:translateY(-50%);pointer-events:none;font-size:.85rem;}
+.dest-ddl{position:absolute;top:calc(100%+6px);left:0;right:0;background:white;border:1px solid var(–border);border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.1);z-index:20;display:none;max-height:280px;overflow-y:auto;}
+.dest-ddl.open{display:block;}
+.dopt{padding:.8rem 1.2rem;cursor:pointer;display:flex;align-items:center;gap:.7rem;transition:background .15s;border-bottom:1px solid var(–border);}
+.dopt:last-child{border-bottom:none;}
+.dopt:hover{background:var(–off);}
+.dopt-n{font-size:.85rem;}
+.dopt-r{font-size:.68rem;color:var(–mist);}
+.dest-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(45,74,53,.07);border:1px solid rgba(45,74,53,.15);border-radius:100px;padding:.4rem .9rem;font-size:.82rem;color:var(–sage);margin-bottom:1.75rem;}
+
+/* Basics */
+.basics-g{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.5rem;}
+.fld{display:flex;flex-direction:column;gap:.4rem;}
+.fld label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(–mist);}
+.fld select{font-family:‘DM Sans’,sans-serif;font-size:.88rem;padding:.75rem .9rem;border:1px solid var(–border);border-radius:10px;background:white;color:var(–black);outline:none;transition:border-color .2s;}
+.fld select:focus{border-color:var(–sage);}
+.people-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.pbox{background:white;border:1px solid var(–border);border-radius:12px;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
+.plbl{font-size:.78rem;font-weight:500;color:var(–black);}
+.psub{font-size:.62rem;color:var(–mist);}
+.ctr{display:flex;align-items:center;gap:.65rem;}
+.cbtn{width:28px;height:28px;border-radius:50%;border:1px solid var(–border);background:var(–off);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(–black);}
+.cbtn:hover{border-color:var(–sage);background:rgba(45,74,53,.05);}
+.cnum{font-size:.92rem;font-weight:500;min-width:16px;text-align:center;}
+
+/* Filter chips */
+.filter-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem;}
+.fchip{padding:.32rem .8rem;border:1px solid var(–border);border-radius:100px;font-size:.72rem;cursor:pointer;background:white;color:var(–mist);transition:all .18s;}
+.fchip:hover{border-color:var(–sage);color:var(–sage);}
+.fchip.on{background:var(–sage);border-color:var(–sage);color:white;}
+
+/* Place cards */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:8rem;}
+.pc{border:1px solid var(–border);border-radius:18px;overflow:hidden;background:white;position:relative;cursor:pointer;transition:all .28s;}
+.pc:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.1);border-color:var(–stone);}
+.pc.sel{border-color:var(–sage);}
+.pc-tick{display:none;position:absolute;top:.75rem;right:.75rem;width:22px;height:22px;border-radius:50%;background:var(–sage);color:white;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;z-index:3;box-shadow:0 2px 8px rgba(45,74,53,.3);}
+.pc.sel .pc-tick{display:flex;}
+.pc-overlay{position:absolute;inset:0;z-index:2;}
+.pc-img{height:160px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);display:flex;align-items:center;justify-content:center;}
+.pc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.9) saturate(.85);transition:transform .5s ease;}
+.pc:hover .pc-img img{transform:scale(1.06);}
+.pc-emoji{font-size:3rem;position:relative;z-index:1;opacity:.6;}
+.pc-body{padding:1rem;}
+.pc-cat{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(–gold);margin-bottom:.22rem;}
+.pc-name{font-family:‘Cormorant Garamond’,serif;font-size:1.1rem;font-weight:400;margin-bottom:.28rem;line-height:1.2;}
+.pc-desc{font-size:.72rem;color:var(–mist);line-height:1.55;margin-bottom:.6rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;}
+.pc-rat{font-size:.68rem;color:var(–gold);}
+.pc-price{font-size:.68rem;color:var(–leaf);font-weight:500;}
+.pc-more{font-size:.65rem;color:var(–mist);margin-top:.42rem;display:inline-flex;align-items:center;gap:.2rem;cursor:pointer;transition:color .2s;position:relative;z-index:5;}
+.pc-more:hover{color:var(–sage);}
+
+/* Loading skeleton */
+.skel{background:linear-gradient(90deg,#f0ebe0 25%,#e8e0d0 50%,#f0ebe0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-card{border-radius:18px;overflow:hidden;border:1px solid var(–border);}
+.skel-img{height:160px;}
+.skel-body{padding:1rem;}
+.skel-line{height:12px;border-radius:6px;margin-bottom:.6rem;}
+
+/* Bottom bar */
+.bbar{position:fixed;bottom:0;left:0;right:0;z-index:150;background:rgba(245,240,232,.97);backdrop-filter:blur(20px);border-top:1px solid var(–border);padding:.9rem 3rem;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .35s ease;}
+.bbar.show{transform:translateY(0);}
+.bbar-info{font-size:.82rem;color:var(–mist);}
+.bbar-info strong{color:var(–black);font-weight:500;}
+.bbar-btns{display:flex;gap:.65rem;}
+.btn-skip{padding:.55rem 1.3rem;border:1px solid var(–border);border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.75rem;color:var(–mist);background:transparent;cursor:pointer;transition:all .2s;}
+.btn-skip:hover{border-color:var(–stone);color:var(–black);}
+.btn-next{padding:.55rem 1.6rem;background:var(–sage);color:white;border:none;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+.btn-next:hover{background:var(–leaf);}
+
+/* DRAWER */
+#drBg{position:fixed;inset:0;z-index:299;background:rgba(10,10,8,.45);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s;}
+#drBg.show{opacity:1;pointer-events:all;}
+#drawer{position:fixed;top:0;right:0;bottom:0;z-index:300;width:480px;background:white;box-shadow:-24px 0 80px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+#drawer.open{transform:translateX(0);}
+.dr-hero{height:260px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);display:flex;align-items:center;justify-content:center;}
+.dr-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.85);}
+.dr-hero-emoji{position:relative;z-index:1;font-size:4.5rem;opacity:.35;}
+.dr-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;z-index:2;transition:background .2s;}
+.dr-close:hover{background:white;}
+.dr-body{padding:1.75rem;}
+.dr-cat{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(–gold);margin-bottom:.4rem;}
+.dr-name{font-family:‘Cormorant Garamond’,serif;font-size:1.8rem;font-weight:400;color:var(–black);margin-bottom:.2rem;line-height:1.15;}
+.dr-rating{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(–mist);margin-bottom:1.2rem;}
+.dr-stars{color:var(–gold);}
+.dr-div{height:1px;background:var(–border);margin:1rem 0;}
+.dr-sec{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(–stone);margin-bottom:.5rem;}
+.dr-text{font-size:.83rem;line-height:1.75;color:#5a5650;margin-bottom:1rem;}
+.dr-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem;}
+.dr-cell{background:var(–off);border-radius:10px;padding:.7rem;}
+.dr-cell-l{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(–mist);margin-bottom:.2rem;}
+.dr-cell-v{font-size:.82rem;font-weight:500;color:var(–black);}
+.dr-reviews{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem;}
+.rv{background:var(–off);border-radius:10px;padding:.8rem;}
+.rv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem;}
+.rv-author{font-size:.72rem;font-weight:500;}
+.rv-src{font-size:.58rem;color:var(–mist);}
+.rv-text{font-size:.72rem;color:#5a5650;line-height:1.6;}
+.dr-actions{display:flex;gap:.6rem;}
+.btn-add{flex:1;padding:.8rem;background:var(–sage);color:white;border:none;border-radius:10px;font-family:‘DM Sans’,sans-serif;font-size:.8rem;font-weight:500;cursor:pointer;transition:background .2s;}
+.btn-add:hover{background:var(–leaf);}
+.btn-close-dr{padding:.8rem 1.1rem;border:1px solid var(–border);border-radius:10px;background:transparent;font-family:‘DM Sans’,sans-serif;font-size:.8rem;cursor:pointer;color:var(–mist);transition:all .2s;}
+.btn-close-dr:hover{border-color:var(–stone);color:var(–black);}
+
+/* PRIMARY BUTTONS */
+.btn-p{padding:.82rem 2rem;background:var(–sage);color:white;border:none;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.04em;}
+.btn-p:hover{background:var(–leaf);transform:translateY(-1px);}
+.btn-o{padding:.82rem 1.8rem;background:transparent;color:var(–black);border:1px solid var(–border);border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.82rem;cursor:pointer;transition:all .25s;}
+.btn-o:hover{border-color:var(–sage);}
+
+/* RESULT */
+.res-wrap{animation:fadeUp .5s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.res-hero{background:linear-gradient(135deg,var(–sage) 0%,#1a3020 100%);border-radius:20px;padding:2.5rem;margin-bottom:1.75rem;position:relative;overflow:hidden;}
+.res-hero::before{content:’’;position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(201,151,58,.1);}
+.res-hero h2{font-family:‘Cormorant Garamond’,serif;font-size:1.8rem;font-weight:300;color:var(–off);margin-bottom:.3rem;position:relative;}
+.res-hero p{color:rgba(245,240,232,.45);font-size:.78rem;position:relative;}
+.res-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem;position:relative;}
+.rtag{padding:.22rem .7rem;border:1px solid rgba(245,240,232,.15);border-radius:100px;color:rgba(245,240,232,.55);font-size:.68rem;}
+.res-body{background:white;border-radius:18px;border:1px solid var(–border);padding:2.5rem;font-size:.9rem;line-height:1.88;color:var(–black);white-space:pre-wrap;min-height:300px;}
+.res-body strong{color:var(–sage);font-weight:500;}
+.cursor{display:inline-block;width:2px;height:1em;background:var(–gold);margin-left:2px;vertical-align:middle;animation:blink .7s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.spin-row{display:flex;align-items:center;gap:.7rem;color:var(–mist);}
+.spin{width:16px;height:16px;border:1.5px solid var(–border);border-top-color:var(–gold);border-radius:50%;animation:sp .8s linear infinite;flex-shrink:0;}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+nav,nav.solid{padding:1rem 1.5rem;}
+.hero-footer{padding:1.5rem 1.5rem;}
+.wiz-top{padding:1rem 1.5rem;}
+.wiz-body{padding:2rem 1rem 8rem;}
+.vibes,.dest-recs,.pgrid{grid-template-columns:1fr 1fr;}
+.basics-g,.people-row{grid-template-columns:1fr;}
+#drawer{width:100%;}
+.bbar{padding:.9rem 1.5rem;}
+.feat-grid{grid-template-columns:1fr 1fr;}
+.feat-card-wide{grid-column:span 2;height:220px;}
+.featured-sec{padding:3rem 1.5rem;}
+}
+@media(max-width:480px){
+.vibes,.pgrid,.dest-recs{grid-template-columns:1fr;}
+.feat-grid{grid-template-columns:1fr 1fr;}
+.hero h1{font-size:3rem;}
+}
+</style>
+
+</head>
+<body>
+
+<!-- LOADER -->
+
+<div id="loader">
+  <div class="l-word">Rover</div>
+  <div class="l-line"><div class="l-prog"></div></div>
+</div>
+
+<!-- NAV -->
+
+<nav id="nav">
+  <div class="nav-brand">Rover</div>
+  <div class="nav-right">
+    <button class="nav-link" onclick="document.getElementById('wizard').scrollIntoView()">探索</button>
+    <button class="nav-link">攻略</button>
+    <button class="nav-cta" onclick="openWizard('A')">开始规划</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-slides" id="heroSlides"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="eyebrow-dash"></div>Victoria, Australia<div class="eyebrow-dash"></div></div>
+    <h1>Discover<span>Victoria</span></h1>
+    <p class="hero-desc">从壮阔海岸到古老金矿城，从薄雾森林到原野旷野。告诉我你的向往。</p>
+
+```
+<div class="search-wrap">
+  <span class="search-icon">⌕</span>
+  <input class="search-box" id="heroSearch" placeholder="搜索目的地，如 Bendigo、大洋路、丹德农…" oninput="heroFilter(this.value)" onblur="setTimeout(hideHeroDdl,200)">
+  <button class="search-btn" onclick="heroSearchGo()">探索 →</button>
+  <div class="search-dropdown" id="heroDdl"></div>
+</div>
+
+<div class="hero-tags">
+  <span class="htag" onclick="quickDest('大洋路')">大洋路</span>
+  <span class="htag" onclick="quickDest('Wilson Promontory')">Wilson Prom</span>
+  <span class="htag" onclick="quickDest('丹德农山脉')">丹德农山脉</span>
+  <span class="htag" onclick="quickDest('雅拉谷')">雅拉谷</span>
+  <span class="htag" onclick="quickDest('本迪戈')">本迪戈</span>
+  <span class="htag" onclick="quickDest('莫宁顿半岛')">莫宁顿半岛</span>
+</div>
+<button class="hero-not-sure" onclick="openWizard('B')">不知道去哪？让我帮你选 →</button>
+```
+
+  </div>
+
+  <div class="hero-footer">
+    <div class="hero-loc" id="heroLoc">大洋路 · 十二门徒岩</div>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-scroll-hint"><div class="scroll-track"><div class="scroll-runner"></div></div><span>探索</span></div>
+  </div>
+</section>
+
+<!-- FEATURED DESTINATIONS -->
+
+<section class="featured-sec" id="featuredSec">
+  <div class="feat-header">
+    <div class="feat-eyebrow">精选目的地</div>
+    <h2 class="feat-title">维多利亚州<em>热门去处</em></h2>
+    <p class="feat-sub">点击直接开始规划，或搜索任意小众目的地</p>
+  </div>
+  <div class="feat-grid" id="featGrid"></div>
+</section>
+
+<!-- WIZARD -->
+
+<div id="wizard">
+  <div class="wiz-top">
+    <button class="wiz-back" onclick="closeWizard()">← 返回</button>
+    <div class="wiz-brand">Rover</div>
+    <div class="wiz-prog" id="wizProg"></div>
+  </div>
+  <div class="wiz-body" id="wizBody"></div>
+  <div class="bbar" id="bbar">
+    <div class="bbar-info">已选 <strong id="bbarN">0</strong> 项</div>
+    <div class="bbar-btns">
+      <button class="btn-skip" onclick="nextStep()">跳过 →</button>
+      <button class="btn-next" onclick="nextStep()">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER -->
+
+<div id="drBg" onclick="closeDr()"></div>
+<div id="drawer"><div id="drContent"></div></div>
+
+<script>
+// ── DATA ──
+const CITIES=[
+  {n:'墨尔本 City',r:'大都市',e:'🏙',lat:-37.814,lng:144.963,img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80&auto=format&fit=crop'},
+  {n:'St Kilda',r:'墨尔本海滨',e:'🎡',lat:-37.868,lng:144.978,img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
+  {n:'Brighton Beach',r:'彩色浴室',e:'🏖',lat:-37.907,lng:144.983,img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80&auto=format&fit=crop'},
+  {n:'丹德农山脉',r:'薄雾森林',e:'🌿',lat:-37.83,lng:145.35,img:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=600&q=80&auto=format&fit=crop'},
+  {n:'马其顿山',r:'火山奇岩',e:'🍂',lat:-37.38,lng:144.56,img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop'},
+  {n:'雅拉谷',r:'葡萄酒产区',e:'🍷',lat:-37.75,lng:145.55,img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
+  {n:'莫宁顿半岛',r:'温泉海湾',e:'♨️',lat:-38.22,lng:145.04,img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80&auto=format&fit=crop'},
+  {n:'菲利普岛',r:'企鹅圣地',e:'🐧',lat:-38.43,lng:145.23,img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80&auto=format&fit=crop'},
+  {n:'大洋路',r:'西南海岸',e:'🌊',lat:-38.68,lng:143.4,img:'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?w=600&q=80&auto=format&fit=crop'},
+  {n:'本迪戈',r:'金矿历史城',e:'⛏',lat:-36.757,lng:144.28,img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop'},
+  {n:'巴拉瑞特',r:'历史金矿城',e:'🏛',lat:-37.562,lng:143.858,img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
+  {n:'格兰坪',r:'国家公园',e:'🏔',lat:-37.25,lng:142.52,img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop'},
+  {n:'Healesville',r:'野生动物',e:'🐨',lat:-37.65,lng:145.52,img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80&auto=format&fit=crop'},
+  {n:'Werribee',r:'庄园动物园',e:'🦁',lat:-37.9,lng:144.66,img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80&auto=format&fit=crop'},
+  {n:'Geelong',r:'港口城市',e:'⚓',lat:-38.15,lng:144.36,img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80&auto=format&fit=crop'},
+  {n:'Wilson Promontory',r:'最南端海岬',e:'🦘',lat:-39.0,lng:146.4,img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80&auto=format&fit=crop'},
+  {n:'Apollo Bay',r:'大洋路海湾',e:'🏄',lat:-38.76,lng:143.67,img:'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?w=600&q=80&auto=format&fit=crop'},
+  {n:'Lorne',r:'大洋路小镇',e:'🌅',lat:-38.54,lng:143.98,img:'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?w=600&q=80&auto=format&fit=crop'},
+  {n:'Halls Gap',r:'格兰坪山村',e:'🦘',lat:-37.14,lng:142.52,img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop'},
+  {n:'Hepburn Springs',r:'矿泉温泉',e:'🛁',lat:-37.31,lng:144.14,img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
+  {n:'Mildura',r:'墨累河小城',e:'🍇',lat:-34.18,lng:142.16,img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80&auto=format&fit=crop'},
+  {n:'Echuca',r:'墨累河历史港',e:'🚢',lat:-36.13,lng:144.75,img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80&auto=format&fit=crop'},
+  {n:'Mount Buller',r:'滑雪胜地',e:'⛷️',lat:-37.15,lng:146.44,img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop'},
+  {n:'Falls Creek',r:'高山滑雪村',e:'🏔',lat:-36.87,lng:147.27,img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop'},
+];
+
+const VIBES=[
+  {id:'nature',i:'🏔',n:'自然风光',h:'国家公园、山脉、森林'},
+  {id:'beach',i:'🌊',n:'海滩海岸',h:'大洋路、海湾、冲浪'},
+  {id:'food',i:'🍷',n:'美食美酒',h:'酒庄、餐厅、咖啡文化'},
+  {id:'wildlife',i:'🐨',n:'野生动物',h:'袋鼠、企鹅、考拉'},
+  {id:'culture',i:'🎭',n:'城市文化',h:'博物馆、艺术、历史'},
+  {id:'relax',i:'♨️',n:'温泉放松',h:'温泉、SPA、度假村'},
+];
+
+const VIBE_RECS={
+  nature:['格兰坪','丹德农山脉','Wilson Promontory'],
+  beach:['大洋路','Brighton Beach','莫宁顿半岛'],
+  food:['雅拉谷','马其顿山','莫宁顿半岛'],
+  wildlife:['菲利普岛','Healesville','格兰坪'],
+  culture:['墨尔本 City','本迪戈','巴拉瑞特'],
+  relax:['莫宁顿半岛','Hepburn Springs','雅拉谷'],
+};
+
+const FILTER_CHIPS={
+  attractions:['全部','自然景观','历史文化','野生动物','艺术'],
+  restaurants:['全部','咖啡','海鲜','Fine Dining','亚洲菜','酒吧'],
+  hotels:['全部','精品酒店','民宿','度假村','经济型'],
+};
+
+const HERO_SLIDES=[
+  {
+    url:'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?w=1920&q=90&auto=format&fit=crop',
+    loc:'大洋路 · 十二门徒岩',pos:'center 50%'
+  },
+  {
+    url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1920&q=90&auto=format&fit=crop',
+    loc:'墨尔本 · Flinders Street车站',pos:'center 45%'
+  },
+  {
+    url:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=1920&q=90&auto=format&fit=crop',
+    loc:'丹德农山脉 · 薄雾森林',pos:'center 40%'
+  },
+  {
+    url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1920&q=90&auto=format&fit=crop',
+    loc:'Wilson Promontory · 澳洲大陆最南端',pos:'center 38%'
+  },
+  {
+    url:'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=1920&q=90&auto=format&fit=crop',
+    loc:'莫宁顿半岛 · 海湾灯塔',pos:'center 50%'
+  },
+  {
+    url:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=90&auto=format&fit=crop',
+    loc:'本迪戈 · 金矿历史城',pos:'center 42%'
+  },
+];
+
+// ── HERO SLIDESHOW ──
+let slideIdx=0,slideTimer=null;
+
+function initHero(){
+  const wrap=document.getElementById('heroSlides');
+  const dots=document.getElementById('heroDots');
+  wrap.innerHTML=HERO_SLIDES.map((s,i)=>`
+    <div class="hero-slide${i===0?' active':''}" id="slide-${i}">
+      <img src="${s.url}" style="object-position:${s.pos}" alt="${s.loc}">
+    </div>`).join('');
+  dots.innerHTML=HERO_SLIDES.map((_,i)=>`<div class="hdot${i===0?' on':''}" onclick="goSlide(${i})"></div>`).join('');
+  // Preload all
+  HERO_SLIDES.forEach(s=>{const p=new Image();p.src=s.url;});
+  slideTimer=setInterval(()=>goSlide((slideIdx+1)%HERO_SLIDES.length),6000);
+}
+
+function goSlide(idx){
+  document.getElementById('slide-'+slideIdx)?.classList.remove('active');
+  document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===idx));
+  slideIdx=idx;
+  const slide=document.getElementById('slide-'+idx);
+  if(slide) slide.classList.add('active');
+  const loc=document.getElementById('heroLoc');
+  if(loc){loc.style.opacity='0';setTimeout(()=>{loc.textContent=HERO_SLIDES[idx].loc;loc.style.opacity='1';loc.style.transition='opacity .5s';},300);}
+}
+
+// ── FEATURED DESTINATIONS ──
+const FEATURED=[
+  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?w=800&q=85&auto=format&fit=crop',wide:true},
+  {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=85&auto=format&fit=crop'},
+  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=85&auto=format&fit=crop'},
+  {n:'丹德农山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=600&q=85&auto=format&fit=crop'},
+  {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=85&auto=format&fit=crop'},
+  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=800&q=85&auto=format&fit=crop',wide:true},
+  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=85&auto=format&fit=crop'},
+  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=85&auto=format&fit=crop'},
+];
+
+function initFeatured(){
+  const grid=document.getElementById('featGrid');
+  if(!grid)return;
+  grid.innerHTML=FEATURED.map(f=>`
+    <div class="feat-card${f.wide?' feat-card-wide':''}" onclick="quickDest('${f.n}')">
+      <img src="${f.img}" alt="${f.n}" loading="lazy" onerror="this.style.background='#1e3a2f'">
+      <div class="feat-card-body">
+        <div class="feat-region">${f.r}</div>
+        <div class="feat-name">${f.n}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── HERO SEARCH ──
+function heroFilter(v){
+  const ddl=document.getElementById('heroDdl');
+  if(!v.trim()){ddl.classList.remove('open');return;}
+  const f=CITIES.filter(c=>c.n.toLowerCase().includes(v.toLowerCase())||c.r.toLowerCase().includes(v.toLowerCase()));
+  if(!f.length){ddl.classList.remove('open');return;}
+  ddl.innerHTML=f.slice(0,8).map(c=>`<div class="sd-item" onclick="quickDest('${c.n}')"><span>${c.e}</span><div><div class="sd-name">${c.n}</div><div class="sd-region">${c.r}</div></div></div>`).join('');
+  ddl.classList.add('open');
+}
+function hideHeroDdl(){document.getElementById('heroDdl').classList.remove('open');}
+function heroSearchGo(){
+  const v=document.getElementById('heroSearch').value.trim();
+  if(v) quickDest(v);
+  else openWizard('B');
+}
+function quickDest(name){
+  state.dest=name;state.attractions=[];state.restaurants=[];state.hotels=[];
+  openWizard('A',true);
+}
+
+// ── STATE ──
+let path='A',step=0,steps=[];
+let state={dest:'',vibes:[],adults:2,children:0,days:'2天',budget:'中等',transport:'自驾',attractions:[],restaurants:[],hotels:[]};
+let cache={};
+let currentFilter={attractions:'全部',restaurants:'全部',hotels:'全部'};
+
+const STEPS_A=['basics','attractions','restaurants','hotels','result'];
+const STEPS_B=['vibes','dest_pick','basics','attractions','restaurants','hotels','result'];
+
+function openWizard(p,skipBasics=false){
+  path=p;
+  steps=p==='A'?STEPS_A:STEPS_B;
+  // Entry A: always start at basics (step 0) so user fills people/days first
+  // Only skip basics if coming from quickDest AND dest already set
+  if(p==='A'&&skipBasics&&state.dest){
+    step=0; // still show basics - just pre-fill dest
+  } else {
+    step=0;
+  }
+  if(p==='A'){
+    state={...state,vibes:[],attractions:[],restaurants:[],hotels:[]};
+  } else {
+    state={dest:'',vibes:[],adults:2,children:0,days:'2天',budget:'中等',transport:'自驾',attractions:[],restaurants:[],hotels:[]};
+  }
+  document.getElementById('wizard').classList.add('show');
+  window.scrollTo(0,0);
+  renderStep();
+}
+function closeWizard(){document.getElementById('wizard').classList.remove('show');document.getElementById('bbar').classList.remove('show');state.dest='';}
+function nextStep(){if(step<steps.length-1){step++;document.getElementById('wizBody').style.opacity='0';setTimeout(renderStep,200);}}
+
+function renderProg(){
+  const labels={vibes:'偏好',dest_pick:'目的地',basics:'信息',attractions:'景点',restaurants:'餐厅',hotels:'住宿',result:'攻略'};
+  document.getElementById('wizProg').innerHTML=steps.map((s,i)=>{
+    const cls=i<step?'done':i===step?'on':'';
+    const line=i<steps.length-1?`<div class="wp-line${i<step?' done':''}"></div>`:'';
+    return `<div class="wp ${cls}">${i<step?'✓':i+1}</div>${line}`;
+  }).join('');
+}
+
+function animIn(el){el.style.opacity='0';el.style.transform='translateY(12px)';el.style.transition='none';setTimeout(()=>{el.style.transition='all .3s ease';el.style.opacity='1';el.style.transform='translateY(0)';},30);}
+
+function renderStep(){
+  renderProg();
+  const b=document.getElementById('wizBody');
+  animIn(b);
+  document.getElementById('bbar').classList.remove('show');
+  const s=steps[step];
+  if(s==='vibes') renderVibes(b);
+  else if(s==='dest_pick') renderDestPick(b);
+  else if(s==='basics') renderBasics(b);
+  else if(s==='attractions') renderPlaces(b,'attractions');
+  else if(s==='restaurants') renderPlaces(b,'restaurants');
+  else if(s==='hotels') renderPlaces(b,'hotels');
+  else if(s==='result') renderResult(b);
+}
+
+// ── VIBES ──
+function renderVibes(el){
+  el.innerHTML=`<div class="sno">Step 1 · 旅行偏好</div>
+    <h2 class="stitle">你想要什么样的<em>体验？</em></h2>
+    <p class="ssub">选择感兴趣的方向，可多选，我们将为你推荐最合适的维州目的地</p>
+    <div class="vibes">${VIBES.map(v=>`<div class="vibe${state.vibes.includes(v.id)?' on':''}" onclick="toggleVibe('${v.id}',this)"><span class="vi">${v.i}</span><div class="vn">${v.n}</div><div class="vh">${v.h}</div></div>`).join('')}</div>
+    <div style="display:flex;justify-content:flex-end"><button class="btn-p" onclick="nextStep()">下一步 →</button></div>`;
+}
+function toggleVibe(id,el){state.vibes.includes(id)?state.vibes=state.vibes.filter(v=>v!==id):state.vibes.push(id);el.classList.toggle('on');}
+
+// ── DEST PICK ──
+function renderDestPick(el){
+  let names=[];
+  state.vibes.forEach(v=>{if(VIBE_RECS[v])names.push(...VIBE_RECS[v]);});
+  names=[...new Set(names)].slice(0,3);
+  if(!names.length) names=['墨尔本 City','大洋路','雅拉谷'];
+  const recs=names.map(n=>{const c=CITIES.find(c=>c.n===n||n.includes(c.n.split(' ')[0]));return c||{n,r:'维多利亚州',e:'🗺',img:''};});
+
+  el.innerHTML=`<div class="sno">Step 2 · 推荐目的地</div>
+    <h2 class="stitle">为你推荐的<em>目的地</em></h2>
+    <p class="ssub">根据你的旅行偏好精心筛选，选择一个目的地，后续景点、餐厅、住宿将自动匹配</p>
+    <div class="dest-recs" id="destRecsList">${recs.map((r,i)=>`
+      <div class="drec${state.dest===r.n?' on':''}" id="drec-${i}" onclick="pickDest('${r.n}',${i})">
+        <div class="drec-img" style="background:linear-gradient(135deg,#1e3a2f,#3d6b4a)">
+          ${r.img?`<img src="${r.img}" alt="${r.n}">`:''}
+          <span style="position:relative;z-index:1;font-size:2rem">${r.e}</span>
+        </div>
+        <div class="drec-body">
+          <div class="drec-region">${r.r}</div>
+          <div class="drec-name">${r.n}</div>
+          <div class="drec-why">${CITIES.find(c=>c.n===r.n)?.r||'维多利亚州精选目的地'}</div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem">
+      <div id="destPickHint" style="font-size:.82rem;color:var(--mist)">${state.dest?`已选择：${state.dest}`:'请选择一个目的地'}</div>
+      <button class="btn-p" onclick="confirmDestPick()">下一步 →</button>
+    </div>`;
+}
+function pickDest(name,idx){
+  state.dest=name;state.attractions=[];state.restaurants=[];state.hotels=[];
+  document.querySelectorAll('.drec').forEach(d=>d.classList.remove('on'));
+  document.getElementById('drec-'+idx)?.classList.add('on');
+  const hint=document.getElementById('destPickHint');
+  if(hint)hint.textContent='已选择：'+name;
+}
+function confirmDestPick(){if(!state.dest){const h=document.getElementById('destPickHint');if(h){h.textContent='请先选择一个目的地';h.style.color='var(--ember)';}return;}nextStep();}
+
+// ── BASICS ──
+function renderBasics(el){
+  const sn=steps.indexOf('basics')+1;
+  const destBlock=path==='A'?`
+    <div class="dest-field-wrap">
+      <span class="dest-field-ico">📍</span>
+      <input class="dest-field" id="destF" placeholder="搜索目的地，如：Bendigo、Apollo Bay、Hepburn Springs…" value="${state.dest}" oninput="filterDest(this.value)" onblur="setTimeout(hideDest,200)">
+      <div class="dest-ddl" id="destDdl"></div>
+    </div>`:
+    `<div class="dest-pill">📍 ${state.dest}</div>`;
+
+  el.innerHTML=`<div class="sno">Step ${sn} · 基本信息</div>
+    <h2 class="stitle">${path==='A'?'你想去哪里，<em>怎么玩？</em>':'确认你的<em>行程安排</em>'}</h2>
+    <p class="ssub">帮我了解你的行程，以便生成最贴合你的攻略</p>
+    ${destBlock}
+    <div class="fld" style="margin-bottom:1.5rem"><label>出行人数</label>
+      <div class="people-row">
+        <div class="pbox"><div><div class="plbl">成人</div><div class="psub">16岁以上</div></div>
+          <div class="ctr"><button class="cbtn" onclick="adj('adults',-1)">−</button><div class="cnum" id="aN">${state.adults}</div><button class="cbtn" onclick="adj('adults',1)">+</button></div>
+        </div>
+        <div class="pbox"><div><div class="plbl">儿童</div><div class="psub">15岁及以下</div></div>
+          <div class="ctr"><button class="cbtn" onclick="adj('children',-1)">−</button><div class="cnum" id="cN">${state.children}</div><button class="cbtn" onclick="adj('children',1)">+</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="basics-g">
+      <div class="fld"><label>旅行天数</label><select onchange="state.days=this.value">${['1天','2天','3天','4-5天','一周+'].map(d=>`<option${state.days===d?' selected':''}>${d}</option>`).join('')}</select></div>
+      <div class="fld"><label>预算</label><select onchange="state.budget=this.value">${['经济型（$100/天以内）','中等（$100-300/天）','舒适型（$300-600/天）','豪华型'].map(d=>`<option${state.budget===d?' selected':''}>${d}</option>`).join('')}</select></div>
+      <div class="fld"><label>交通方式</label><select onchange="state.transport=this.value">${['自驾','公共交通','Uber/拼车','跟团'].map(d=>`<option${state.transport===d?' selected':''}>${d}</option>`).join('')}</select></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:1rem"><button class="btn-p" onclick="confirmBasics()">下一步 →</button></div>`;
+}
+function adj(k,d){state[k]=Math.max(k==='adults'?1:0,state[k]+d);document.getElementById(k==='adults'?'aN':'cN').textContent=state[k];}
+function filterDest(v){
+  const ddl=document.getElementById('destDdl');if(!ddl)return;
+  if(!v){ddl.classList.remove('open');return;}
+  const f=CITIES.filter(c=>c.n.toLowerCase().includes(v.toLowerCase())||c.r.toLowerCase().includes(v.toLowerCase()));
+  if(!f.length){ddl.classList.remove('open');return;}
+  ddl.innerHTML=f.slice(0,10).map(c=>`<div class="dopt" onclick="selDest('${c.n}')"><span>${c.e}</span><div><div class="dopt-n">${c.n}</div><div class="dopt-r">${c.r}</div></div></div>`).join('');
+  ddl.classList.add('open');
+}
+function selDest(n){state.dest=n;state.attractions=[];state.restaurants=[];state.hotels=[];const f=document.getElementById('destF');if(f)f.value=n;hideDest();}
+function hideDest(){const d=document.getElementById('destDdl');if(d)d.classList.remove('open');}
+function confirmBasics(){
+  if(path==='A'){const f=document.getElementById('destF');if(f)state.dest=f.value;if(!state.dest.trim()){if(f){f.style.borderColor='var(--ember)';f.placeholder='请输入目的地！';}return;}}
+  nextStep();
+}
+
+// ── PLACES (Google Places API) ──
+const GKEY='AIzaSyDegBY5wqNKPshtxbMkyXhpYSNYuEjT9mk';
+const EMOJI_MAP={tourist_attraction:'🏛',natural_feature:'🌿',park:'🌲',museum:'🏛',church:'⛪',amusement_park:'🎡',zoo:'🐨',art_gallery:'🎨',restaurant:'🍽',cafe:'☕',bar:'🍺',bakery:'🥐',lodging:'🏨',default:'📍'};
+function placeEmoji(types=[]){for(const t of types)if(EMOJI_MAP[t])return EMOJI_MAP[t];return EMOJI_MAP.default;}
+function photoUrl(photos){if(!photos?.length)return null;return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photo_reference=${photos[0].photo_reference}&key=${GKEY}`;}
+function unsplashFallback(name,type){const queries={attractions:'victoria australia landscape nature',restaurants:'restaurant food australia',hotels:'hotel accommodation australia'};const seed=name.split('').reduce((a,c)=>a+c.charCodeAt(0),0)%1000;return `https://source.unsplash.com/600x400/?${encodeURIComponent(queries[type]||'australia')}&sig=${seed}`;}
+
+async function fetchPlaces(dest,type){
+  const key=`${dest}__${type}`;
+  if(cache[key])return cache[key];
+  try{
+    const res=await fetch(`/.netlify/functions/places?query=${encodeURIComponent(dest)}&type=${type}`);
+    const data=await res.json();
+    if(!data.results?.length)return[];
+    const items=data.results.slice(0,15).map((p,i)=>({
+      id:p.place_id||`p${i}`,name:p.name,
+      cat:(p.types?.[0]||'place').replace(/_/g,' '),
+      e:placeEmoji(p.types),
+      photo:photoUrl(p.photos),
+      desc:p.formatted_address||'',
+      rating:p.rating?.toFixed(1)||'N/A',
+      price:p.price_level?'$'.repeat(p.price_level):'—',
+      hours:p.opening_hours?.open_now!=null?(p.opening_hours.open_now?'现在营业中':'现在关闭'):'—',
+      address:p.formatted_address||'',
+      reviews:(p.reviews||[]).slice(0,2).map(r=>({a:r.author_name,s:'Google',t:r.text?.slice(0,120)||''})),
+      place_id:p.place_id,types:p.types||[],
+    }));
+    cache[key]=items;return items;
+  }catch(e){console.error(e);return[];}
+}
+
+async function renderPlaces(el,type){
+  const sn=steps.indexOf(type)+1;
+  const labels={attractions:'景点',restaurants:'餐厅',hotels:'住宿'};
+  const titles={attractions:'选择你想去的<em>景点</em>',restaurants:'选择心仪的<em>餐厅</em>',hotels:'选择你的<em>住宿</em>'};
+  const subs={attractions:'点击卡片勾选，点击「详细介绍」查看更多',restaurants:'我们将餐厅安排在行程动线上，不额外绕路',hotels:'根据你选的景点位置，推荐最便利的住宿'};
+
+  el.innerHTML=`<div class="sno">Step ${sn} · ${labels[type]}</div>
+    <h2 class="stitle">${titles[type]}</h2>
+    <p class="ssub">${subs[type]}${state.dest?` · <strong>${state.dest}</strong>`:''}</p>
+    <div class="filter-row" id="filterRow">${(FILTER_CHIPS[type]||[]).map(c=>`<span class="fchip${currentFilter[type]===c?' on':''}" onclick="applyFilter('${type}','${c}',this)">${c}</span>`).join('')}</div>
+    <div class="pgrid" id="pgrid">
+      ${[...Array(6)].map(()=>`<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line" style="width:60%"></div><div class="skel skel-line" style="width:90%"></div><div class="skel skel-line" style="width:45%"></div></div></div>`).join('')}
+    </div>`;
+
+  const items=await fetchPlaces(state.dest||'Melbourne',type);
+  if(!items.length){
+    document.getElementById('pgrid').innerHTML=`<div style="color:var(--ember);padding:1rem;grid-column:1/-1">暂无数据，请检查网络连接后重试。</div>`;
+    return;
+  }
+  renderCards(type,items,state[type]);
+  if(state[type].length>0)document.getElementById('bbar').classList.add('show');
+}
+
+function renderCards(type,items,sel){
+  const grid=document.getElementById('pgrid');
+  if(!grid)return;
+  grid.innerHTML=items.map(item=>`
+    <div class="pc${sel.includes(item.id)?' sel':''}" id="pc-${item.id}">
+      <div class="pc-tick">✓</div>
+      <div class="pc-overlay" onclick="togglePlace('${type}','${item.id}')"></div>
+      <div class="pc-img">
+        <img src="${item.photo||unsplashFallback(item.name,type)}" alt="${item.name}" onerror="this.style.display='none'">
+        <span class="pc-emoji">${item.e}</span>
+      </div>
+      <div class="pc-body">
+        <div class="pc-cat">${item.cat}</div>
+        <div class="pc-name">${item.name}</div>
+        <div class="pc-desc">${item.desc}</div>
+        <div class="pc-foot">
+          <span class="pc-rat">${item.rating!=='N/A'?'★ '+item.rating:'—'}</span>
+          <span class="pc-price">${item.price}</span>
+        </div>
+        <div class="pc-more" onclick="openDr('${type}','${item.id}',event)">详细介绍 →</div>
+      </div>
+    </div>`).join('');
+}
+
+function applyFilter(type,chip,el){
+  currentFilter[type]=chip;
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  // Re-fetch with filter keyword
+  const dest=state.dest||'Melbourne';
+  const q=chip==='全部'?dest:`${chip} ${dest}`;
+  const grid=document.getElementById('pgrid');
+  if(grid) grid.innerHTML=`<div style="grid-column:1/-1;padding:2rem 0;display:flex;align-items:center;gap:.75rem;color:var(--mist)"><div class="spin"></div>加载中…</div>`;
+  fetchPlaces(q,type).then(items=>renderCards(type,items,state[type]));
+}
+
+function togglePlace(type,id){
+  const a=state[type];a.includes(id)?state[type]=a.filter(x=>x!==id):state[type].push(id);
+  document.getElementById('pc-'+id)?.classList.toggle('sel',state[type].includes(id));
+  updateBbar(type);
+  document.getElementById('bbar').classList.toggle('show',state[type].length>0);
+}
+function updateBbar(type){const n=state[type].length;const lb={attractions:'个景点',restaurants:'家餐厅',hotels:'家住宿'};document.getElementById('bbarN').textContent=n;document.querySelector('.bbar-info').innerHTML=`已选 <strong>${n}</strong> ${lb[type]||'项'}`;}
+
+// ── DRAWER ──
+async function openDr(type,id,e){
+  if(e)e.stopPropagation();
+  const key=`${state.dest||'Melbourne'}__${type}`;
+  const items=cache[key]||[];
+  const item=items.find(x=>x.id===id);
+  if(!item)return;
+  const isSel=state[type].includes(id);
+
+  document.getElementById('drContent').innerHTML=`
+    <div class="dr-hero">
+      <img src="${item.photo||unsplashFallback(item.name,type)}" alt="${item.name}" onerror="this.style.display='none'">
+      <span class="dr-hero-emoji">${item.e}</span>
+      <button class="dr-close" onclick="closeDr()">✕</button>
+    </div>
+    <div class="dr-body">
+      <div class="dr-cat">${item.cat}</div>
+      <div class="dr-name">${item.name}</div>
+      <div class="dr-rating"><span class="dr-stars">★★★★★</span><span>${item.rating}/5.0</span><span>·</span><span>${item.price||'—'}</span></div>
+      <div class="dr-div"></div>
+      <div class="dr-sec">地址</div>
+      <div class="dr-text">${item.address||'—'}</div>
+      <div class="dr-grid">
+        <div class="dr-cell"><div class="dr-cell-l">评分</div><div class="dr-cell-v">${item.rating}</div></div>
+        <div class="dr-cell"><div class="dr-cell-l">营业状态</div><div class="dr-cell-v">${item.hours}</div></div>
+      </div>
+      ${item.reviews?.length?`
+      <div class="dr-div"></div>
+      <div class="dr-sec">真实评价</div>
+      <div class="dr-reviews">${item.reviews.map(r=>`<div class="rv"><div class="rv-top"><span class="rv-author">${r.a}</span><span class="rv-src">${r.s}</span></div><div class="rv-text">${r.t}</div></div>`).join('')}</div>`:''}
+      <div class="dr-div"></div>
+      <div class="dr-actions">
+        <button class="btn-add" id="drAddBtn" onclick="togglePlace('${type}','${id}');updateDrBtn('${type}','${id}')">${isSel?'✓ 已加入行程':'＋ 加入行程'}</button>
+        <button class="btn-close-dr" onclick="closeDr()">关闭</button>
+      </div>
+    </div>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drBg').classList.add('show');
+}
+function updateDrBtn(type,id){const b=document.getElementById('drAddBtn');if(b)b.textContent=state[type].includes(id)?'✓ 已加入行程':'＋ 加入行程';}
+function closeDr(){document.getElementById('drawer').classList.remove('open');document.getElementById('drBg').classList.remove('show');}
+
+// ── RESULT ──
+async function renderResult(el){
+  document.getElementById('bbar').classList.remove('show');
+  const dest=state.dest||'维多利亚州';
+  const cA=cache[`${dest}__attractions`]||[];
+  const cR=cache[`${dest}__restaurants`]||[];
+  const cH=cache[`${dest}__hotels`]||[];
+  const selA=cA.filter(x=>state.attractions.includes(x.id)).map(x=>x.name);
+  const selR=cR.filter(x=>state.restaurants.includes(x.id)).map(x=>x.name);
+  const selH=cH.filter(x=>state.hotels.includes(x.id)).map(x=>x.name);
+  const hasKids=state.children>0;
+
+  el.innerHTML=`<div class="res-wrap">
+    <div class="res-hero">
+      <h2>${dest} · 专属旅行攻略</h2>
+      <p>由 AI 综合景点路线、餐饮安排与住宿推荐生成</p>
+      <div class="res-tags">
+        <span class="rtag">📅 ${state.days}</span>
+        <span class="rtag">👥 成人${state.adults}人${state.children>0?` · 儿童${state.children}人`:''}</span>
+        <span class="rtag">💰 ${state.budget}</span>
+        <span class="rtag">🚗 ${state.transport}</span>
+      </div>
+    </div>
+    <div class="res-body" id="resBody"><div class="spin-row"><div class="spin"></div>&nbsp;正在规划最优行程路线…</div></div>
+    <div style="display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem">
+      <button class="btn-o" onclick="step=0;renderStep()">← 重新规划</button>
+      <button class="btn-p" onclick="closeWizard()">完成</button>
+    </div>
+  </div>`;
+
+  const prompt=`你是澳大利亚维多利亚州专业旅游顾问，用精致优雅的中文撰写实用攻略。
+
+目的地：${dest} | 天数：${state.days} | 成人：${state.adults}人${hasKids?` | 儿童：${state.children}人`:''} | 预算：${state.budget} | 交通：${state.transport}
+${state.vibes.length?`偏好：${state.vibes.map(v=>VIBES.find(x=>x.id===v)?.n).join('、')}\n`:''}
+已选景点：${selA.length?selA.join('、'):'（请推荐2-3个核心景点）'}
+已选餐厅：${selR.length?selR.join('、'):'（请推荐2-3家合适餐厅）'}
+已选住宿：${selH.length?selH.join('、'):'（请推荐最适合的住宿）'}
+
+按地理就近原则排景点顺序，住宿靠近景点聚集地，餐厅安排在动线上${hasKids?'，有儿童注意活动难度和休息':''}.
+
+**✦ 行程概览**
+
+**📅 每日行程**（按天，上午/下午/晚上，标注预计时长和费用）
+
+**🍽 餐饮安排**
+
+**🏨 住宿建议**
+
+**🚗 交通路线**
+
+**✦ 旅行贴士**（5条具体建议）`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,stream:true,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok)throw new Error('API error');
+    const body=document.getElementById('resBody');body.innerHTML='';
+    const reader=res.body.getReader();const dec=new TextDecoder();let full='';
+    while(true){const{done,value}=await reader.read();if(done)break;
+      for(const line of dec.decode(value).split('\n')){
+        if(line.startsWith('data: ')){const d=line.slice(6);if(d==='[DONE]')continue;
+          try{const j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta?.text){full+=j.delta.text;body.innerHTML=fmt(full)+'<span class="cursor"></span>';}}catch{}
+        }
+      }
+    }
+    document.getElementById('resBody').innerHTML=fmt(full);
+  }catch(e){document.getElementById('resBody').innerHTML=`<div style="color:var(--ember);padding:1rem">生成失败，请重试。</div>`;}
+}
+
+function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
+
+// ── INIT ──
+window.addEventListener('load',()=>{
+  setTimeout(()=>{document.getElementById('loader').classList.add('gone');initHero();initFeatured();},1800);
+});
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',scrollY>60);});
+</script>
+
+</body>
+</html>
