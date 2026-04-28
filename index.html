@@ -456,30 +456,12 @@ const FILTER_CHIPS={
 };
 
 const HERO_SLIDES=[
-  {
-    url:'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?w=1920&q=90&auto=format&fit=crop',
-    loc:'大洋路 · 十二门徒岩',pos:'center 50%'
-  },
-  {
-    url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1920&q=90&auto=format&fit=crop',
-    loc:'墨尔本 · Flinders Street车站',pos:'center 45%'
-  },
-  {
-    url:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=1920&q=90&auto=format&fit=crop',
-    loc:'丹德农山脉 · 薄雾森林',pos:'center 40%'
-  },
-  {
-    url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1920&q=90&auto=format&fit=crop',
-    loc:'Wilson Promontory · 澳洲大陆最南端',pos:'center 38%'
-  },
-  {
-    url:'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=1920&q=90&auto=format&fit=crop',
-    loc:'莫宁顿半岛 · 海湾灯塔',pos:'center 50%'
-  },
-  {
-    url:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=90&auto=format&fit=crop',
-    loc:'本迪戈 · 金矿历史城',pos:'center 42%'
-  },
+  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1920&q=90&auto=format&fit=crop',loc:'大洋路 · 十二门徒岩',pos:'center 50%'},
+  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1920&q=90&auto=format&fit=crop',loc:'墨尔本 · Flinders Street车站',pos:'center 45%'},
+  {url:'https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=1920&q=90&auto=format&fit=crop',loc:'丹德农山脉 · 薄雾森林',pos:'center 40%'},
+  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1920&q=90&auto=format&fit=crop',loc:'Wilson Promontory · 澳洲最南端',pos:'center 38%'},
+  {url:'https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=1920&q=90&auto=format&fit=crop',loc:'雅拉谷 · 葡萄酒产区',pos:'center 50%'},
+  {url:'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1920&q=90&auto=format&fit=crop',loc:'维多利亚州 · 原野大地',pos:'center 42%'},
 ];
 
 // ── HERO SLIDESHOW ──
@@ -711,29 +693,61 @@ const GKEY='AIzaSyDegBY5wqNKPshtxbMkyXhpYSNYuEjT9mk';
 const EMOJI_MAP={tourist_attraction:'🏛',natural_feature:'🌿',park:'🌲',museum:'🏛',church:'⛪',amusement_park:'🎡',zoo:'🐨',art_gallery:'🎨',restaurant:'🍽',cafe:'☕',bar:'🍺',bakery:'🥐',lodging:'🏨',default:'📍'};
 function placeEmoji(types=[]){for(const t of types)if(EMOJI_MAP[t])return EMOJI_MAP[t];return EMOJI_MAP.default;}
 function photoUrl(photos){if(!photos?.length)return null;return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photo_reference=${photos[0].photo_reference}&key=${GKEY}`;}
-function unsplashFallback(name,type){const queries={attractions:'victoria australia landscape nature',restaurants:'restaurant food australia',hotels:'hotel accommodation australia'};const seed=name.split('').reduce((a,c)=>a+c.charCodeAt(0),0)%1000;return `https://source.unsplash.com/600x400/?${encodeURIComponent(queries[type]||'australia')}&sig=${seed}`;}
+
+// Better image fallback - use destination name for relevant images
+function unsplashFallback(name,type,dest){
+  const destClean=(dest||'victoria australia').replace(/\s+/g,'+');
+  const typeQueries={
+    attractions:`${destClean}+australia+landmark`,
+    restaurants:`${destClean}+australia+restaurant+food`,
+    hotels:`${destClean}+australia+hotel+accommodation`
+  };
+  const seed=name.split('').reduce((a,c)=>a+c.charCodeAt(0),0)%1000;
+  return `https://source.unsplash.com/600x400/?${typeQueries[type]||destClean+'+australia'}&sig=${seed}`;
+}
 
 async function fetchPlaces(dest,type){
   const key=`${dest}__${type}`;
   if(cache[key])return cache[key];
   try{
+    // Use more specific search to get Victoria Australia results only
     const res=await fetch(`/.netlify/functions/places?query=${encodeURIComponent(dest)}&type=${type}`);
     const data=await res.json();
     if(!data.results?.length)return[];
-    const items=data.results.slice(0,15).map((p,i)=>({
+    // Filter to only Victoria Australia results
+    const items=data.results
+      .filter(p=>p.formatted_address&&(
+        p.formatted_address.includes('VIC')||
+        p.formatted_address.includes('Victoria')||
+        p.formatted_address.includes('Australia')
+      ))
+      .slice(0,15)
+      .map((p,i)=>({
+        id:p.place_id||`p${i}`,name:p.name,
+        cat:(p.types?.[0]||'place').replace(/_/g,' '),
+        e:placeEmoji(p.types),
+        photo:photoUrl(p.photos),
+        desc:p.formatted_address||'',
+        rating:p.rating?.toFixed(1)||'N/A',
+        price:p.price_level?'$'.repeat(p.price_level):'—',
+        hours:p.opening_hours?.open_now!=null?(p.opening_hours.open_now?'现在营业中':'现在关闭'):'—',
+        address:p.formatted_address||'',
+        reviews:(p.reviews||[]).slice(0,2).map(r=>({a:r.author_name,s:'Google',t:r.text?.slice(0,120)||''})),
+        place_id:p.place_id,types:p.types||[],
+      }));
+    // If filter removed too many, use unfiltered
+    const final=items.length>=3?items:data.results.slice(0,15).map((p,i)=>({
       id:p.place_id||`p${i}`,name:p.name,
       cat:(p.types?.[0]||'place').replace(/_/g,' '),
-      e:placeEmoji(p.types),
-      photo:photoUrl(p.photos),
-      desc:p.formatted_address||'',
-      rating:p.rating?.toFixed(1)||'N/A',
+      e:placeEmoji(p.types),photo:photoUrl(p.photos),
+      desc:p.formatted_address||'',rating:p.rating?.toFixed(1)||'N/A',
       price:p.price_level?'$'.repeat(p.price_level):'—',
       hours:p.opening_hours?.open_now!=null?(p.opening_hours.open_now?'现在营业中':'现在关闭'):'—',
       address:p.formatted_address||'',
       reviews:(p.reviews||[]).slice(0,2).map(r=>({a:r.author_name,s:'Google',t:r.text?.slice(0,120)||''})),
       place_id:p.place_id,types:p.types||[],
     }));
-    cache[key]=items;return items;
+    cache[key]=final;return final;
   }catch(e){console.error(e);return[];}
 }
 
@@ -741,7 +755,7 @@ async function renderPlaces(el,type){
   const sn=steps.indexOf(type)+1;
   const labels={attractions:'景点',restaurants:'餐厅',hotels:'住宿'};
   const titles={attractions:'选择你想去的<em>景点</em>',restaurants:'选择心仪的<em>餐厅</em>',hotels:'选择你的<em>住宿</em>'};
-  const subs={attractions:'点击卡片勾选，点击「详细介绍」查看更多',restaurants:'我们将餐厅安排在行程动线上，不额外绕路',hotels:'根据你选的景点位置，推荐最便利的住宿'};
+  const subs={attractions:'点击卡片勾选，点击「详细介绍」查看更多，可跳过',restaurants:'我们将餐厅安排在行程动线上，不额外绕路',hotels:'根据你选的景点位置，推荐最便利的住宿'};
 
   el.innerHTML=`<div class="sno">Step ${sn} · ${labels[type]}</div>
     <h2 class="stitle">${titles[type]}</h2>
@@ -751,13 +765,16 @@ async function renderPlaces(el,type){
       ${[...Array(6)].map(()=>`<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line" style="width:60%"></div><div class="skel skel-line" style="width:90%"></div><div class="skel skel-line" style="width:45%"></div></div></div>`).join('')}
     </div>`;
 
+  // ALWAYS show bbar immediately so user is never stuck
+  document.getElementById('bbar').classList.add('show');
+  updateBbar(type);
+
   const items=await fetchPlaces(state.dest||'Melbourne',type);
   if(!items.length){
-    document.getElementById('pgrid').innerHTML=`<div style="color:var(--ember);padding:1rem;grid-column:1/-1">暂无数据，请检查网络连接后重试。</div>`;
+    document.getElementById('pgrid').innerHTML=`<div style="color:var(--ember);padding:1rem;grid-column:1/-1">暂无数据，点「跳过」继续下一步。</div>`;
     return;
   }
   renderCards(type,items,state[type]);
-  if(state[type].length>0)document.getElementById('bbar').classList.add('show');
 }
 
 function renderCards(type,items,sel){
@@ -768,7 +785,7 @@ function renderCards(type,items,sel){
       <div class="pc-tick">✓</div>
       <div class="pc-overlay" onclick="togglePlace('${type}','${item.id}')"></div>
       <div class="pc-img">
-        <img src="${item.photo||unsplashFallback(item.name,type)}" alt="${item.name}" onerror="this.style.display='none'">
+        <img src="${item.photo||unsplashFallback(item.name,type,state.dest)}" alt="${item.name}" onerror="this.style.display='none'">
         <span class="pc-emoji">${item.e}</span>
       </div>
       <div class="pc-body">
@@ -788,12 +805,17 @@ function applyFilter(type,chip,el){
   currentFilter[type]=chip;
   document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
-  // Re-fetch with filter keyword
   const dest=state.dest||'Melbourne';
-  const q=chip==='全部'?dest:`${chip} ${dest}`;
   const grid=document.getElementById('pgrid');
   if(grid) grid.innerHTML=`<div style="grid-column:1/-1;padding:2rem 0;display:flex;align-items:center;gap:.75rem;color:var(--mist)"><div class="spin"></div>加载中…</div>`;
-  fetchPlaces(q,type).then(items=>renderCards(type,items,state[type]));
+  // For '全部', use original cached results
+  const q=chip==='全部'?dest:`${chip} ${dest}`;
+  fetchPlaces(q,type).then(items=>{
+    renderCards(type,items,state[type]);
+    document.getElementById('bbar').classList.add('show');
+    updateBbar(type);
+  });
+}
 }
 
 function togglePlace(type,id){
@@ -815,7 +837,7 @@ async function openDr(type,id,e){
 
   document.getElementById('drContent').innerHTML=`
     <div class="dr-hero">
-      <img src="${item.photo||unsplashFallback(item.name,type)}" alt="${item.name}" onerror="this.style.display='none'">
+      <img src="${item.photo||unsplashFallback(item.name,type,state.dest)}" alt="${item.name}" onerror="this.style.display='none'">
       <span class="dr-hero-emoji">${item.e}</span>
       <button class="dr-close" onclick="closeDr()">✕</button>
     </div>
