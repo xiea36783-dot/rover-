@@ -18,7 +18,7 @@ body{font-family:'DM Sans','Noto Sans SC',sans-serif;background:var(--off);color
 
 /* LOADER */
 #loader{position:fixed;inset:0;z-index:2000;background:var(–black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 1s ease;}
-#loader.gone{opacity:0;pointer-events:none;}
+#loader.gone{opacity:0;pointer-events:none;display:none;}
 .l-word{font-family:‘Cormorant Garamond’,serif;font-size:4rem;font-weight:200;color:var(–off);letter-spacing:.3em;text-transform:uppercase;}
 .l-line{width:60px;height:1px;background:rgba(245,240,232,.15);overflow:hidden;position:relative;}
 .l-prog{position:absolute;inset:0;background:var(–gold);transform:translateX(-100%);animation:lprog 1.8s cubic-bezier(.4,0,.2,1) forwards;}
@@ -41,10 +41,10 @@ nav.solid .nav-cta:hover{background:var(–sage);color:var(–off);}
 
 /* HERO */
 .hero{height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.hero-slides{position:absolute;inset:0;background:linear-gradient(155deg,#0c201a 0%,#1e3a2f 50%,#2d5a3d 100%);}
+.hero-slides{position:absolute;inset:0;background:linear-gradient(155deg,#0a1a12 0%,#1a3525 40%,#2a5538 70%,#1a3525 100%);}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease;}
 .hero-slide.active{opacity:1;}
-.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.55) saturate(.8);transform:scale(1.08);transition:transform 9s ease-out;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.6) saturate(.85) contrast(1.05);transform:scale(1.08);transition:transform 9s ease-out;}
 .hero-slide.active img{transform:scale(1.0);}
 .hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(10,10,8,.6) 100%);}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.95) 0%,rgba(10,10,8,.65) 30%,rgba(10,10,8,.35) 60%,rgba(10,10,8,.4) 100%);}
@@ -456,12 +456,12 @@ const FILTER_CHIPS={
 };
 
 const HERO_SLIDES=[
-  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'大洋路 · 十二门徒岩',pos:'center 50%'},
-  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'墨尔本 · Flinders Street车站',pos:'center 45%'},
-  {url:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'维多利亚 · 原野大地',pos:'center 40%'},
-  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'Wilson Promontory · 澳洲最南端',pos:'center 38%'},
-  {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'格兰坪 · 国家公园',pos:'center 50%'},
-  {url:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80&auto=format&fit=crop&crop=center',loc:'维多利亚海岸 · 壮阔南洋',pos:'center 42%'},
+  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1600&q=75&fm=jpg&auto=compress',loc:'大洋路 · 十二门徒岩',pos:'center 50%'},
+  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=75&fm=jpg&auto=compress',loc:'墨尔本 · Flinders Street车站',pos:'center 45%'},
+  {url:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=75&fm=jpg&auto=compress',loc:'维多利亚海岸 · 原野大地',pos:'center 40%'},
+  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=75&fm=jpg&auto=compress',loc:'Wilson Promontory · 澳洲最南端',pos:'center 38%'},
+  {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=75&fm=jpg&auto=compress',loc:'格兰坪 · 国家公园',pos:'center 50%'},
+  {url:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=75&fm=jpg&auto=compress',loc:'维多利亚 · 壮阔旷野',pos:'center 42%'},
 ];
 
 // ── HERO SLIDESHOW ──
@@ -472,10 +472,10 @@ function initHero(){
   const dots=document.getElementById('heroDots');
   wrap.innerHTML=HERO_SLIDES.map((s,i)=>`
     <div class="hero-slide${i===0?' active':''}" id="slide-${i}">
-      <img src="${s.url}" style="object-position:${s.pos}" alt="${s.loc}">
+      <img src="${s.url}" style="object-position:${s.pos}" alt="${s.loc}"
+        onerror="this.style.opacity='0'">
     </div>`).join('');
   dots.innerHTML=HERO_SLIDES.map((_,i)=>`<div class="hdot${i===0?' on':''}" onclick="goSlide(${i})"></div>`).join('');
-  // Preload all
   HERO_SLIDES.forEach(s=>{const p=new Image();p.src=s.url;});
   slideTimer=setInterval(()=>goSlide((slideIdx+1)%HERO_SLIDES.length),6000);
 }
