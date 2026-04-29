@@ -24,12 +24,12 @@ nav.solid .nc:hover{background:var(--sage);color:#fff;}
 .hslides{position:absolute;inset:0;}
 .hs{position:absolute;inset:0;opacity:0;transition:opacity 2s;}
 .hs.on{opacity:1;}
-.hs img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.8);}
-.hov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.9) 0%,rgba(10,10,8,.4) 40%,rgba(10,10,8,.2) 100%);}
+.hs img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.7) contrast(1.1);transform:scale(1.08);transition:transform 10s ease-out;}.hs.on img{transform:scale(1.0);}
+.hov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.5) 100%);}
 .hcnt{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:760px;}
 .hey{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem;}
 .hd{width:24px;height:1px;background:var(--gold);}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6.5rem);font-weight:200;line-height:.95;letter-spacing:.05em;color:#fff;margin-bottom:1rem;text-transform:uppercase;text-shadow:0 2px 40px rgba(0,0,0,.5);}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6.5rem);font-weight:200;line-height:.95;letter-spacing:.05em;color:#fff;margin-bottom:1rem;text-transform:uppercase;text-shadow:0 2px 32px rgba(0,0,0,.6),0 1px 0 rgba(0,0,0,.3);}
 .hero h1 em{display:block;font-style:italic;font-size:clamp(2rem,5vw,4rem);}
 .hdesc{font-size:.92rem;color:rgba(255,255,255,.65);margin-bottom:2.5rem;text-shadow:0 1px 12px rgba(0,0,0,.4);}
 .sw{position:relative;max-width:560px;margin:0 auto 1.5rem;}
@@ -63,7 +63,7 @@ nav.solid .nc:hover{background:var(--sage);color:#fff;}
 .fc{border-radius:16px;overflow:hidden;cursor:pointer;position:relative;height:260px;transition:transform .3s;}
 .fc:hover{transform:translateY(-4px);}
 .fc.wide{grid-column:span 2;}
-.fc img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:transform .5s;}
+.fc img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.8) contrast(1.1);transition:transform .6s ease;}.fc:hover img{transform:scale(1.05);filter:brightness(.78) saturate(.9) contrast(1.08);}
 .fc:hover img{transform:scale(1.05);}
 .fcb{position:absolute;bottom:0;left:0;right:0;padding:1.2rem;background:linear-gradient(to top,rgba(10,10,8,.85),transparent);}
 .fcr{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.55);margin-bottom:.2rem;}
@@ -221,7 +221,7 @@ nav.solid .nc:hover{background:var(--sage);color:#fff;}
 <section class="hero">
   <div class="hbg"></div>
   <div class="hslides" id="heroSlides"></div>
-  <div class="hov"></div>
+  <div class="hov"></div><div style="position:absolute;inset:0;z-index:1;opacity:.03;background-image:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\".9\" numOctaves=\"4\"/></filter><rect width=\"100%25\" height=\"100%25\" filter=\"url(%23n)\"/></svg>');pointer-events:none;"></div>
   <div class="hcnt">
     <div class="hey"><div class="hd"></div>Victoria, Australia<div class="hd"></div></div>
     <h1>Discover<em>Victoria</em></h1>
@@ -275,11 +275,11 @@ nav.solid .nc:hover{background:var(--sage);color:#fff;}
 <script>
 // ── HERO DATA ──
 const SLIDES=[
-  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1600&q=80',loc:'大洋路 · 十二门徒岩'},
-  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=80',loc:'墨尔本 · Flinders Street'},
-  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=80',loc:'Wilson Promontory · 最南端'},
-  {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80',loc:'格兰坪 · 国家公园'},
-  {url:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80',loc:'维多利亚 · 壮阔海岸'},
+  {url:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=1600&q=85',loc:'大洋路 · 十二门徒岩'},
+  {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=85',loc:'墨尔本 · Flinders Street车站'},
+  {url:'https://images.unsplash.com/photo-1611813200700-f6b5cd3aa3e0?w=1600&q=85',loc:'维多利亚 · 袋鼠原野'},
+  {url:'https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=1600&q=85',loc:'墨尔本 · 雅拉河畔'},
+  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=85',loc:'Wilson Promontory · 最南端海岬'},
 ];
 
 // ── ALL DESTINATIONS ──
@@ -469,14 +469,14 @@ const PLACES_DB = {
 
 // ── FEATURED ──
 const FEATURED=[
-  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=80',wide:true},
-  {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
-  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80'},
-  {n:'丹德农山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80'},
-  {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80'},
-  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=800&q=80',wide:true},
-  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80'},
-  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
+  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=800&q=85',wide:true},
+  {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=85'},
+  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=85'},
+  {n:'丹德농山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=600&q=85'},
+  {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=85'},
+  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=800&q=85',wide:true},
+  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=85'},
+  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=85'},
 ];
 
 const VIBES=[
