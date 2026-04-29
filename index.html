@@ -146,10 +146,9 @@ nav.solid .nav-link{color:var(–mist);}
 .fld select:focus{border-color:var(–sage);}
 
 /* BASICS HERO */
-.basics-hero{height:220px;border-radius:16px;overflow:hidden;position:relative;margin-bottom:2rem;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);}
-.basics-hero{background-size:cover;background-position:center;}
-.basics-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.7) 0%,rgba(10,10,8,.2) 100%);}
-.basics-hero-label{position:absolute;bottom:1.2rem;left:1.4rem;font-family:‘Cormorant Garamond’,serif;font-size:1.6rem;font-weight:300;color:#fff;letter-spacing:.05em;}
+.basics-bg{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;transition:opacity .5s;}
+.basics-bg-overlay{position:fixed;inset:0;z-index:1;background:rgba(255,255,255,.88);}
+.wiz-body-inner{position:relative;z-index:2;}
 
 /* PLACES */
 .filter-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
@@ -446,7 +445,12 @@ function openWiz(p){
   renderStep();
 }
 function closeWiz(){document.getElementById('wiz').classList.remove('show');document.getElementById('bbar').classList.remove('show');document.body.style.overflow='';state.dest='';}
-function nextStep(){if(step<steps.length-1){step++;const b=document.getElementById('wizBody');b.style.opacity='0';setTimeout(renderStep,180);}}
+function nextStep(){
+  // Remove basics bg when moving away
+  const bg=document.getElementById('basicsBg');const bgo=document.getElementById('basicsBgOverlay');
+  if(bg)bg.style.opacity='0';
+  if(step<steps.length-1){step++;const b=document.getElementById('wizBody');b.style.opacity='0';setTimeout(renderStep,180);}
+}
 
 function renderProg(){
   document.getElementById('wizProg').innerHTML=steps.map((s,i)=>{
@@ -499,8 +503,18 @@ function renderBasics(el){
   const destImg=destCity?.img||'';
   const destBlock=path==='A'?`<div class="dest-wrap"><span class="dest-ico">📍</span><input class="dest-inp" id="destF" placeholder="搜索目的地，如 Bendigo、Apollo Bay…" value="${state.dest}" oninput="filterDest(this.value)" onblur="setTimeout(hideDdl,200)"><div class="dest-ddl" id="destDdl"></div></div>`:`<div class="dest-pill">📍 ${state.dest}</div>`;
 
+  // Set fullscreen background
+  const wizEl=document.getElementById('wiz');
+  let bgEl=document.getElementById('basicsBg');
+  let bgOverlay=document.getElementById('basicsBgOverlay');
+  if(!bgEl){
+    bgEl=document.createElement('div');bgEl.id='basicsBg';bgEl.className='basics-bg';wizEl.appendChild(bgEl);
+    bgOverlay=document.createElement('div');bgOverlay.id='basicsBgOverlay';bgOverlay.className='basics-bg-overlay';wizEl.appendChild(bgOverlay);
+  }
+  if(destImg){bgEl.style.backgroundImage=`url('${destImg}')`;bgEl.style.opacity='1';}
+  else{bgEl.style.opacity='0';}
+
   el.innerHTML=`
-    ${destImg?`<div class="basics-hero" style="background-image:url('${destImg}')"><div class="basics-hero-overlay"></div><div class="basics-hero-label">${state.dest||'维多利亚州'}</div></div>`:''}
     <div class="sno">Step ${sn} · 基本信息</div>
     <h2 class="stitle">${path==='A'?'你想去哪里？':'确认你的<em>行程</em>'}</h2>
     <p class="ssub">填写基本信息，AI将为你生成最贴合的攻略</p>
@@ -530,23 +544,20 @@ function placeEmoji(types=[]){for(const t of types)if(EMAP[t])return EMAP[t];ret
 function photoUrl(photos){if(!photos?.length)return null;return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photo_reference=${photos[0].photo_reference}&key=${GKEY}`;}
 
 async function fetchPlaces(dest,type){
-  // For restaurants and hotels, use the first selected attraction's location if available
-  let searchDest = dest || 'Melbourne';
-  if((type==='restaurants'||type==='hotels') && state.attractions.length>0){
-    const cacheKey=`${dest}__attractions`;
-    const attrItems=cache[cacheKey]||[];
-    const firstSelected=attrItems.find(x=>state.attractions.includes(x.id));
-    if(firstSelected && firstSelected.address){
-      // Extract suburb/area from address
-      const parts=firstSelected.address.split(',');
-      if(parts.length>=2) searchDest=parts[0].trim()+', '+dest;
+  const key=`${dest}__${type}`;
+  if(cache[key])return cache[key];
+  // Build search query - for restaurants/hotels, add attraction context
+  let q=dest||'Melbourne';
+  if((type==='restaurants'||type==='hotels')&&state.attractions.length>0){
+    const attrItems=cache[`${dest}__attractions`]||[];
+    const sel=attrItems.find(x=>state.attractions.includes(x.id));
+    if(sel?.address){
+      const suburb=sel.address.split(',')[0].trim();
+      if(suburb&&suburb!==dest) q=suburb+', '+dest;
     }
   }
-
-  const key=`${searchDest}__${type}`;
-  if(cache[key])return cache[key];
   try{
-    const res=await fetch(`/.netlify/functions/places?query=${encodeURIComponent(searchDest)}&type=${type}`);
+    const res=await fetch(`/.netlify/functions/places?query=${encodeURIComponent(q)}&type=${type}`);
     const data=await res.json();
     if(!data.results?.length)return[];
     const items=data.results.slice(0,15).map((p,i)=>({
@@ -656,20 +667,16 @@ async function renderResult(el){
   el.innerHTML=`<div class="res-wrap"><div class="res-hd"><h2>${dest} · 专属旅行攻略</h2><p>由 AI 综合景点路线、餐饮安排与住宿推荐生成</p><div class="res-tags"><span class="rtag">📅 ${state.days}</span><span class="rtag">👥 成人${state.adults}人${state.children>0?` · 儿童${state.children}人`:''}</span><span class="rtag">💰 ${state.budget}</span><span class="rtag">🚗 ${state.transport}</span></div></div><div class="res-body" id="resBody"><div class="spin-row"><div class="spin"></div>&nbsp;正在规划最优行程路线…</div></div><div style="display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem"><button class="btn-o" onclick="step=0;renderStep()">← 重新规划</button><button class="btn-p" onclick="closeWiz()">完成</button></div></div>`;
   const prompt=`你是澳大利亚维多利亚州专业旅游顾问，用精致优雅的中文撰写实用攻略。\n目的地：${dest} | 天数：${state.days} | 成人：${state.adults}人${hasKids?` | 儿童：${state.children}人`:''} | 预算：${state.budget} | 交通：${state.transport}\n${state.vibes.length?`偏好：${state.vibes.map(v=>VIBES.find(x=>x.id===v)?.n).join('、')}\n`:''}\n已选景点：${selA.length?selA.join('、'):'（请推荐2-3个核心景点）'}\n已选餐厅：${selR.length?selR.join('、'):'（请推荐2-3家合适餐厅）'}\n已选住宿：${selH.length?selH.join('、'):'（请推荐最适合的住宿）'}\n\n按地理就近原则排景点顺序，住宿靠近景点聚集地，餐厅安排在动线上${hasKids?'，有儿童注意活动难度和休息':''}。\n\n**✦ 行程概览**\n\n**📅 每日行程**（按天，上午/下午/晚上，标注预计时长和费用）\n\n**🍽 餐饮安排**\n\n**🏨 住宿建议**\n\n**🚗 交通路线**\n\n**✦ 旅行贴士**（5条具体建议）`;
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res=await fetch('/.netlify/functions/itinerary',{
       method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
-      },
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,stream:true,messages:[{role:'user',content:prompt}]})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt})
     });
-    if(!res.ok)throw new Error('API error');
+    if(!res.ok)throw new Error('API error '+res.status);
     const body=document.getElementById('resBody');body.innerHTML='';
-    const reader=res.body.getReader();const dec=new TextDecoder();let full='';
-    while(true){const{done,value}=await reader.read();if(done)break;for(const line of dec.decode(value).split('\n')){if(line.startsWith('data: ')){const d=line.slice(6);if(d==='[DONE]')continue;try{const j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta?.text){full+=j.delta.text;body.innerHTML=fmt(full)+'<span class="cursor"></span>';}}catch{}}}}
-    document.getElementById('resBody').innerHTML=fmt(full);
+    const data=await res.json();
+    if(data.error)throw new Error(data.error);
+    document.getElementById('resBody').innerHTML=fmt(data.content||'');
   }catch(e){document.getElementById('resBody').innerHTML=`<div style="color:#b85c2a;padding:1rem">生成失败，请重试。</div>`;}
 }
 function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
