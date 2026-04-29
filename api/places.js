@@ -1,8 +1,7 @@
 const https = require(‘https’);
 
-export default async function handler(req, res) {
+module.exports = function(req, res) {
 res.setHeader(‘Access-Control-Allow-Origin’, ‘*’);
-res.setHeader(‘Access-Control-Allow-Methods’, ‘GET’);
 
 const { query, type, action, place_id } = req.query || {};
 const k2 = [‘AIzaSyDegBY5wqNKP’,‘shtxbMkyXhpYSNYuEjT9mk’].join(’’);
@@ -16,23 +15,18 @@ const typeMap={attractions:‘tourist_attraction’,restaurants:‘restaurant’
 const placeType=typeMap[type]||‘tourist_attraction’;
 url=`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query+' Victoria Australia')}&type=${placeType}&key=${GKEY}`;
 } else {
-return res.status(400).json({error:‘Missing params’});
+res.status(400).json({error:‘Missing params’});
+return;
 }
 
-return new Promise(resolve=>{
 https.get(url, r=>{
 let d=’’;
 r.on(‘data’,c=>d+=c);
 r.on(‘end’,()=>{
-try{
 res.setHeader(‘Content-Type’,‘application/json’);
-res.send(d);
-}catch(e){}
-resolve();
+res.end(d);
 });
 }).on(‘error’,e=>{
 res.status(500).json({error:e.message});
-resolve();
 });
-});
-}
+};
