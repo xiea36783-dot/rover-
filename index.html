@@ -542,7 +542,11 @@ async function fetchPlaces(dest,type){
     }
   }
   try{
-    const res=await fetch(`/api/places?query=${encodeURIComponent(q)}&type=${type}`);
+    const typeMap2={attractions:'tourist_attraction',restaurants:'restaurant',hotels:'lodging'};
+    const placeType=typeMap2[type]||'tourist_attraction';
+    const googleUrl=`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(q+' Victoria Australia')}&type=${placeType}&key=${GKEY}`;
+    const proxyUrl=`https://corsproxy.io/?${encodeURIComponent(googleUrl)}`;
+    const res=await fetch(proxyUrl);
     const data=await res.json();
     if(!data.results?.length)return[];
     const items=data.results.slice(0,15).map((p,i)=>({
