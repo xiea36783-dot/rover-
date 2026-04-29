@@ -386,7 +386,7 @@ const VIBES=[
 ];
 const VIBE_RECS={nature:['格兰坪','丹德农山脉','Wilson Promontory'],beach:['大洋路','Brighton Beach','莫宁顿半岛'],food:['雅拉谷','马其顿山','莫宁顿半岛'],wildlife:['菲利普岛','Healesville','格兰坪'],culture:['墨尔本 City','本迪戈','巴拉瑞特'],relax:['莫宁顿半岛','Hepburn Springs','雅拉谷']};
 const CHIPS={attractions:['全部','自然景观','历史文化','野生动物','艺术'],restaurants:['全部','咖啡','海鲜','Fine Dining','亚洲菜'],hotels:['全部','精品酒店','民宿','度假村','经济型']};
-const GKEY='';// Key handled server-side
+const GKEY='AIzaSyDegBY5wqNKPshtxbMkyXhpYSNYuEjT9mk';
 const EMAP={tourist_attraction:'🏛',natural_feature:'🌿',park:'🌲',museum:'🏛',church:'⛪',amusement_park:'🎡',zoo:'🐨',art_gallery:'🎨',restaurant:'🍽',cafe:'☕',bar:'🍺',lodging:'🏨'};
 
 // ── STATE ──
@@ -541,14 +541,13 @@ async function fetchPlaces(dest,type){
       if(suburb&&suburb!==dest) q=suburb+', '+dest;
     }
   }
-  const showErr=(msg)=>{const g=document.getElementById('pgrid');if(g)g.innerHTML=`<div style="grid-column:1/-1;padding:1rem;color:red;font-size:.75rem;word-break:break-all">${msg}</div>`;};
   try{
-    const res=await fetch(`/api/places?query=${encodeURIComponent(q)}&type=${type}`);
-    const text=await res.text();
-    let data;
-    try{data=JSON.parse(text);}catch(e){showErr('解析错误: '+text.slice(0,200));return[];}
-    if(data.error_message){showErr('API错误: '+data.error_message+' 状态: '+data.status);return[];}
-    if(!data.results?.length){showErr('无结果 状态:'+data.status+' 查询:'+q);return[];}
+    const typeMap={attractions:'tourist_attraction',restaurants:'restaurant',hotels:'lodging'};
+    const placeType=typeMap[type]||'tourist_attraction';
+    const apiUrl=`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(q+' Victoria Australia')}&type=${placeType}&key=${GKEY}`;
+    const res=await fetch(apiUrl);
+    const data=await res.json();
+    if(!data.results?.length)return[];
     const items=data.results.slice(0,15).map((p,i)=>({
       id:p.place_id||'p'+i,name:p.name,
       cat:(p.types?.[0]||'place').replace(/_/g,' '),
