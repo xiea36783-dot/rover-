@@ -146,9 +146,10 @@ nav.solid .nav-link{color:var(–mist);}
 .fld select:focus{border-color:var(–sage);}
 
 /* BASICS HERO */
-.basics-bg{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;transition:opacity .5s;}
-.basics-bg-overlay{position:fixed;inset:0;z-index:1;background:rgba(255,255,255,.88);}
-.wiz-body-inner{position:relative;z-index:2;}
+.basics-hero-img{width:100%;height:260px;object-fit:cover;border-radius:16px;margin-bottom:2rem;filter:brightness(.75) saturate(.85);}
+.basics-hero-wrap{position:relative;margin-bottom:2rem;border-radius:16px;overflow:hidden;}
+.basics-hero-wrap img{width:100%;height:260px;object-fit:cover;filter:brightness(.7) saturate(.85);}
+.basics-hero-label{position:absolute;bottom:1.2rem;left:1.4rem;font-family:‘Cormorant Garamond’,serif;font-size:1.8rem;font-weight:300;color:#fff;letter-spacing:.05em;text-shadow:0 2px 12px rgba(0,0,0,.4);}
 
 /* PLACES */
 .filter-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
@@ -445,12 +446,7 @@ function openWiz(p){
   renderStep();
 }
 function closeWiz(){document.getElementById('wiz').classList.remove('show');document.getElementById('bbar').classList.remove('show');document.body.style.overflow='';state.dest='';}
-function nextStep(){
-  // Remove basics bg when moving away
-  const bg=document.getElementById('basicsBg');const bgo=document.getElementById('basicsBgOverlay');
-  if(bg)bg.style.opacity='0';
-  if(step<steps.length-1){step++;const b=document.getElementById('wizBody');b.style.opacity='0';setTimeout(renderStep,180);}
-}
+function nextStep(){if(step<steps.length-1){step++;const b=document.getElementById('wizBody');b.style.opacity='0';setTimeout(renderStep,180);}}
 
 function renderProg(){
   document.getElementById('wizProg').innerHTML=steps.map((s,i)=>{
@@ -503,18 +499,8 @@ function renderBasics(el){
   const destImg=destCity?.img||'';
   const destBlock=path==='A'?`<div class="dest-wrap"><span class="dest-ico">📍</span><input class="dest-inp" id="destF" placeholder="搜索目的地，如 Bendigo、Apollo Bay…" value="${state.dest}" oninput="filterDest(this.value)" onblur="setTimeout(hideDdl,200)"><div class="dest-ddl" id="destDdl"></div></div>`:`<div class="dest-pill">📍 ${state.dest}</div>`;
 
-  // Set fullscreen background
-  const wizEl=document.getElementById('wiz');
-  let bgEl=document.getElementById('basicsBg');
-  let bgOverlay=document.getElementById('basicsBgOverlay');
-  if(!bgEl){
-    bgEl=document.createElement('div');bgEl.id='basicsBg';bgEl.className='basics-bg';wizEl.appendChild(bgEl);
-    bgOverlay=document.createElement('div');bgOverlay.id='basicsBgOverlay';bgOverlay.className='basics-bg-overlay';wizEl.appendChild(bgOverlay);
-  }
-  if(destImg){bgEl.style.backgroundImage=`url('${destImg}')`;bgEl.style.opacity='1';}
-  else{bgEl.style.opacity='0';}
-
   el.innerHTML=`
+    ${destImg?`<div class="basics-hero-wrap"><img src="${destImg}" alt="${state.dest}" onerror="this.parentElement.style.display='none'"><div class="basics-hero-label">${state.dest}</div></div>`:''}
     <div class="sno">Step ${sn} · 基本信息</div>
     <h2 class="stitle">${path==='A'?'你想去哪里？':'确认你的<em>行程</em>'}</h2>
     <p class="ssub">填写基本信息，AI将为你生成最贴合的攻略</p>
