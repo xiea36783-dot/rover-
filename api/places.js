@@ -1,7 +1,8 @@
 const https = require(‘https’);
 
-module.exports = async function(req, res) {
+export default async function handler(req, res) {
 res.setHeader(‘Access-Control-Allow-Origin’, ‘*’);
+res.setHeader(‘Access-Control-Allow-Methods’, ‘GET’);
 
 const { query, type, action, place_id } = req.query || {};
 const k2 = [‘AIzaSyDegBY5wqNKP’,‘shtxbMkyXhpYSNYuEjT9mk’].join(’’);
@@ -23,8 +24,10 @@ https.get(url, r=>{
 let d=’’;
 r.on(‘data’,c=>d+=c);
 r.on(‘end’,()=>{
+try{
 res.setHeader(‘Content-Type’,‘application/json’);
 res.send(d);
+}catch(e){}
 resolve();
 });
 }).on(‘error’,e=>{
@@ -32,4 +35,4 @@ res.status(500).json({error:e.message});
 resolve();
 });
 });
-};
+}
