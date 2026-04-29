@@ -66,7 +66,7 @@ nav.solid .nav-link{color:var(–mist);}
 .feat-eyebrow{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(–gold);margin-bottom:.5rem;}
 .feat-title{font-family:‘Cormorant Garamond’,serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(–black);margin-bottom:.4rem;}
 .feat-title em{font-style:italic;color:var(–sage);}
-.feat-sub{font-size:.84rem;color:var(–mist);margin-bottom:2rem;}
+.feat-sub{font-size:.84rem;color:#555;margin-bottom:2rem;}
 .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
 .fc{border-radius:16px;overflow:hidden;cursor:pointer;position:relative;height:260px;transition:transform .3s;}
 .fc:hover{transform:translateY(-4px);}
@@ -94,7 +94,7 @@ nav.solid .nav-link{color:var(–mist);}
 .sno{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(–gold);margin-bottom:.6rem;}
 .stitle{font-family:‘Cormorant Garamond’,serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:var(–black);margin-bottom:.4rem;}
 .stitle em{font-style:italic;color:var(–sage);}
-.ssub{font-size:.84rem;color:var(–mist);margin-bottom:2rem;}
+.ssub{font-size:.84rem;color:#555;margin-bottom:2rem;}
 
 /* VIBES */
 .vibes-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
@@ -145,6 +145,12 @@ nav.solid .nav-link{color:var(–mist);}
 .fld select{font-family:‘DM Sans’,sans-serif;font-size:.88rem;padding:.72rem .9rem;border:1px solid var(–border);border-radius:10px;background:#fff;color:var(–black);outline:none;}
 .fld select:focus{border-color:var(–sage);}
 
+/* BASICS HERO */
+.basics-hero{height:220px;border-radius:16px;overflow:hidden;position:relative;margin-bottom:2rem;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);}
+.basics-hero{background-size:cover;background-position:center;}
+.basics-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.7) 0%,rgba(10,10,8,.2) 100%);}
+.basics-hero-label{position:absolute;bottom:1.2rem;left:1.4rem;font-family:‘Cormorant Garamond’,serif;font-size:1.6rem;font-weight:300;color:#fff;letter-spacing:.05em;}
+
 /* PLACES */
 .filter-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
 .fchip{padding:.3rem .8rem;border:1px solid var(–border);border-radius:100px;font-size:.7rem;cursor:pointer;background:#fff;color:var(–mist);transition:all .18s;}
@@ -178,10 +184,10 @@ nav.solid .nav-link{color:var(–mist);}
 /* BBAR */
 .bbar{position:fixed;bottom:0;left:0;right:0;z-index:150;background:#fff;border-top:2px solid var(–border);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -4px 24px rgba(0,0,0,.08);}
 .bbar.show{transform:translateY(0);}
-.bbar-info{font-size:.84rem;color:var(–mist);}
+.bbar-info{font-size:.84rem;color:#333;}
 .bbar-info strong{color:var(–black);font-weight:600;}
 .bbar-btns{display:flex;gap:.75rem;align-items:center;}
-.btn-skip{padding:.65rem 1.4rem;border:1.5px solid var(–border);border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.8rem;color:var(–mist);background:transparent;cursor:pointer;transition:all .2s;font-weight:400;}
+.btn-skip{padding:.65rem 1.4rem;border:1.5px solid #999;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.8rem;color:#555;background:transparent;cursor:pointer;transition:all .2s;font-weight:400;}
 .btn-skip:hover{border-color:var(–stone);color:var(–black);}
 .btn-next{padding:.65rem 1.8rem;background:var(–sage);color:#fff;border:none;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.03em;}
 .btn-next:hover{background:var(–leaf);transform:translateY(-1px);}
@@ -456,8 +462,9 @@ function renderStep(){
   renderProg();
   const b=document.getElementById('wizBody');
   animIn(b);
-  document.getElementById('bbar').classList.remove('show');
   const s=steps[step];
+  const isPlaces=(s==='attractions'||s==='restaurants'||s==='hotels');
+  if(!isPlaces) document.getElementById('bbar').classList.remove('show');
   if(s==='vibes')renderVibes(b);
   else if(s==='dest_pick')renderDestPick(b);
   else if(s==='basics')renderBasics(b);
@@ -487,8 +494,30 @@ function confirmDp(){if(!state.dest){const h=document.getElementById('dpHint');i
 // ── BASICS ──
 function renderBasics(el){
   const sn=steps.indexOf('basics')+1;
+  // Get destination image for background
+  const destCity=CITIES.find(c=>c.n===state.dest);
+  const destImg=destCity?.img||'';
   const destBlock=path==='A'?`<div class="dest-wrap"><span class="dest-ico">📍</span><input class="dest-inp" id="destF" placeholder="搜索目的地，如 Bendigo、Apollo Bay…" value="${state.dest}" oninput="filterDest(this.value)" onblur="setTimeout(hideDdl,200)"><div class="dest-ddl" id="destDdl"></div></div>`:`<div class="dest-pill">📍 ${state.dest}</div>`;
-  el.innerHTML=`<div class="sno">Step ${sn} · 基本信息</div><h2 class="stitle">${path==='A'?'你想去哪里？':'确认你的<em>行程</em>'}</h2><p class="ssub">填写基本信息，AI将为你生成最贴合的攻略</p>${destBlock}<div class="fld" style="margin-bottom:1.5rem"><label>出行人数</label><div class="people-row"><div class="pbox"><div><div class="plbl">成人</div><div class="psub">16岁以上</div></div><div class="ctr"><button class="cbtn" onclick="adj('adults',-1)">−</button><div class="cnum" id="aN">${state.adults}</div><button class="cbtn" onclick="adj('adults',1)">+</button></div></div><div class="pbox"><div><div class="plbl">儿童</div><div class="psub">15岁及以下</div></div><div class="ctr"><button class="cbtn" onclick="adj('children',-1)">−</button><div class="cnum" id="cN">${state.children}</div><button class="cbtn" onclick="adj('children',1)">+</button></div></div></div></div><div class="basics-g"><div class="fld"><label>旅行天数</label><select onchange="state.days=this.value">${['1天','2天','3天','4-5天','一周+'].map(d=>`<option${state.days===d?' selected':''}>${d}</option>`).join('')}</select></div><div class="fld"><label>预算</label><select onchange="state.budget=this.value">${['经济型','中等','舒适型','豪华型'].map(d=>`<option${state.budget===d?' selected':''}>${d}</option>`).join('')}</select></div><div class="fld"><label>交通方式</label><select onchange="state.transport=this.value">${['自驾','公共交通','Uber','跟团'].map(d=>`<option${state.transport===d?' selected':''}>${d}</option>`).join('')}</select></div></div><div style="display:flex;justify-content:flex-end"><button class="btn-p" onclick="confirmBasics()">下一步 →</button></div>`;
+
+  el.innerHTML=`
+    ${destImg?`<div class="basics-hero" style="background-image:url('${destImg}')"><div class="basics-hero-overlay"></div><div class="basics-hero-label">${state.dest||'维多利亚州'}</div></div>`:''}
+    <div class="sno">Step ${sn} · 基本信息</div>
+    <h2 class="stitle">${path==='A'?'你想去哪里？':'确认你的<em>行程</em>'}</h2>
+    <p class="ssub">填写基本信息，AI将为你生成最贴合的攻略</p>
+    ${destBlock}
+    <div class="fld" style="margin-bottom:1.5rem">
+      <label>出行人数</label>
+      <div class="people-row">
+        <div class="pbox"><div><div class="plbl">成人</div><div class="psub">16岁以上</div></div><div class="ctr"><button class="cbtn" onclick="adj('adults',-1)">−</button><div class="cnum" id="aN">${state.adults}</div><button class="cbtn" onclick="adj('adults',1)">+</button></div></div>
+        <div class="pbox"><div><div class="plbl">儿童</div><div class="psub">15岁及以下</div></div><div class="ctr"><button class="cbtn" onclick="adj('children',-1)">−</button><div class="cnum" id="cN">${state.children}</div><button class="cbtn" onclick="adj('children',1)">+</button></div></div>
+      </div>
+    </div>
+    <div class="basics-g">
+      <div class="fld"><label>旅行天数</label><select onchange="state.days=this.value">${['1天','2天','3天','4-5天','一周+'].map(d=>`<option${state.days===d?' selected':''}>${d}</option>`).join('')}</select></div>
+      <div class="fld"><label>预算（每人每天）</label><select onchange="state.budget=this.value">${['经济型 ($50-100/人/天)','中等 ($100-200/人/天)','舒适型 ($200-400/人/天)','豪华型 ($400+/人/天)'].map(d=>`<option${state.budget===d?' selected':''}>${d}</option>`).join('')}</select></div>
+      <div class="fld"><label>交通方式</label><select onchange="state.transport=this.value">${['自驾','公共交通','Uber','跟团'].map(d=>`<option${state.transport===d?' selected':''}>${d}</option>`).join('')}</select></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end"><button class="btn-p" onclick="confirmBasics()">下一步 →</button></div>`;
 }
 function adj(k,d){state[k]=Math.max(k==='adults'?1:0,state[k]+d);document.getElementById(k==='adults'?'aN':'cN').textContent=state[k];}
 function filterDest(v){const ddl=document.getElementById('destDdl');if(!v){ddl.classList.remove('open');return;}const f=CITIES.filter(c=>c.n.toLowerCase().includes(v.toLowerCase())||c.r.toLowerCase().includes(v.toLowerCase()));if(!f.length){ddl.classList.remove('open');return;}ddl.innerHTML=f.slice(0,10).map(c=>`<div class="dopt" onclick="selDest('${c.n}')"><span>${c.e}</span><div><div class="dopt-n">${c.n}</div><div class="dopt-r">${c.r}</div></div></div>`).join('');ddl.classList.add('open');}
