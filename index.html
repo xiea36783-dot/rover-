@@ -160,14 +160,14 @@ nav.solid .nav-link{color:var(–mist);}
 .pc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.88) saturate(.85);transition:transform .5s;}
 .pc:hover .pc-img img{transform:scale(1.06);}
 .pc-emoji{font-size:3rem;position:relative;z-index:1;opacity:.7;}
-.pc-body{padding:.9rem;}
+.pc-body{padding:.9rem;position:relative;z-index:3;}
 .pc-cat{font-size:.57rem;letter-spacing:.13em;text-transform:uppercase;color:var(–gold);margin-bottom:.2rem;}
 .pc-name{font-family:‘Cormorant Garamond’,serif;font-size:1.05rem;font-weight:400;margin-bottom:.25rem;line-height:1.2;}
 .pc-desc{font-size:.7rem;color:var(–mist);line-height:1.55;margin-bottom:.55rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pc-foot{display:flex;align-items:center;justify-content:space-between;}
 .pc-rat{font-size:.67rem;color:var(–gold);}
 .pc-price{font-size:.67rem;color:var(–leaf);font-weight:500;}
-.pc-more{font-size:.64rem;color:var(–mist);margin-top:.4rem;cursor:pointer;position:relative;z-index:5;}
+.pc-more{font-size:.64rem;color:var(–mist);margin-top:.4rem;cursor:pointer;position:relative;z-index:10;display:inline-block;padding:.2rem 0;}
 .pc-more:hover{color:var(–sage);}
 .skel{background:linear-gradient(90deg,#f0ebe0 25%,#e8e0d0 50%,#f0ebe0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
@@ -177,14 +177,15 @@ nav.solid .nav-link{color:var(–mist);}
 .skel-line{height:11px;margin-bottom:.5rem;}
 
 /* BBAR */
-.bbar{position:fixed;bottom:0;left:0;right:0;z-index:150;background:rgba(245,240,232,.97);backdrop-filter:blur(20px);border-top:1px solid var(–border);padding:.9rem 3rem;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .3s ease;}
+.bbar{position:fixed;bottom:0;left:0;right:0;z-index:150;background:#fff;border-top:2px solid var(–border);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -4px 24px rgba(0,0,0,.08);}
 .bbar.show{transform:translateY(0);}
-.bbar-info{font-size:.8rem;color:var(–mist);}
-.bbar-info strong{color:var(–black);font-weight:500;}
-.bbar-btns{display:flex;gap:.6rem;}
-.btn-skip{padding:.52rem 1.2rem;border:1px solid var(–border);border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.74rem;color:var(–mist);background:transparent;cursor:pointer;}
-.btn-next{padding:.52rem 1.5rem;background:var(–sage);color:#fff;border:none;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.74rem;font-weight:500;cursor:pointer;}
-.btn-next:hover{background:var(–leaf);}
+.bbar-info{font-size:.84rem;color:var(–mist);}
+.bbar-info strong{color:var(–black);font-weight:600;}
+.bbar-btns{display:flex;gap:.75rem;align-items:center;}
+.btn-skip{padding:.65rem 1.4rem;border:1.5px solid var(–border);border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.8rem;color:var(–mist);background:transparent;cursor:pointer;transition:all .2s;font-weight:400;}
+.btn-skip:hover{border-color:var(–stone);color:var(–black);}
+.btn-next{padding:.65rem 1.8rem;background:var(–sage);color:#fff;border:none;border-radius:100px;font-family:‘DM Sans’,sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.03em;}
+.btn-next:hover{background:var(–leaf);transform:translateY(-1px);}
 
 /* DRAWER */
 #drBg{position:fixed;inset:0;z-index:299;background:rgba(10,10,8,.45);opacity:0;pointer-events:none;transition:opacity .35s;}
@@ -501,10 +502,23 @@ function placeEmoji(types=[]){for(const t of types)if(EMAP[t])return EMAP[t];ret
 function photoUrl(photos){if(!photos?.length)return null;return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photo_reference=${photos[0].photo_reference}&key=${GKEY}`;}
 
 async function fetchPlaces(dest,type){
-  const key=`${dest}__${type}`;
+  // For restaurants and hotels, use the first selected attraction's location if available
+  let searchDest = dest || 'Melbourne';
+  if((type==='restaurants'||type==='hotels') && state.attractions.length>0){
+    const cacheKey=`${dest}__attractions`;
+    const attrItems=cache[cacheKey]||[];
+    const firstSelected=attrItems.find(x=>state.attractions.includes(x.id));
+    if(firstSelected && firstSelected.address){
+      // Extract suburb/area from address
+      const parts=firstSelected.address.split(',');
+      if(parts.length>=2) searchDest=parts[0].trim()+', '+dest;
+    }
+  }
+
+  const key=`${searchDest}__${type}`;
   if(cache[key])return cache[key];
   try{
-    const res=await fetch(`/.netlify/functions/places?query=${encodeURIComponent(dest)}&type=${type}`);
+    const res=await fetch(`/.netlify/functions/places?query=${encodeURIComponent(searchDest)}&type=${type}`);
     const data=await res.json();
     if(!data.results?.length)return[];
     const items=data.results.slice(0,15).map((p,i)=>({
@@ -525,12 +539,22 @@ async function fetchPlaces(dest,type){
 
 const PLABELS={attractions:'景点',restaurants:'餐厅',hotels:'住宿'};
 const PTITLES={attractions:'选择你想去的<em>景点</em>',restaurants:'选择心仪的<em>餐厅</em>',hotels:'选择你的<em>住宿</em>'};
-const PSUBS={attractions:'点卡片勾选，点「详细介绍」查看更多',restaurants:'餐厅将安排在行程动线上',hotels:'根据景点位置推荐最便利的住宿'};
 
 async function renderPlaces(el,type){
   const sn=steps.indexOf(type)+1;
-  el.innerHTML=`<div class="sno">Step ${sn} · ${PLABELS[type]}</div><h2 class="stitle">${PTITLES[type]}</h2><p class="ssub">${PSUBS[type]}${state.dest?` · <strong>${state.dest}</strong>`:''}</p><div class="filter-row">${(CHIPS[type]||[]).map(c=>`<span class="fchip${filters[type]===c?' on':''}" onclick="applyFilter('${type}','${c}',this)">${c}</span>`).join('')}</div><div class="pgrid" id="pgrid">${[...Array(6)].map(()=>`<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line" style="width:55%"></div><div class="skel skel-line" style="width:88%"></div><div class="skel skel-line" style="width:40%"></div></div></div>`).join('')}</div>`;
-  // Always show bbar immediately
+  let sub=state.dest?`<strong>${state.dest}</strong>`:'';
+  if(type==='restaurants'&&state.attractions.length>0) sub+=` · 根据你选的景点推荐附近餐厅`;
+  else if(type==='hotels'&&state.attractions.length>0) sub+=` · 根据你选的景点推荐附近住宿`;
+  else if(type==='attractions') sub+=` · 点卡片勾选，点「详细介绍」查看更多`;
+
+  el.innerHTML=`
+    <div class="sno">Step ${sn} · ${PLABELS[type]}</div>
+    <h2 class="stitle">${PTITLES[type]}</h2>
+    <p class="ssub">${sub}</p>
+    <div class="filter-row">${(CHIPS[type]||[]).map(c=>`<span class="fchip${filters[type]===c?' on':''}" onclick="applyFilter('${type}','${c}',this)">${c}</span>`).join('')}</div>
+    <div class="pgrid" id="pgrid">
+      ${[...Array(6)].map(()=>`<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line" style="width:55%"></div><div class="skel skel-line" style="width:88%"></div><div class="skel skel-line" style="width:40%"></div></div></div>`).join('')}
+    </div>`;
   document.getElementById('bbar').classList.add('show');
   updateBbar(type);
   const items=await fetchPlaces(state.dest||'Melbourne',type);
