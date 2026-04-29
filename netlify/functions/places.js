@@ -1,7 +1,7 @@
 const https = require(‘https’);
 exports.handler = async function(event) {
 const { query, type, action, place_id } = event.queryStringParameters || {};
-const GKEY = process.env.GOOGLE_API_KEY || ‘AIzaSyDegBY5wqNKPshtxbMkyXhpYSNYuEjT9mk’;
+const GKEY = process.env.GOOGLE_API_KEY;
 const headers = {‘Content-Type’:‘application/json’,‘Access-Control-Allow-Origin’:’*’};
 let url;
 if(action===‘details’&&place_id){
