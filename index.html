@@ -10,61 +10,72 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--black:#0a0a08;--off:#f5f0e8;--mist:#8a8478;--gold:#c9973a;--sage:#2d4a35;--leaf:#4a7a52;--border:#e8e0d0;--ember:#b85c2a;}
 body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--black);overflow-x:hidden;}
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s;}
 nav.solid{background:rgba(245,240,232,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1rem 3rem;}
-.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:#fff;transition:color .4s;}
-nav.solid .nav-brand{color:var(--black);}
-.nav-cta{padding:.45rem 1.2rem;border:1px solid rgba(255,255,255,.4);border-radius:100px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:transparent;cursor:pointer;font-family:inherit;transition:all .3s;}
-nav.solid .nav-cta{border-color:var(--sage);color:var(--sage);}
-nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
+.nb{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:#fff;transition:color .4s;}
+nav.solid .nb{color:var(--black);}
+.nc{padding:.45rem 1.2rem;border:1px solid rgba(255,255,255,.4);border-radius:100px;font-size:.72rem;text-transform:uppercase;color:#fff;background:transparent;cursor:pointer;font-family:inherit;transition:all .3s;}
+nav.solid .nc{border-color:var(--sage);color:var(--sage);}
+nav.solid .nc:hover{background:var(--sage);color:#fff;}
+/* HERO */
 .hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(155deg,#0a1a12,#1a3525,#2a5538);}
-.hero-slides{position:absolute;inset:0;}
-.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 2s ease;}
-.hero-slide.on{opacity:1;}
-.hero-slide img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.8);}
-.hero-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.9) 0%,rgba(10,10,8,.4) 40%,rgba(10,10,8,.2) 100%);}
-.hero-cnt{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:760px;}
-.hero-ey{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem;}
-.ey-d{width:24px;height:1px;background:var(--gold);}
+.hbg{position:absolute;inset:0;background:linear-gradient(155deg,#0a1a12,#1a3525,#2a5538);}
+.hslides{position:absolute;inset:0;}
+.hs{position:absolute;inset:0;opacity:0;transition:opacity 2s;}
+.hs.on{opacity:1;}
+.hs img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.8);}
+.hov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,8,.9) 0%,rgba(10,10,8,.4) 40%,rgba(10,10,8,.2) 100%);}
+.hcnt{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:760px;}
+.hey{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem;}
+.hd{width:24px;height:1px;background:var(--gold);}
 .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6.5rem);font-weight:200;line-height:.95;letter-spacing:.05em;color:#fff;margin-bottom:1rem;text-transform:uppercase;text-shadow:0 2px 40px rgba(0,0,0,.5);}
 .hero h1 em{display:block;font-style:italic;font-size:clamp(2rem,5vw,4rem);}
-.hero-desc{font-size:.92rem;color:rgba(255,255,255,.65);margin-bottom:2.5rem;text-shadow:0 1px 12px rgba(0,0,0,.4);}
-.s-wrap{position:relative;max-width:560px;margin:0 auto 1.5rem;}
-.s-inp{width:100%;background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:1rem 1.4rem 1rem 3rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:#fff;outline:none;}
-.s-inp::placeholder{color:rgba(255,255,255,.4);}
-.s-ico{position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);}
-.s-btn{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);padding:.58rem 1.3rem;background:var(--gold);color:var(--black);border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;}
-.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1rem;}
+.hdesc{font-size:.92rem;color:rgba(255,255,255,.65);margin-bottom:2.5rem;text-shadow:0 1px 12px rgba(0,0,0,.4);}
+.sw{position:relative;max-width:560px;margin:0 auto 1.5rem;}
+.si{width:100%;background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:1rem 1.4rem 1rem 3rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:#fff;outline:none;}
+.si::placeholder{color:rgba(255,255,255,.4);}
+.sic{position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);}
+.sb{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);padding:.58rem 1.3rem;background:var(--gold);color:var(--black);border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;}
+.htags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1rem;}
 .htag{padding:.35rem .85rem;border:1px solid rgba(255,255,255,.2);border-radius:100px;font-size:.7rem;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;background:transparent;}
 .htag:hover{border-color:rgba(255,255,255,.4);color:#fff;}
-.hero-ns{background:transparent;border:none;color:rgba(255,255,255,.4);font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
-.hero-loc{position:absolute;left:3rem;bottom:2rem;z-index:2;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:.5rem;}
-.hero-loc::before{content:'';width:16px;height:1px;background:var(--gold);}
-.hero-dots{position:absolute;right:3rem;bottom:2rem;z-index:2;display:flex;gap:.4rem;}
+.hns{background:transparent;border:none;color:rgba(255,255,255,.4);font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.hloc{position:absolute;left:3rem;bottom:2rem;z-index:2;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:.5rem;}
+.hloc::before{content:'';width:16px;height:1px;background:var(--gold);}
+.hdots{position:absolute;right:3rem;bottom:2rem;z-index:2;display:flex;gap:.4rem;}
 .hdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:all .3s;}
 .hdot.on{background:var(--gold);width:16px;border-radius:3px;}
+/* SEARCH DROPDOWN */
+#heroDdl{position:absolute;top:calc(100%+8px);left:0;right:0;background:rgba(10,10,8,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;z-index:50;display:none;}
+.sdi{padding:.85rem 1.4rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s;}
+.sdi:last-child{border:none;}
+.sdi:hover{background:rgba(255,255,255,.06);}
+.sdn{font-size:.86rem;color:#fff;}
+.sdr{font-size:.68rem;color:rgba(255,255,255,.4);}
+/* FEATURED */
 .feat{padding:5rem 3rem;max-width:1200px;margin:0 auto;}
-.feat-ey{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
-.feat-h{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--black);margin-bottom:.4rem;}
-.feat-h em{font-style:italic;color:var(--sage);}
-.feat-sub{font-size:.84rem;color:var(--mist);margin-bottom:2rem;}
-.feat-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.fey{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.fh{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--black);margin-bottom:.4rem;}
+.fh em{font-style:italic;color:var(--sage);}
+.fsub{font-size:.84rem;color:var(--mist);margin-bottom:2rem;}
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
 .fc{border-radius:16px;overflow:hidden;cursor:pointer;position:relative;height:260px;transition:transform .3s;}
 .fc:hover{transform:translateY(-4px);}
 .fc.wide{grid-column:span 2;}
 .fc img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:transform .5s;}
 .fc:hover img{transform:scale(1.05);}
-.fc-body{position:absolute;bottom:0;left:0;right:0;padding:1.2rem;background:linear-gradient(to top,rgba(10,10,8,.85),transparent);}
-.fc-reg{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.55);margin-bottom:.2rem;}
-.fc-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:#fff;}
+.fcb{position:absolute;bottom:0;left:0;right:0;padding:1.2rem;background:linear-gradient(to top,rgba(10,10,8,.85),transparent);}
+.fcr{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.55);margin-bottom:.2rem;}
+.fcn{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:#fff;}
+/* WIZARD */
 #wiz{display:none;position:fixed;inset:0;z-index:200;background:#fff;overflow-y:auto;}
 #wiz.show{display:block;}
 .wn{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--border);padding:1.1rem 3rem;display:flex;align-items:center;justify-content:space-between;}
 .wb{font-size:.75rem;color:var(--mist);cursor:pointer;border:none;background:none;font-family:inherit;}
 .wb:hover{color:var(--black);}
-.wbrand{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;}
-.wprog{display:flex;align-items:center;gap:.3rem;}
+.wbr{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;}
+.wp-row{display:flex;align-items:center;gap:.3rem;}
 .wp{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:500;border:1.5px solid #ccc;color:var(--mist);background:#fff;transition:all .3s;}
 .wp.on{background:var(--sage);border-color:var(--sage);color:#fff;}
 .wp.done{background:var(--leaf);border-color:var(--leaf);color:#fff;}
@@ -75,21 +86,28 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
 .stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:var(--black);margin-bottom:.4rem;}
 .stitle em{font-style:italic;color:var(--sage);}
 .ssub{font-size:.84rem;color:var(--mist);margin-bottom:2rem;}
-.vibes-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+/* VIBES */
+.vg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
 .vibe{padding:1.5rem 1.1rem;border:1px solid var(--border);border-radius:14px;background:#fff;cursor:pointer;text-align:center;transition:all .22s;}
 .vibe.on,.vibe:hover{border-color:var(--sage);}
 .vibe.on{background:rgba(45,74,53,.03);}
 .vi{font-size:1.6rem;display:block;margin-bottom:.4rem;}
 .vn{font-size:.83rem;font-weight:500;margin-bottom:.12rem;}
 .vh{font-size:.68rem;color:var(--mist);}
-.drecs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+/* DEST PICK */
+.drg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
 .drec{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;cursor:pointer;transition:all .25s;}
 .drec:hover,.drec.on{border-color:var(--sage);}
-.drec-img{height:100px;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);display:flex;align-items:center;justify-content:center;font-size:2.2rem;position:relative;overflow:hidden;}
+.drec-img{height:110px;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;overflow:hidden;}
 .drec-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7);}
 .drec-body{padding:.85rem 1rem;}
 .drec-reg{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.18rem;}
-.drec-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;}
+.drec-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;margin-bottom:.15rem;}
+.drec-why{font-size:.7rem;color:var(--mist);line-height:1.5;}
+/* BASICS */
+.bh-wrap{position:relative;margin-bottom:2rem;border-radius:16px;overflow:hidden;}
+.bh-wrap img{width:100%;height:220px;object-fit:cover;filter:brightness(.7);}
+.bh-label{position:absolute;bottom:1.2rem;left:1.4rem;font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4);}
 .dest-wrap{position:relative;margin-bottom:1.5rem;}
 .dest-inp{width:100%;font-family:'DM Sans',sans-serif;font-size:.92rem;padding:.95rem 1.1rem .95rem 2.6rem;border:1px solid var(--border);border-radius:12px;background:#fff;color:var(--black);outline:none;transition:border-color .2s;}
 .dest-inp:focus{border-color:var(--sage);}
@@ -102,22 +120,20 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
 .dopt-n{font-size:.84rem;}
 .dopt-r{font-size:.66rem;color:var(--mist);}
 .dest-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(45,74,53,.07);border:1px solid rgba(45,74,53,.15);border-radius:100px;padding:.38rem .9rem;font-size:.82rem;color:var(--sage);margin-bottom:1.5rem;}
-.bh-wrap{position:relative;margin-bottom:2rem;border-radius:16px;overflow:hidden;}
-.bh-wrap img{width:100%;height:220px;object-fit:cover;filter:brightness(.7);}
-.bh-label{position:absolute;bottom:1.2rem;left:1.4rem;font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4);}
 .people-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
 .pbox{background:#fff;border:1px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
 .plbl{font-size:.78rem;font-weight:500;}
 .psub{font-size:.62rem;color:var(--mist);}
 .ctr{display:flex;align-items:center;gap:.6rem;}
-.cbtn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--off);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cbtn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--off);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cbtn:hover{border-color:var(--sage);}
 .cnum{font-size:.92rem;font-weight:500;min-width:16px;text-align:center;}
-.basics-g{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem;}
+.bg{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem;}
 .fld{display:flex;flex-direction:column;gap:.4rem;}
 .fld label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--mist);}
 .fld select{font-family:'DM Sans',sans-serif;font-size:.88rem;padding:.72rem .9rem;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--black);outline:none;}
 .fld select:focus{border-color:var(--sage);}
+/* PLACE CARDS */
 .filter-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
 .fchip{padding:.3rem .8rem;border:1px solid var(--border);border-radius:100px;font-size:.7rem;cursor:pointer;background:#fff;color:var(--mist);transition:all .18s;}
 .fchip.on{background:var(--sage);border-color:var(--sage);color:#fff;}
@@ -127,41 +143,37 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
 .pc.sel{border-color:var(--sage);}
 .pc-tick{display:none;position:absolute;top:.7rem;right:.7rem;width:22px;height:22px;border-radius:50%;background:var(--sage);color:#fff;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;z-index:3;}
 .pc.sel .pc-tick{display:flex;}
-.pc-img-w{height:150px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.pc-img-w img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.88);transition:transform .5s;}
-.pc:hover .pc-img-w img{transform:scale(1.06);}
-.pc-emoji{font-size:3rem;position:relative;z-index:1;opacity:.7;}
+.pc-img{height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.pc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.88);transition:transform .5s;}
+.pc:hover .pc-img img{transform:scale(1.06);}
+.pc-emoji{font-size:3.5rem;position:relative;z-index:1;}
 .pc-body{padding:.9rem;}
 .pc-cat{font-size:.57rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem;}
 .pc-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;margin-bottom:.25rem;line-height:1.2;}
 .pc-desc{font-size:.7rem;color:var(--mist);line-height:1.55;margin-bottom:.55rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.pc-foot{display:flex;align-items:center;justify-content:space-between;}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;}
 .pc-rat{font-size:.67rem;color:var(--gold);}
 .pc-price{font-size:.67rem;color:var(--leaf);font-weight:500;}
-.pc-more{font-size:.72rem;color:var(--sage);margin-top:.5rem;cursor:pointer;display:inline-flex;align-items:center;gap:.3rem;font-weight:500;padding:.3rem 0;}
+.pc-more{font-size:.72rem;color:var(--sage);cursor:pointer;font-weight:500;}
 .pc-more:hover{color:var(--leaf);}
-.skel{background:linear-gradient(90deg,#f0ebe0 25%,#e8e0d0 50%,#f0ebe0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skel-card{border-radius:16px;overflow:hidden;border:1px solid var(--border);}
-.skel-img{height:150px;}
-.skel-body{padding:.9rem;}
-.skel-line{height:11px;margin-bottom:.5rem;}
+/* BBAR */
 .bbar{position:fixed;bottom:0;left:0;right:0;z-index:150;background:#fff;border-top:2px solid var(--border);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -4px 24px rgba(0,0,0,.08);}
 .bbar.show{transform:translateY(0);}
 .bbar-info{font-size:.84rem;color:#555;}
 .bbar-info strong{color:var(--black);font-weight:600;}
-.bbar-btns{display:flex;gap:.75rem;align-items:center;}
+.bbar-btns{display:flex;gap:.75rem;}
 .btn-skip{padding:.65rem 1.4rem;border:1.5px solid #999;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.8rem;color:#555;background:transparent;cursor:pointer;}
 .btn-skip:hover{border-color:var(--sage);color:var(--black);}
 .btn-next{padding:.65rem 1.8rem;background:var(--sage);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;}
 .btn-next:hover{background:var(--leaf);}
+/* DRAWER */
 #drBg{position:fixed;inset:0;z-index:299;background:rgba(10,10,8,.45);opacity:0;pointer-events:none;transition:opacity .35s;}
 #drBg.show{opacity:1;pointer-events:all;}
 #drawer{position:fixed;top:0;right:0;bottom:0;z-index:300;width:460px;background:#fff;box-shadow:-20px 0 60px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
 #drawer.open{transform:translateX(0);}
 .dr-hero{height:240px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1e3a2f,#3d6b4a);display:flex;align-items:center;justify-content:center;}
 .dr-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.75);}
-.dr-emoji{position:relative;z-index:1;font-size:4rem;opacity:.4;}
+.dr-emoji{position:relative;z-index:1;font-size:4rem;opacity:.5;}
 .dr-close{position:absolute;top:.9rem;right:.9rem;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;z-index:2;font-size:.82rem;}
 .dr-body{padding:1.6rem;}
 .dr-cat{font-size:.57rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
@@ -171,23 +183,19 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
 .dr-div{height:1px;background:var(--border);margin:.9rem 0;}
 .dr-sec{font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:#bbb;margin-bottom:.45rem;}
 .dr-text{font-size:.82rem;line-height:1.72;color:#585850;margin-bottom:.9rem;}
-.dr-grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.9rem;}
-.dr-cell{background:var(--off);border-radius:9px;padding:.65rem;}
-.dr-cl{font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:.18rem;}
-.dr-cv{font-size:.8rem;font-weight:500;}
-.dr-reviews{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.3rem;}
-.rv{background:var(--off);border-radius:9px;padding:.75rem;}
-.rv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem;}
-.rv-a{font-size:.7rem;font-weight:500;}
-.rv-s{font-size:.57rem;color:var(--mist);}
-.rv-t{font-size:.7rem;color:#585850;line-height:1.58;}
-.dr-acts{display:flex;gap:.55rem;}
+.dr-facts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.9rem;}
+.dr-fact{background:var(--off);border-radius:9px;padding:.65rem;}
+.dr-fl{font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:.18rem;}
+.dr-fv{font-size:.8rem;font-weight:500;}
+.dr-acts{display:flex;gap:.55rem;margin-top:1rem;}
 .btn-add{flex:1;padding:.75rem;background:var(--sage);color:#fff;border:none;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;}
 .btn-add:hover{background:var(--leaf);}
 .btn-closdr{padding:.75rem 1rem;border:1px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.78rem;cursor:pointer;color:var(--mist);}
+/* BUTTONS */
 .btn-p{padding:.8rem 2rem;background:var(--sage);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .22s;}
 .btn-p:hover{background:var(--leaf);}
 .btn-o{padding:.8rem 1.8rem;background:transparent;color:var(--black);border:1px solid var(--border);border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;}
+/* RESULT */
 .res-hd{background:linear-gradient(135deg,var(--sage),#1a3020);border-radius:18px;padding:2.2rem;margin-bottom:1.5rem;}
 .res-hd h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:#fff;margin-bottom:.25rem;}
 .res-hd p{color:rgba(255,255,255,.45);font-size:.76rem;}
@@ -200,30 +208,31 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
 .spin-row{display:flex;align-items:center;gap:.65rem;color:var(--mist);}
 .spin{width:16px;height:16px;border:1.5px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;flex-shrink:0;}
 @keyframes sp{to{transform:rotate(360deg)}}
-@media(max-width:768px){nav,nav.solid{padding:1rem 1.5rem;}.wn{padding:1rem 1.5rem;}.wbody{padding:2rem 1rem 9rem;}.vibes-g,.drecs,.pgrid{grid-template-columns:1fr 1fr;}.basics-g,.people-row{grid-template-columns:1fr;}#drawer{width:100%;}.bbar{padding:.9rem 1.5rem;}.feat-g{grid-template-columns:1fr 1fr;}.fc.wide{grid-column:span 2;height:200px;}.feat{padding:3rem 1.5rem;}.hero-loc{left:1.5rem;}.hero-dots{right:1.5rem;}}
-@media(max-width:480px){.vibes-g,.pgrid,.drecs{grid-template-columns:1fr;}.hero h1{font-size:2.8rem;}}
+@media(max-width:768px){nav,nav.solid{padding:1rem 1.5rem;}.wn{padding:1rem 1.5rem;}.wbody{padding:2rem 1rem 9rem;}.vg,.drg,.pgrid{grid-template-columns:1fr 1fr;}.bg,.people-row{grid-template-columns:1fr;}#drawer{width:100%;}.bbar{padding:.9rem 1.5rem;}.fg{grid-template-columns:1fr 1fr;}.fc.wide{grid-column:span 2;height:200px;}.feat{padding:3rem 1.5rem;}.hloc{left:1.5rem;}.hdots{right:1.5rem;}}
+@media(max-width:480px){.vg,.pgrid,.drg{grid-template-columns:1fr;}.hero h1{font-size:2.8rem;}}
 </style>
 </head>
 <body>
 <nav id="nav">
-  <div class="nav-brand">Rover</div>
-  <button class="nav-cta" onclick="openWiz('A')">开始规划</button>
+  <div class="nb">Rover</div>
+  <button class="nc" onclick="openWiz('A')">开始规划</button>
 </nav>
+
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-slides" id="heroSlides"></div>
-  <div class="hero-ov"></div>
-  <div class="hero-cnt">
-    <div class="hero-ey"><div class="ey-d"></div>Victoria, Australia<div class="ey-d"></div></div>
+  <div class="hbg"></div>
+  <div class="hslides" id="heroSlides"></div>
+  <div class="hov"></div>
+  <div class="hcnt">
+    <div class="hey"><div class="hd"></div>Victoria, Australia<div class="hd"></div></div>
     <h1>Discover<em>Victoria</em></h1>
-    <p class="hero-desc">从壮阔海岸到古老金矿城，从薄雾森林到原野旷野。</p>
-    <div class="s-wrap">
-      <span class="s-ico">⌕</span>
-      <input class="s-inp" id="heroInp" placeholder="搜索目的地，如 Bendigo、大洋路…" oninput="heroFilter(this.value)" onblur="setTimeout(closeHeroDdl,200)">
-      <button class="s-btn" onclick="heroGo()">探索 →</button>
-      <div id="heroDdl" style="position:absolute;top:calc(100%+8px);left:0;right:0;background:rgba(10,10,8,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;z-index:50;display:none;"></div>
+    <p class="hdesc">从壮阔海岸到古老金矿城，从薄雾森林到原野旷野。</p>
+    <div class="sw">
+      <span class="sic">⌕</span>
+      <input class="si" id="heroInp" placeholder="搜索目的地，如 Bendigo、大洋路…" oninput="heroFilter(this.value)" onblur="setTimeout(closeHeroDdl,200)">
+      <button class="sb" onclick="heroGo()">探索 →</button>
+      <div id="heroDdl"></div>
     </div>
-    <div class="hero-tags">
+    <div class="htags">
       <span class="htag" onclick="quickDest('大洋路')">大洋路</span>
       <span class="htag" onclick="quickDest('Wilson Promontory')">Wilson Prom</span>
       <span class="htag" onclick="quickDest('丹德农山脉')">丹德农山脉</span>
@@ -231,22 +240,24 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
       <span class="htag" onclick="quickDest('本迪戈')">本迪戈</span>
       <span class="htag" onclick="quickDest('莫宁顿半岛')">莫宁顿半岛</span>
     </div>
-    <button class="hero-ns" onclick="openWiz('B')">不知道去哪？让我帮你推荐 →</button>
+    <button class="hns" onclick="openWiz('B')">不知道去哪？让我帮你推荐 →</button>
   </div>
-  <div class="hero-loc" id="heroLoc">大洋路 · 十二门徒岩</div>
-  <div class="hero-dots" id="heroDots"></div>
+  <div class="hloc" id="heroLoc">大洋路 · 十二门徒岩</div>
+  <div class="hdots" id="heroDots"></div>
 </section>
+
 <section class="feat">
-  <div class="feat-ey">精选目的地</div>
-  <h2 class="feat-h">维多利亚州<em>热门去处</em></h2>
-  <p class="feat-sub">点击直接开始规划</p>
-  <div class="feat-g" id="featG"></div>
+  <div class="fey">精选目的地</div>
+  <h2 class="fh">维多利亚州<em>热门去处</em></h2>
+  <p class="fsub">点击直接开始规划</p>
+  <div class="fg" id="featG"></div>
 </section>
+
 <div id="wiz">
   <div class="wn">
     <button class="wb" onclick="closeWiz()">← 返回</button>
-    <div class="wbrand">Rover</div>
-    <div class="wprog" id="wizProg"></div>
+    <div class="wbr">Rover</div>
+    <div class="wp-row" id="wizProg"></div>
   </div>
   <div class="wbody" id="wizBody"></div>
   <div class="bbar" id="bbar">
@@ -257,10 +268,12 @@ nav.solid .nav-cta:hover{background:var(--sage);color:#fff;}
     </div>
   </div>
 </div>
+
 <div id="drBg" onclick="closeDr()"></div>
 <div id="drawer"><div id="drContent"></div></div>
+
 <script>
-const GKEY='AIzaSyDegBY5wqNKPshtxbMkyXhpYSNYuEjT9mk';
+// ── HERO DATA ──
 const SLIDES=[
   {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1600&q=80',loc:'大洋路 · 十二门徒岩'},
   {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=80',loc:'墨尔本 · Flinders Street'},
@@ -268,8 +281,10 @@ const SLIDES=[
   {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80',loc:'格兰坪 · 国家公园'},
   {url:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80',loc:'维多利亚 · 壮阔海岸'},
 ];
+
+// ── ALL DESTINATIONS ──
 const CITIES=[
-  {n:'墨尔本 City',r:'大都市',e:'🏙',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80'},
+  {n:'墨尔本',r:'大都市',e:'🏙',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80'},
   {n:'大洋路',r:'西南海岸',e:'🌊',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80'},
   {n:'丹德农山脉',r:'薄雾森林',e:'🌿',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80'},
   {n:'雅拉谷',r:'葡萄酒产区',e:'🍷',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
@@ -278,13 +293,181 @@ const CITIES=[
   {n:'本迪戈',r:'金矿历史城',e:'⛏',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80'},
   {n:'格兰坪',r:'国家公园',e:'🏔',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
   {n:'Wilson Promontory',r:'最南端海岬',e:'🦘',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80'},
-  {n:'巴拉瑞特',r:'历史金矿城',e:'🏛',img:''},{n:'马其顿山',r:'火山奇岩',e:'🍂',img:''},
-  {n:'Healesville',r:'野生动物',e:'🐨',img:''},{n:'Apollo Bay',r:'大洋路海湾',e:'🏄',img:''},
-  {n:'Hepburn Springs',r:'矿泉温泉',e:'🛁',img:''},{n:'Mildura',r:'墨累河小城',e:'🍇',img:''},
-  {n:'Echuca',r:'历史港口',e:'🚢',img:''},{n:'Geelong',r:'港口城市',e:'⚓',img:''},
-  {n:'Lorne',r:'大洋路小镇',e:'🌅',img:''},{n:'Halls Gap',r:'格兰坪山村',e:'🦘',img:''},
-  {n:'Brighton Beach',r:'彩色浴室',e:'🏖',img:''},{n:'Mount Buller',r:'滑雪胜地',e:'⛷️',img:''},
+  {n:'巴拉瑞特',r:'历史金矿城',e:'🏛',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80'},
+  {n:'Healesville',r:'野生动物',e:'🐨',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80'},
+  {n:'Apollo Bay',r:'大洋路海湾',e:'🏄',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80'},
+  {n:'Hepburn Springs',r:'矿泉温泉',e:'🛁',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80'},
+  {n:'Lorne',r:'大洋路小镇',e:'🌅',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80'},
+  {n:'Halls Gap',r:'格兰坪山村',e:'🦘',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
 ];
+
+// ── BUILT-IN PLACES DATA ──
+const PLACES_DB = {
+  '大洋路': {
+    attractions:[
+      {id:'gor1',name:'十二门徒岩',cat:'自然景观',e:'🪨',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',desc:'大洋路最著名的石灰岩海蚀柱群，落日时分壮观无比',rating:'4.8',price:'免费',hours:'全天开放',tips:'建议日落前1小时到达，停车位有限'},
+      {id:'gor2',name:'Loch Ard峡谷',cat:'自然景观',e:'🌊',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',desc:'险峻的石灰岩峡谷，有着1878年沉船的传奇故事',rating:'4.7',price:'免费',hours:'全天开放',tips:'有木栈道可安全观览'},
+      {id:'gor3',name:'大洋路纪念拱门',cat:'历史文化',e:'🏛',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'一战纪念碑，标志着这条壮观海岸公路的起点',rating:'4.5',price:'免费',hours:'全天开放',tips:'与Apollo Bay小镇一起游览'},
+      {id:'gor4',name:'Otway国家公园',cat:'自然景观',e:'🌿',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'热带雨林、瀑布和野生考拉的天堂',rating:'4.6',price:'$15/车',hours:'8:00-日落',tips:'Maits Rest步道可看到野生考拉'},
+      {id:'gor5',name:'吉朗港口',cat:'城市文化',e:'⚓',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'维多利亚第二大城市，有彩色木偶装置的海滨散步道',rating:'4.3',price:'免费',hours:'全天开放',tips:'从墨尔本出发的大洋路第一站'},
+      {id:'gor6',name:'Cape Otway灯塔',cat:'历史文化',e:'🏮',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'澳大利亚大陆最古老的灯塔，1848年建造',rating:'4.4',price:'$19.5',hours:'9:00-17:00',tips:'可登顶360度观海景'},
+    ],
+    restaurants:[
+      {id:'gorr1',name:'Chris\'s Beacon Point',cat:'海鲜餐厅',e:'🦞',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',desc:'悬崖上的海鲜餐厅，俯瞰大洋路无敌海景',rating:'4.6',price:'$$$',hours:'12:00-21:00',tips:'需提前预订，周末极受欢迎'},
+      {id:'gorr2',name:'Apollo Bay Hotel',cat:'酒吧餐厅',e:'🍺',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'历史悠久的海滨酒吧，供应当地新鲜海产',rating:'4.2',price:'$$',hours:'11:00-22:00',tips:'周五晚有现场音乐'},
+      {id:'gorr3',name:'Wye River General Store',cat:'咖啡小食',e:'☕',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'大洋路边的复古小店，自制派和咖啡必试',rating:'4.5',price:'$',hours:'7:00-17:00',tips:'公路旅行完美中途站'},
+      {id:'gorr4',name:'Lorne Hotel',cat:'酒吧餐厅',e:'🍻',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'Lorne镇中心的经典酒吧，啤酒和薯条人气极高',rating:'4.1',price:'$$',hours:'11:00-23:00',tips:'户外露台可欣赏小镇风光'},
+    ],
+    hotels:[
+      {id:'gorh1',name:'Fairhaven Surf Life Saving Club',cat:'海景民宿',e:'🏄',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',desc:'直面南太平洋的冲浪海滩住宿',rating:'4.3',price:'$$',hours:'',tips:'适合冲浪爱好者'},
+      {id:'gorh2',name:'Cumberland Lorne Resort',cat:'度假村',e:'🏊',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'Lorne镇最受欢迎的度假村，设施齐全',rating:'4.5',price:'$$$',hours:'',tips:'提前预订旺季房间'},
+      {id:'gorh3',name:'Apollo Bay Surf & Eco Lodge',cat:'青旅',e:'🛖',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'背包客最爱，步行可达海滩',rating:'4.2',price:'$',hours:'',tips:'社区氛围好，认识旅伴的好地方'},
+    ]
+  },
+  '雅拉谷': {
+    attractions:[
+      {id:'yv1',name:'Healesville野生动物保护区',cat:'野生动物',e:'🐨',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'近距离接触考拉、袋鼠、袋熊等澳洲原生动物',rating:'4.7',price:'$38',hours:'9:00-17:00',tips:'上午动物更活跃，考拉喂食时间11:30'},
+      {id:'yv2',name:'TarraWarra博物馆',cat:'艺术文化',e:'🎨',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'葡萄园中的当代艺术博物馆，建筑本身就是艺术品',rating:'4.4',price:'$12',hours:'11:00-17:00',tips:'周二关闭，周末有特别展览'},
+      {id:'yv3',name:'Maroondah水库公园',cat:'自然景观',e:'🌲',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'百年历史的蓄水库，四周是美丽的桉树森林',rating:'4.5',price:'免费',hours:'8:30-17:30',tips:'秋天枫叶季节最美'},
+      {id:'yv4',name:'Yering Station酒庄',cat:'酒庄',e:'🍷',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'雅拉谷最古老的酒庄，1838年创立，品酒体验一流',rating:'4.6',price:'免费品酒',hours:'10:00-18:00',tips:'周末有农夫市集'},
+    ],
+    restaurants:[
+      {id:'yvr1',name:'Innocent Bystander',cat:'酒庄餐厅',e:'🍕',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'Healesville镇上最受欢迎的餐厅，木火披萨配本地葡萄酒',rating:'4.5',price:'$$',hours:'9:00-22:00',tips:'户外座位需提前预订'},
+      {id:'yvr2',name:'Rochford Wines餐厅',cat:'Fine Dining',e:'🍽',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'葡萄园中的高级餐厅，美食美酒美景三合一',rating:'4.6',price:'$$$',hours:'12:00-16:00',tips:'仅午餐，需预订'},
+      {id:'yvr3',name:'Harvest Café',cat:'咖啡厅',e:'☕',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'农场直供的有机早午餐，食材新鲜美味',rating:'4.4',price:'$$',hours:'8:00-15:00',tips:'周末排队较长'},
+    ],
+    hotels:[
+      {id:'yvh1',name:'Chateau Yering Historic House',cat:'精品酒店',e:'🏰',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'雅拉谷最奢华的历史庄园酒店，19世纪维多利亚建筑',rating:'4.8',price:'$$$$',hours:'',tips:'周末套餐含下午茶'},
+      {id:'yvh2',name:'Yering Gorge Cottages',cat:'度假小屋',e:'🏡',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'森林中的独立小屋，宁静私密，适合蜜月旅行',rating:'4.6',price:'$$$',hours:'',tips:'每间小屋都有壁炉'},
+    ]
+  },
+  '莫宁顿半岛': {
+    attractions:[
+      {id:'mp1',name:'Peninsula Hot Springs',cat:'温泉',e:'♨️',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'澳大利亚最受欢迎的天然地热温泉，有数十个不同温度的温泉池',rating:'4.5',price:'$45起',hours:'7:30-22:00',tips:'工作日清晨或傍晚人少，建议提前预订'},
+      {id:'mp2',name:'Arthurs Seat州立公园',cat:'自然景观',e:'🌄',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'半岛最高点，有缆车可乘，俯瞰菲利普湾壮丽景色',rating:'4.4',price:'缆车$24',hours:'10:00-17:00',tips:'缆车周末需排队，建议早点'},
+      {id:'mp3',name:'Point Nepean国家公园',cat:'历史文化',e:'🏰',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'半岛最南端的历史要塞，一战军事遗址与壮观海景',rating:'4.6',price:'$15',hours:'8:30-日落',tips:'租自行车游览最佳'},
+      {id:'mp4',name:'Red Hill艺术工作室',cat:'艺术文化',e:'🎨',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'散布在半岛各处的艺术家工作室和画廊',rating:'4.3',price:'免费',hours:'周末10:00-17:00',tips:'每年两次艺术节活动'},
+    ],
+    restaurants:[
+      {id:'mpr1',name:'Montalto Vineyard',cat:'Fine Dining',e:'🍽',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'半岛顶级餐厅，当季食材配本地葡萄酒，获多项大奖',rating:'4.8',price:'$$$$',hours:'12:00-15:00',tips:'至少提前一周预订'},
+      {id:'mpr2',name:'Epicurean Café',cat:'咖啡早午餐',e:'☕',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'Red Hill市集旁的人气早午餐咖啡馆',rating:'4.4',price:'$$',hours:'8:00-16:00',tips:'周六市集日最热闹'},
+      {id:'mpr3',name:'Port Phillip Estate',cat:'酒庄餐厅',e:'🍷',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',desc:'海湾边的精品酒庄，海鲜拼盘配长相思白葡萄酒',rating:'4.5',price:'$$$',hours:'11:00-17:00',tips:'户外露台直面菲利普湾'},
+    ],
+    hotels:[
+      {id:'mph1',name:'The Baths Sorrento',cat:'精品酒店',e:'🏊',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'历史浴场改建的精品海滨酒店，优雅复古',rating:'4.6',price:'$$$',hours:'',tips:'步行可达渡轮码头'},
+      {id:'mph2',name:'Jackalope Hotel',cat:'精品酒店',e:'🦘',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'半岛最时尚的设计酒店，坐落在Willow Creek酒庄中',rating:'4.9',price:'$$$$',hours:'',tips:'内有获奖餐厅Doot Doot Doot'},
+    ]
+  },
+  '丹德农山脉': {
+    attractions:[
+      {id:'dr1',name:'Puffing Billy蒸汽火车',cat:'历史体验',e:'🚂',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'百年历史的古董蒸汽火车，穿越丛林和薄雾的童话旅程',rating:'4.7',price:'$30起',hours:'每天多班',tips:'周末提前网上订票，节假日非常受欢迎'},
+      {id:'dr2',name:'SkyHigh Mount Dandenong',cat:'自然景观',e:'🌃',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'海拔633米的山顶，鸟瞰墨尔本全景，夜景尤为壮观',rating:'4.4',price:'免费',hours:'全天开放',tips:'日落时分人最多，注意停车'},
+      {id:'dr3',name:'William Ricketts保护区',cat:'艺术文化',e:'🌿',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'森林中的神秘雕塑花园，融合土著文化与自然艺术',rating:'4.5',price:'$8',hours:'10:00-16:30',tips:'静谧神秘的氛围，带孩子游览效果极好'},
+      {id:'dr4',name:'Sherbrooke森林',cat:'自然景观',e:'🦜',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'澳大利亚最著名的琴鸟栖息地，清晨可听到婉转歌声',rating:'4.6',price:'免费',hours:'全天开放',tips:'清晨6-9点是听琴鸟叫声最佳时间'},
+    ],
+    restaurants:[
+      {id:'drr1',name:'Miss Marples Tea Room',cat:'下午茶',e:'🫖',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'Sassafras镇的维多利亚风格茶室，传统英式下午茶',rating:'4.5',price:'$$',hours:'10:00-17:00',tips:'排队是常态，建议工作日前往'},
+      {id:'drr2',name:'Ranges Café',cat:'咖啡早午餐',e:'☕',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'Olinda镇的森林咖啡馆，自制蛋糕和浓缩咖啡一流',rating:'4.4',price:'$$',hours:'8:00-16:00',tips:'周末排队，建议工作日'},
+    ],
+    hotels:[
+      {id:'drh1',name:'Ranges Boutique Hotel',cat:'精品酒店',e:'🌲',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'森林中的精品酒店，每间客房都有私人阳台和壁炉',rating:'4.7',price:'$$$',hours:'',tips:'距Puffing Billy火车站步行5分钟'},
+      {id:'drh2',name:'EcoFarm Dandenong Ranges',cat:'农场民宿',e:'🐓',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'有机农场民宿，体验采摘和农场生活',rating:'4.3',price:'$$',hours:'',tips:'适合亲子家庭'},
+    ]
+  },
+  '格兰坪': {
+    attractions:[
+      {id:'gp1',name:'麦肯纪峰',cat:'自然景观',e:'🏔',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'格兰坪最高峰，360度俯瞰砂岩山脉和平原',rating:'4.7',price:'$15',hours:'日出-日落',tips:'清晨登顶云海景色最美'},
+      {id:'gp2',name:'Brambuk文化中心',cat:'历史文化',e:'🪃',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'土著Gariwerd人的文化中心，了解4万年的原住民历史',rating:'4.5',price:'$5',hours:'9:00-17:00',tips:'有原住民向导带领讲解'},
+      {id:'gp3',name:'McKenzie Falls',cat:'自然景观',e:'💦',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'格兰坪最壮观的瀑布，雨季后水量充沛气势磅礴',rating:'4.8',price:'$15',hours:'全天',tips:'下雨后1-2天瀑布最壮观'},
+      {id:'gp4',name:'Reed Lookout',cat:'自然景观',e:'🦘',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'公路边的观景台，早晨经常能看到袋鼠觅食',rating:'4.4',price:'免费',hours:'全天',tips:'日出时分看袋鼠群概率最高'},
+    ],
+    restaurants:[
+      {id:'gpr1',name:'Halls Gap Hotel',cat:'酒吧餐厅',e:'🍺',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'格兰坪唯一镇子Halls Gap的中心酒吧，牛排和薯条一流',rating:'4.1',price:'$$',hours:'11:00-22:00',tips:'旺季需提前预订'},
+      {id:'gpr2',name:'Grampians Peaks Café',cat:'咖啡早午餐',e:'☕',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'当地人最爱的早餐店，自制面包和新鲜果汁',rating:'4.3',price:'$',hours:'7:00-14:00',tips:'超早开门，适合登山前用餐'},
+    ],
+    hotels:[
+      {id:'gph1',name:'Grampians Manor Boutique Hotel',cat:'精品酒店',e:'🏡',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'Halls Gap镇的精品住宿，有私人花园和山景',rating:'4.6',price:'$$$',hours:'',tips:'安静区域，有噪声管制'},
+      {id:'gph2',name:'Boroka Downs',cat:'豪华小屋',e:'🌄',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'俯瞰整个格兰坪的悬崖边豪华小屋',rating:'4.9',price:'$$$$',hours:'',tips:'澳大利亚评分最高的住宿之一'},
+    ]
+  },
+  'Wilson Promontory': {
+    attractions:[
+      {id:'wp1',name:'Squeaky Beach',cat:'自然景观',e:'🏖',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'踩上去会发出吱吱声的白石英沙滩，澳大利亚最美海滩之一',rating:'4.9',price:'$15',hours:'全天',tips:'名字由来是因为沙粒踩上去的摩擦声'},
+      {id:'wp2',name:'Wilsons Promontory灯塔',cat:'历史文化',e:'🏮',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'1859年建造的历史灯塔，需徒步19km来回，但绝对值得',rating:'4.8',price:'$15',hours:'全天',tips:'可住在灯塔附近的小屋，提前半年预订'},
+      {id:'wp3',name:'Tidal River营地',cat:'自然景观',e:'🏕',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'威尔逊海角的核心营地，夜晚星空是全澳最美之一',rating:'4.7',price:'$40',hours:'全年开放',tips:'节假日提前几个月预订'},
+    ],
+    restaurants:[
+      {id:'wpr1',name:'Tidal River Café',cat:'简餐',e:'🍔',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'公园内唯一的餐厅，简单快餐，价格合理',rating:'3.8',price:'$$',hours:'8:00-20:00',tips:'旺季排队，建议自备食物'},
+    ],
+    hotels:[
+      {id:'wph1',name:'Tidal River小屋',cat:'公园住宿',e:'🛖',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'国家公园内的官方小屋，设施齐全，紧邻海滩',rating:'4.4',price:'$$',hours:'',tips:'Parks Victoria官网预订，极受欢迎'},
+    ]
+  },
+  '菲利普岛': {
+    attractions:[
+      {id:'pi1',name:'企鹅归巢',cat:'野生动物',e:'🐧',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'每天日落后数百只小蓝企鹅从海中归巢，全球最受欢迎的野生动物体验之一',rating:'4.8',price:'$30',hours:'日落后',tips:'提前网上购票，穿厚衣服夜晚海风很冷'},
+      {id:'pi2',name:'考拉保护中心',cat:'野生动物',e:'🐨',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'救助和保护考拉的中心，可近距离观察这些可爱的动物',rating:'4.6',price:'$14',hours:'10:00-17:30',tips:'下午2点有考拉保护讲解'},
+      {id:'pi3',name:'诺比角野生动物保护区',cat:'野生动物',e:'🦭',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'可以看到毛皮海豹的天然栖息地，春季有幼崽',rating:'4.5',price:'免费',hours:'全天',tips:'带望远镜效果更好'},
+    ],
+    restaurants:[
+      {id:'pir1',name:'The Jetty Cowes',cat:'海鲜餐厅',e:'🦐',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'Cowes小镇最受欢迎的海鲜餐厅，新鲜龙虾和生蚝',rating:'4.5',price:'$$$',hours:'12:00-21:00',tips:'企鹅归巢前的晚餐首选'},
+      {id:'pir2',name:'Isola di Capri',cat:'意大利菜',e:'🍝',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'Cowes镇的意大利餐厅，自制意面和披萨口碑极好',rating:'4.4',price:'$$',hours:'17:30-22:00',tips:'周末需预订'},
+    ],
+    hotels:[
+      {id:'pih1',name:'Amaze\'n Philip Island',cat:'度假村',e:'🎭',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'集住宿和娱乐于一体的家庭度假村',rating:'4.3',price:'$$',hours:'',tips:'适合带孩子的家庭'},
+      {id:'pih2',name:'Cowes海滨公寓',cat:'公寓',e:'🏠',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'Cowes镇中心的自助公寓，步行可达所有景点',rating:'4.4',price:'$$',hours:'',tips:'提前预订性价比最高'},
+    ]
+  },
+  '本迪戈': {
+    attractions:[
+      {id:'bg1',name:'中国馆博物馆',cat:'历史文化',e:'🏮',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'澳大利亚最古老的中国博物馆，展示淘金热时期华人历史',rating:'4.6',price:'$10',hours:'10:00-17:00',tips:'馆内有1879年制造的中国龙'},
+      {id:'bg2',name:'本迪戈艺术馆',cat:'艺术文化',e:'🎨',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'澳大利亚规模最大的地区性艺术馆，馆藏丰富',rating:'4.5',price:'$10',hours:'10:00-17:00',tips:'特别展览通常质量极高'},
+      {id:'bg3',name:'中央黛博拉金矿',cat:'历史文化',e:'⛏',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'真实的历史金矿，可下矿井体验淘金热时代的采矿生活',rating:'4.7',price:'$34',hours:'9:30-17:00',tips:'矿井温度很低，带外套'},
+      {id:'bg4',name:'本迪戈大教堂',cat:'历史文化',e:'⛪',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'维多利亚金矿时代的宏伟哥特式建筑，澳大利亚最美教堂之一',rating:'4.5',price:'$5',hours:'10:00-16:00',tips:'可登塔俯瞰本迪戈全城'},
+    ],
+    restaurants:[
+      {id:'bgr1',name:'GPO Bar & Brasserie',cat:'Fine Dining',e:'🍽',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'历史邮政总局改建的高级餐厅，澳大利亚本地食材料理',rating:'4.6',price:'$$$',hours:'12:00-22:00',tips:'建筑本身就值得一看'},
+      {id:'bgr2',name:'101 Bar & Restaurant',cat:'酒吧餐厅',e:'🍸',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'本迪戈最热门的夜生活场所，鸡尾酒和小食一流',rating:'4.3',price:'$$',hours:'16:00-00:00',tips:'周四有现场音乐'},
+    ],
+    hotels:[
+      {id:'bgh1',name:'Schaller Studio',cat:'设计酒店',e:'🎨',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'艺术家工作室改建的创意酒店，每间房都是独特艺术品',rating:'4.8',price:'$$$',hours:'',tips:'本迪戈最独特的住宿体验'},
+      {id:'bgh2',name:'Shamrock Hotel',cat:'历史酒店',e:'🍀',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'1854年建造的历史酒店，维多利亚金矿时代的活化石',rating:'4.4',price:'$$',hours:'',tips:'酒吧每天有现场娱乐'},
+    ]
+  },
+  '巴拉瑞特': {
+    attractions:[
+      {id:'bl1',name:'主权山历史公园',cat:'历史文化',e:'⛏',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'重现1850年代淘金热时代的活历史博物馆，演员扮演历史人物',rating:'4.7',price:'$39',hours:'9:30-17:30',tips:'每天15:30有真实淘金热冲突重演'},
+      {id:'bl2',name:'Ballarat野生动物园',cat:'野生动物',e:'🦘',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'可以喂食袋鼠和袋熊的家庭友好动物园',rating:'4.5',price:'$29',hours:'9:00-17:30',tips:'早上动物最活跃'},
+      {id:'bl3',name:'巴拉瑞特植物园',cat:'自然景观',e:'🌷',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'1858年建立的历史园林，秋天枫叶季节最美',rating:'4.4',price:'免费',hours:'7:30-日落',tips:'有免费的历史导览可参加'},
+    ],
+    restaurants:[
+      {id:'blr1',name:'Carboni\'s',cat:'意大利菜',e:'🍝',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'巴拉瑞特最受好评的意大利餐厅，家庭经营四十年',rating:'4.5',price:'$$',hours:'17:30-22:00',tips:'需提前预订'},
+    ],
+    hotels:[
+      {id:'blh1',name:'Craig\'s Royal Hotel',cat:'历史酒店',e:'👑',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'1853年历史酒店，曾接待无数名人，维多利亚时代的奢华建筑',rating:'4.6',price:'$$$',hours:'',tips:'历史酒吧值得一坐'},
+    ]
+  },
+  '墨尔本': {
+    attractions:[
+      {id:'mel1',name:'Flinders Street车站',cat:'历史文化',e:'🚉',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'墨尔本的标志性建筑，1905年建造的巴洛克式火车站',rating:'4.6',price:'免费',hours:'全天',tips:'可以进入大厅拍照，上方有咖啡馆'},
+      {id:'mel2',name:'皇家展览馆',cat:'历史文化',e:'🏛',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'世界遗产级别的维多利亚时代建筑，1880年国际展览场馆',rating:'4.4',price:'$12导览',hours:'9:00-17:00',tips:'卡尔顿花园里散步免费'},
+      {id:'mel3',name:'维多利亚国家美术馆',cat:'艺术文化',e:'🎨',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'澳大利亚最古老最大的公立美术馆，馆藏超过7万件',rating:'4.6',price:'免费',hours:'10:00-17:00',tips:'周五晚间有特别活动'},
+      {id:'mel4',name:'中唐人街',cat:'历史文化',e:'🏮',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'世界上历史最悠久的唐人街之一，美食多样热闹非凡',rating:'4.3',price:'免费',hours:'全天',tips:'农历新年庆典规模盛大'},
+    ],
+    restaurants:[
+      {id:'melr1',name:'Chin Chin',cat:'亚洲菜',e:'🌶',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'墨尔本最热门餐厅之一，东南亚风味菜肴人气爆棚',rating:'4.5',price:'$$',hours:'12:00-23:00',tips:'不接受预订，需排队等位'},
+      {id:'melr2',name:'Attica',cat:'Fine Dining',e:'🍽',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'世界50最佳餐厅之一，澳大利亚本土食材的极致创意烹饪',rating:'4.9',price:'$$$$',hours:'18:30-22:00',tips:'至少提前3个月预订'},
+      {id:'melr3',name:'Supernormal',cat:'日式餐厅',e:'🍱',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'日式居酒屋风格，招牌新英格兰龙虾卷全城排队',rating:'4.6',price:'$$$',hours:'12:00-23:00',tips:'龙虾卷限量供应'},
+    ],
+    hotels:[
+      {id:'melh1',name:'The Hotel Windsor',cat:'历史酒店',e:'👑',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'1883年开业，维多利亚时代最顶级的豪华酒店',rating:'4.7',price:'$$$$',hours:'',tips:'下午茶是墨尔本传统体验'},
+      {id:'melh2',name:'Alt Hotel Melbourne',cat:'精品酒店',e:'🎨',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'南岸的现代设计酒店，步行可达主要景点',rating:'4.5',price:'$$$',hours:'',tips:'阳台可看雅拉河景'},
+      {id:'melh3',name:'Space Hotel Melbourne',cat:'青旅',e:'🎸',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'市中心最佳背包客旅舍，共用厨房和社交空间',rating:'4.3',price:'$',hours:'',tips:'周边酒吧和咖啡馆步行可达'},
+    ]
+  },
+};
+
+// ── FEATURED ──
 const FEATURED=[
   {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=80',wide:true},
   {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
@@ -292,9 +475,10 @@ const FEATURED=[
   {n:'丹德农山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80'},
   {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80'},
   {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=800&q=80',wide:true},
-  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80'},
+  {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80'},
   {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
 ];
+
 const VIBES=[
   {id:'nature',i:'🏔',n:'自然风光',h:'国家公园、山脉、森林'},
   {id:'beach',i:'🌊',n:'海滩海岸',h:'大洋路、海湾、冲浪'},
@@ -303,47 +487,53 @@ const VIBES=[
   {id:'culture',i:'🎭',n:'城市文化',h:'博物馆、艺术、历史'},
   {id:'relax',i:'♨️',n:'温泉放松',h:'温泉、SPA、度假村'},
 ];
-const VIBE_RECS={nature:['格兰坪','丹德农山脉','Wilson Promontory'],beach:['大洋路','Brighton Beach','莫宁顿半岛'],food:['雅拉谷','马其顿山','莫宁顿半岛'],wildlife:['菲利普岛','Healesville','格兰坪'],culture:['墨尔本 City','本迪戈','巴拉瑞特'],relax:['莫宁顿半岛','Hepburn Springs','雅拉谷']};
-const CHIPS={attractions:['全部','自然景观','历史文化','野生动物','艺术'],restaurants:['全部','咖啡','海鲜','Fine Dining','亚洲菜'],hotels:['全部','精品酒店','民宿','度假村','经济型']};
-const EMAP={tourist_attraction:'🏛',natural_feature:'🌿',park:'🌲',museum:'🏛',church:'⛪',amusement_park:'🎡',zoo:'🐨',art_gallery:'🎨',restaurant:'🍽',cafe:'☕',bar:'🍺',lodging:'🏨'};
+const VIBE_RECS={nature:['格兰坪','丹德农山脉','Wilson Promontory'],beach:['大洋路','莫宁顿半岛','菲利普岛'],food:['雅拉谷','莫宁顿半岛','墨尔本'],wildlife:['菲利普岛','Healesville','格兰坪'],culture:['墨尔本','本迪戈','巴拉瑞特'],relax:['莫宁顿半岛','雅拉谷','丹德农山脉']};
+const CHIPS={attractions:['全部','自然景观','历史文化','野生动物','艺术'],restaurants:['全部','咖啡早午餐','海鲜','Fine Dining','亚洲菜'],hotels:['全部','精品酒店','历史酒店','度假村','民宿']};
+
+// ── STATE ──
 let path='A',step=0,steps=[];
 let state={dest:'',vibes:[],adults:2,children:0,days:'2天',budget:'中等 ($100-200/人/天)',transport:'自驾',attractions:[],restaurants:[],hotels:[]};
-let cache={};
-let filters={attractions:'全部',restaurants:'全部',hotels:'全部'};
 const SA=['basics','attractions','restaurants','hotels','result'];
 const SB=['vibes','dest_pick','basics','attractions','restaurants','hotels','result'];
+
+// ── HERO ──
 let si=0;
 function initHero(){
-  const wrap=document.getElementById('heroSlides');
-  const dots=document.getElementById('heroDots');
-  wrap.innerHTML=SLIDES.map((s,i)=>`<div class="hero-slide${i===0?' on':''}" id="hs${i}"><img src="${s.url}" alt="${s.loc}" onerror="this.parentElement.style.opacity='0'"></div>`).join('');
-  dots.innerHTML=SLIDES.map((_,i)=>`<div class="hdot${i===0?' on':''}" onclick="goSlide(${i})"></div>`).join('');
+  const w=document.getElementById('heroSlides'),d=document.getElementById('heroDots');
+  w.innerHTML=SLIDES.map((s,i)=>`<div class="hs${i===0?' on':''}" id="hs${i}"><img src="${s.url}" alt="${s.loc}" onerror="this.parentElement.style.opacity=0"></div>`).join('');
+  d.innerHTML=SLIDES.map((_,i)=>`<div class="hdot${i===0?' on':''}" onclick="goSlide(${i})"></div>`).join('');
   SLIDES.forEach(s=>{const p=new Image();p.src=s.url;});
   setInterval(()=>goSlide((si+1)%SLIDES.length),7000);
 }
-function goSlide(idx){
+function goSlide(i){
   document.getElementById('hs'+si)?.classList.remove('on');
-  document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===idx));
-  si=idx;
-  document.getElementById('hs'+idx)?.classList.add('on');
-  const loc=document.getElementById('heroLoc');
-  if(loc){loc.style.opacity='0';setTimeout(()=>{loc.textContent=SLIDES[idx].loc;loc.style.opacity='1';loc.style.transition='opacity .5s';},300);}
+  document.querySelectorAll('.hdot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  si=i;
+  document.getElementById('hs'+i)?.classList.add('on');
+  const l=document.getElementById('heroLoc');
+  if(l){l.style.opacity=0;setTimeout(()=>{l.textContent=SLIDES[i].loc;l.style.opacity=1;l.style.transition='opacity .5s';},300);}
 }
+
+// ── FEATURED ──
 function initFeatured(){
   const g=document.getElementById('featG');if(!g)return;
-  g.innerHTML=FEATURED.map(f=>`<div class="fc${f.wide?' wide':''}" onclick="quickDest('${f.n}')"><img src="${f.img}" alt="${f.n}" onerror="this.style.display='none'"><div class="fc-body"><div class="fc-reg">${f.r}</div><div class="fc-name">${f.n}</div></div></div>`).join('');
+  g.innerHTML=FEATURED.map(f=>`<div class="fc${f.wide?' wide':''}" onclick="quickDest('${f.n}')"><img src="${f.img}" alt="${f.n}" onerror="this.style.display='none'"><div class="fcb"><div class="fcr">${f.r}</div><div class="fcn">${f.n}</div></div></div>`).join('');
 }
+
+// ── SEARCH ──
 function heroFilter(v){
-  const ddl=document.getElementById('heroDdl');
-  if(!v.trim()){ddl.style.display='none';return;}
+  const d=document.getElementById('heroDdl');
+  if(!v.trim()){d.style.display='none';return;}
   const f=CITIES.filter(c=>c.n.toLowerCase().includes(v.toLowerCase())||c.r.toLowerCase().includes(v.toLowerCase()));
-  if(!f.length){ddl.style.display='none';return;}
-  ddl.innerHTML=f.slice(0,8).map(c=>`<div style="padding:.85rem 1.4rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid rgba(255,255,255,.06);" onmousedown="quickDest('${c.n}')" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background=''"><span>${c.e}</span><div><div style="font-size:.86rem;color:#fff">${c.n}</div><div style="font-size:.68rem;color:rgba(255,255,255,.4)">${c.r}</div></div></div>`).join('');
-  ddl.style.display='block';
+  if(!f.length){d.style.display='none';return;}
+  d.innerHTML=f.slice(0,8).map(c=>`<div class="sdi" onmousedown="quickDest('${c.n}')" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background=''"><span>${c.e}</span><div><div class="sdn">${c.n}</div><div class="sdr">${c.r}</div></div></div>`).join('');
+  d.style.display='block';
 }
 function closeHeroDdl(){document.getElementById('heroDdl').style.display='none';}
 function heroGo(){const v=document.getElementById('heroInp').value.trim();if(v)quickDest(v);else openWiz('B');}
 function quickDest(n){state.dest=n;state.attractions=[];state.restaurants=[];state.hotels=[];openWiz('A');}
+
+// ── WIZARD ──
 function openWiz(p){
   path=p;steps=p==='A'?SA:SB;step=0;
   if(p==='B')state={dest:'',vibes:[],adults:2,children:0,days:'2天',budget:'中等 ($100-200/人/天)',transport:'自驾',attractions:[],restaurants:[],hotels:[]};
@@ -353,7 +543,7 @@ function openWiz(p){
   renderStep();
 }
 function closeWiz(){document.getElementById('wiz').classList.remove('show');document.getElementById('bbar').classList.remove('show');document.body.style.overflow='';state.dest='';}
-function nextStep(){if(step<steps.length-1){step++;const b=document.getElementById('wizBody');b.style.opacity='0';setTimeout(renderStep,180);}}
+function nextStep(){if(step<steps.length-1){step++;const b=document.getElementById('wizBody');b.style.opacity=0;setTimeout(renderStep,180);}}
 function renderProg(){
   document.getElementById('wizProg').innerHTML=steps.map((s,i)=>{
     const cls=i<step?'done':i===step?'on':'';
@@ -361,14 +551,13 @@ function renderProg(){
     return `<div class="wp ${cls}">${i<step?'✓':i+1}</div>${line}`;
   }).join('');
 }
-function animIn(el){el.style.opacity='0';el.style.transition='none';setTimeout(()=>{el.style.transition='opacity .28s ease';el.style.opacity='1';},30);}
+function animIn(el){el.style.opacity=0;el.style.transition='none';setTimeout(()=>{el.style.transition='opacity .28s ease';el.style.opacity=1;},30);}
 function renderStep(){
   renderProg();
-  const b=document.getElementById('wizBody');
-  animIn(b);
+  const b=document.getElementById('wizBody');animIn(b);
   const s=steps[step];
-  const isPlaces=(s==='attractions'||s==='restaurants'||s==='hotels');
-  if(!isPlaces)document.getElementById('bbar').classList.remove('show');
+  const isP=(s==='attractions'||s==='restaurants'||s==='hotels');
+  if(!isP)document.getElementById('bbar').classList.remove('show');
   if(s==='vibes')renderVibes(b);
   else if(s==='dest_pick')renderDestPick(b);
   else if(s==='basics')renderBasics(b);
@@ -377,144 +566,226 @@ function renderStep(){
   else if(s==='hotels')renderPlaces(b,'hotels');
   else if(s==='result')renderResult(b);
 }
+
+// ── VIBES ──
 function renderVibes(el){
-  el.innerHTML=`<div class="sno">Step 1 · 旅行偏好</div><h2 class="stitle">你想要什么样的<em>体验？</em></h2><p class="ssub">选择感兴趣的方向，可多选</p><div class="vibes-g">${VIBES.map(v=>`<div class="vibe${state.vibes.includes(v.id)?' on':''}" onclick="toggleVibe('${v.id}',this)"><span class="vi">${v.i}</span><div class="vn">${v.n}</div><div class="vh">${v.h}</div></div>`).join('')}</div><div style="display:flex;justify-content:flex-end"><button class="btn-p" onclick="nextStep()">下一步 →</button></div>`;
+  el.innerHTML=`<div class="sno">Step 1 · 旅行偏好</div><h2 class="stitle">你想要什么样的<em>体验？</em></h2><p class="ssub">选择感兴趣的方向，可多选</p><div class="vg">${VIBES.map(v=>`<div class="vibe${state.vibes.includes(v.id)?' on':''}" onclick="toggleVibe('${v.id}',this)"><span class="vi">${v.i}</span><div class="vn">${v.n}</div><div class="vh">${v.h}</div></div>`).join('')}</div><div style="display:flex;justify-content:flex-end"><button class="btn-p" onclick="nextStep()">下一步 →</button></div>`;
 }
 function toggleVibe(id,el){state.vibes.includes(id)?state.vibes=state.vibes.filter(v=>v!==id):state.vibes.push(id);el.classList.toggle('on');}
+
+// ── DEST PICK ──
 function renderDestPick(el){
   let names=[];state.vibes.forEach(v=>{if(VIBE_RECS[v])names.push(...VIBE_RECS[v]);});
   names=[...new Set(names)].slice(0,3);
-  if(!names.length)names=['墨尔本 City','大洋路','雅拉谷'];
+  if(!names.length)names=['墨尔本','大洋路','雅拉谷'];
   const recs=names.map(n=>CITIES.find(c=>c.n===n)||{n,r:'维多利亚州',e:'🗺',img:''});
-  el.innerHTML=`<div class="sno">Step 2 · 推荐目的地</div><h2 class="stitle">为你推荐的<em>目的地</em></h2><p class="ssub">根据你的偏好推荐，选一个继续</p><div class="drecs">${recs.map((r,i)=>`<div class="drec${state.dest===r.n?' on':''}" id="drec${i}" onclick="pickDest('${r.n}',${i})"><div class="drec-img">${r.img?`<img src="${r.img}" alt="${r.n}">`:''}${r.e}</div><div class="drec-body"><div class="drec-reg">${r.r}</div><div class="drec-name">${r.n}</div></div></div>`).join('')}</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem"><div id="dpHint" style="font-size:.8rem;color:var(--mist)">${state.dest?'已选：'+state.dest:'请选择一个目的地'}</div><button class="btn-p" onclick="confirmDp()">下一步 →</button></div>`;
+  el.innerHTML=`<div class="sno">Step 2 · 推荐目的地</div><h2 class="stitle">为你推荐的<em>目的地</em></h2><p class="ssub">根据你的偏好推荐，选一个继续</p><div class="drg">${recs.map((r,i)=>`<div class="drec${state.dest===r.n?' on':''}" id="drec${i}" onclick="pickDest('${r.n}',${i})"><div class="drec-img">${r.img?`<img src="${r.img}" alt="${r.n}">`:''}<span style="position:relative;z-index:1;font-size:2.5rem">${r.e}</span></div><div class="drec-body"><div class="drec-reg">${r.r}</div><div class="drec-name">${r.n}</div><div class="drec-why">${PLACES_DB[r.n]?'有精选景点、餐厅和住宿数据':'维多利亚州精选目的地'}</div></div></div>`).join('')}</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem"><div id="dpH" style="font-size:.8rem;color:var(--mist)">${state.dest?'已选：'+state.dest:'请选择一个目的地'}</div><button class="btn-p" onclick="confirmDp()">下一步 →</button></div>`;
 }
-function pickDest(n,i){state.dest=n;state.attractions=[];state.restaurants=[];state.hotels=[];document.querySelectorAll('.drec').forEach(d=>d.classList.remove('on'));document.getElementById('drec'+i)?.classList.add('on');const h=document.getElementById('dpHint');if(h)h.textContent='已选：'+n;}
-function confirmDp(){if(!state.dest){const h=document.getElementById('dpHint');if(h){h.style.color='var(--ember)';h.textContent='请先选择一个目的地';}return;}nextStep();}
+function pickDest(n,i){state.dest=n;state.attractions=[];state.restaurants=[];state.hotels=[];document.querySelectorAll('.drec').forEach(d=>d.classList.remove('on'));document.getElementById('drec'+i)?.classList.add('on');const h=document.getElementById('dpH');if(h)h.textContent='已选：'+n;}
+function confirmDp(){if(!state.dest){const h=document.getElementById('dpH');if(h){h.style.color='var(--ember)';h.textContent='请先选择一个目的地';}return;}nextStep();}
+
+// ── BASICS ──
 function renderBasics(el){
   const sn=steps.indexOf('basics')+1;
-  const dc=CITIES.find(c=>c.n===state.dest);
-  const di=dc?.img||'';
+  const dc=CITIES.find(c=>c.n===state.dest);const di=dc?.img||'';
   const destBlock=path==='A'?`<div class="dest-wrap"><span class="dest-ico">📍</span><input class="dest-inp" id="destF" placeholder="搜索目的地…" value="${state.dest}" oninput="filterDest(this.value)" onblur="setTimeout(hideDdl,200)"><div class="dest-ddl" id="destDdl"></div></div>`:`<div class="dest-pill">📍 ${state.dest}</div>`;
   el.innerHTML=`${di?`<div class="bh-wrap"><img src="${di}" alt="${state.dest}" onerror="this.parentElement.style.display='none'"><div class="bh-label">${state.dest}</div></div>`:''}
-    <div class="sno">Step ${sn} · 基本信息</div><h2 class="stitle">${path==='A'?'你想去哪里？':'确认你的<em>行程</em>'}</h2><p class="ssub">填写基本信息，AI将为你生成最贴合的攻略</p>
-    ${destBlock}
+    <div class="sno">Step ${sn} · 基本信息</div><h2 class="stitle">${path==='A'?'你想去哪里？':'确认你的<em>行程</em>'}</h2><p class="ssub">填写基本信息，AI将为你生成最贴合的攻略</p>${destBlock}
     <div class="fld" style="margin-bottom:1.5rem"><label>出行人数</label><div class="people-row"><div class="pbox"><div><div class="plbl">成人</div><div class="psub">16岁以上</div></div><div class="ctr"><button class="cbtn" onclick="adj('adults',-1)">−</button><div class="cnum" id="aN">${state.adults}</div><button class="cbtn" onclick="adj('adults',1)">+</button></div></div><div class="pbox"><div><div class="plbl">儿童</div><div class="psub">15岁及以下</div></div><div class="ctr"><button class="cbtn" onclick="adj('children',-1)">−</button><div class="cnum" id="cN">${state.children}</div><button class="cbtn" onclick="adj('children',1)">+</button></div></div></div></div>
-    <div class="basics-g"><div class="fld"><label>旅行天数</label><select onchange="state.days=this.value">${['1天','2天','3天','4-5天','一周+'].map(d=>`<option${state.days===d?' selected':''}>${d}</option>`).join('')}</select></div><div class="fld"><label>预算（每人每天）</label><select onchange="state.budget=this.value">${['经济型 ($50-100/人/天)','中等 ($100-200/人/天)','舒适型 ($200-400/人/天)','豪华型 ($400+/人/天)'].map(d=>`<option${state.budget===d?' selected':''}>${d}</option>`).join('')}</select></div><div class="fld"><label>交通方式</label><select onchange="state.transport=this.value">${['自驾','公共交通','Uber','跟团'].map(d=>`<option${state.transport===d?' selected':''}>${d}</option>`).join('')}</select></div></div>
+    <div class="bg"><div class="fld"><label>旅行天数</label><select onchange="state.days=this.value">${['1天','2天','3天','4-5天','一周+'].map(d=>`<option${state.days===d?' selected':''}>${d}</option>`).join('')}</select></div><div class="fld"><label>预算（每人每天）</label><select onchange="state.budget=this.value">${['经济型 ($50-100/人/天)','中等 ($100-200/人/天)','舒适型 ($200-400/人/天)','豪华型 ($400+/人/天)'].map(d=>`<option${state.budget===d?' selected':''}>${d}</option>`).join('')}</select></div><div class="fld"><label>交通方式</label><select onchange="state.transport=this.value">${['自驾','公共交通','Uber','跟团'].map(d=>`<option${state.transport===d?' selected':''}>${d}</option>`).join('')}</select></div></div>
     <div style="display:flex;justify-content:flex-end"><button class="btn-p" onclick="confirmBasics()">下一步 →</button></div>`;
 }
 function adj(k,d){state[k]=Math.max(k==='adults'?1:0,state[k]+d);document.getElementById(k==='adults'?'aN':'cN').textContent=state[k];}
-function filterDest(v){const ddl=document.getElementById('destDdl');if(!v){ddl.classList.remove('open');return;}const f=CITIES.filter(c=>c.n.toLowerCase().includes(v.toLowerCase())||c.r.toLowerCase().includes(v.toLowerCase()));if(!f.length){ddl.classList.remove('open');return;}ddl.innerHTML=f.slice(0,10).map(c=>`<div class="dopt" onclick="selDest('${c.n}')"><span>${c.e}</span><div><div class="dopt-n">${c.n}</div><div class="dopt-r">${c.r}</div></div></div>`).join('');ddl.classList.add('open');}
+function filterDest(v){const d=document.getElementById('destDdl');if(!v){d.classList.remove('open');return;}const f=CITIES.filter(c=>c.n.toLowerCase().includes(v.toLowerCase())||c.r.toLowerCase().includes(v.toLowerCase()));if(!f.length){d.classList.remove('open');return;}d.innerHTML=f.slice(0,10).map(c=>`<div class="dopt" onclick="selDest('${c.n}')"><span>${c.e}</span><div><div class="dopt-n">${c.n}</div><div class="dopt-r">${c.r}</div></div></div>`).join('');d.classList.add('open');}
 function selDest(n){state.dest=n;state.attractions=[];state.restaurants=[];state.hotels=[];const f=document.getElementById('destF');if(f)f.value=n;hideDdl();}
 function hideDdl(){const d=document.getElementById('destDdl');if(d)d.classList.remove('open');}
 function confirmBasics(){if(path==='A'){const f=document.getElementById('destF');if(f)state.dest=f.value;if(!state.dest.trim()){if(f)f.style.borderColor='var(--ember)';return;}}nextStep();}
-function placeEmoji(types=[]){for(const t of types)if(EMAP[t])return EMAP[t];return '📍';}
-function photoUrl(photos){if(!photos?.length)return null;return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photo_reference=${photos[0].photo_reference}&key=${GKEY}`;}
-async function fetchPlaces(dest,type){
-  const key=`${dest}__${type}`;
-  if(cache[key])return cache[key];
-  let q=dest||'Melbourne';
-  if((type==='restaurants'||type==='hotels')&&state.attractions.length>0){
-    const ai=cache[`${dest}__attractions`]||[];
-    const sel=ai.find(x=>state.attractions.includes(x.id));
-    if(sel?.address){const sub=sel.address.split(',')[0].trim();if(sub&&sub!==dest)q=sub+', '+dest;}
-  }
-  try{
-    const tm={attractions:'tourist_attraction',restaurants:'restaurant',hotels:'lodging'};
-    const pt=tm[type]||'tourist_attraction';
-    const gu=`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(q+' Victoria Australia')}&type=${pt}&key=${GKEY}`;
-    const pu=`https://api.allorigins.win/get?url=${encodeURIComponent(gu)}`;
-    const res=await fetch(pu);
-    const wrapper=await res.json();
-    const data=JSON.parse(wrapper.contents);
-    if(!data.results?.length)return[];
-    const items=data.results.slice(0,15).map((p,i)=>({
-      id:p.place_id||'p'+i,name:p.name,
-      cat:(p.types?.[0]||'place').replace(/_/g,' '),
-      e:placeEmoji(p.types),photo:photoUrl(p.photos),
-      desc:p.formatted_address||'',
-      rating:p.rating?.toFixed(1)||'N/A',
-      price:p.price_level?'$'.repeat(p.price_level):'—',
-      hours:p.opening_hours?.open_now!=null?(p.opening_hours.open_now?'现在营业中':'现在关闭'):'—',
-      address:p.formatted_address||'',
-      reviews:(p.reviews||[]).slice(0,2).map(r=>({a:r.author_name,s:'Google',t:r.text?.slice(0,120)||''})),
-      place_id:p.place_id,types:p.types||[],
-    }));
-    cache[key]=items;return items;
-  }catch(e){console.error('Places error:',e);return[];}
+
+// ── PLACES (Built-in Data) ──
+function getPlaces(dest,type){
+  const db=PLACES_DB[dest];
+  if(!db)return getFallback(dest,type);
+  return db[type]||[];
 }
-async function renderPlaces(el,type){
+
+function getFallback(dest,type){
+  // Generic fallback places when destination not in DB
+  const generic={
+    attractions:[
+      {id:'f1',name:`${dest}自然保护区`,cat:'自然景观',e:'🌿',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:`${dest}地区的自然风光和野生动物`,rating:'4.5',price:'$10-15',hours:'日出-日落',tips:'建议早上前往'},
+      {id:'f2',name:`${dest}历史博物馆`,cat:'历史文化',e:'🏛',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:`了解${dest}的历史与文化`,rating:'4.3',price:'$8-12',hours:'10:00-17:00',tips:'周一部分关闭'},
+      {id:'f3',name:`${dest}观景台`,cat:'自然景观',e:'🌄',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:`${dest}最佳观景地点，俯瞰全景`,rating:'4.4',price:'免费',hours:'全天',tips:'日落时分最美'},
+    ],
+    restaurants:[
+      {id:'fr1',name:`${dest}本地餐厅`,cat:'本地菜',e:'🍽',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:`${dest}当地特色美食`,rating:'4.2',price:'$$',hours:'12:00-21:00',tips:'建议品尝当地特色'},
+      {id:'fr2',name:`${dest}咖啡馆`,cat:'咖啡早午餐',e:'☕',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:`放松休息的好去处，本地咖啡和甜点`,rating:'4.3',price:'$',hours:'8:00-17:00',tips:'澳洲咖啡文化必体验'},
+    ],
+    hotels:[
+      {id:'fh1',name:`${dest}精品酒店`,cat:'精品酒店',e:'🏨',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:`${dest}市中心的舒适住宿`,rating:'4.3',price:'$$$',hours:'',tips:'提前预订有优惠'},
+      {id:'fh2',name:`${dest}民宿`,cat:'民宿',e:'🏡',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:`体验当地生活的最佳选择`,rating:'4.4',price:'$$',hours:'',tips:'通过Airbnb预订'},
+    ],
+  };
+  return generic[type]||[];
+}
+
+function filterPlaces(items,chip){
+  if(chip==='全部')return items;
+  const map={
+    '自然景观':['自然景观'],'历史文化':['历史文化','历史体验'],'野生动物':['野生动物'],'艺术':['艺术文化'],
+    '咖啡早午餐':['咖啡早午餐','咖啡小食','咖啡厅'],'海鲜':['海鲜餐厅'],'Fine Dining':['Fine Dining'],
+    '亚洲菜':['亚洲菜','日式餐厅','意大利菜'],
+    '精品酒店':['精品酒店','设计酒店'],'历史酒店':['历史酒店'],'度假村':['度假村'],'民宿':['民宿','农场民宿','度假小屋','豪华小屋'],
+  };
+  const cats=map[chip]||[chip];
+  return items.filter(p=>cats.some(c=>p.cat.includes(c)));
+}
+
+function renderPlaces(el,type){
   const sn=steps.indexOf(type)+1;
   const LABELS={attractions:'景点',restaurants:'餐厅',hotels:'住宿'};
   const TITLES={attractions:'选择你想去的<em>景点</em>',restaurants:'选择心仪的<em>餐厅</em>',hotels:'选择你的<em>住宿</em>'};
   let sub=state.dest?`<strong>${state.dest}</strong>`:'';
-  if(type==='restaurants'&&state.attractions.length>0)sub+=` · 根据景点推荐附近餐厅`;
-  else if(type==='hotels'&&state.attractions.length>0)sub+=` · 根据景点推荐附近住宿`;
+  if(type==='restaurants'&&state.attractions.length>0)sub+=` · 根据景点位置推荐`;
+  else if(type==='hotels'&&state.attractions.length>0)sub+=` · 根据景点位置推荐`;
   else if(type==='attractions')sub+=` · 点图片勾选，点「详细介绍」查看更多`;
-  el.innerHTML=`<div class="sno">Step ${sn} · ${LABELS[type]}</div><h2 class="stitle">${TITLES[type]}</h2><p class="ssub">${sub}</p><div class="filter-row">${(CHIPS[type]||[]).map(c=>`<span class="fchip${filters[type]===c?' on':''}" onclick="applyFilter('${type}','${c}',this)">${c}</span>`).join('')}</div><div class="pgrid" id="pgrid">${[...Array(6)].map(()=>`<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line" style="width:55%"></div><div class="skel skel-line" style="width:88%"></div><div class="skel skel-line" style="width:40%"></div></div></div>`).join('')}</div>`;
+  const allItems=getPlaces(state.dest,type);
+  const chip=type==='attractions'?'全部':(type==='restaurants'?'全部':'全部');
+  el.innerHTML=`<div class="sno">Step ${sn} · ${LABELS[type]}</div><h2 class="stitle">${TITLES[type]}</h2><p class="ssub">${sub}</p><div class="filter-row" id="fr">${(CHIPS[type]||[]).map(c=>`<span class="fchip${c==='全部'?' on':''}" onclick="applyF('${type}','${c}',this)">${c}</span>`).join('')}</div><div class="pgrid" id="pgrid"></div>`;
   document.getElementById('bbar').classList.add('show');
   updateBbar(type);
-  const items=await fetchPlaces(state.dest||'Melbourne',type);
-  if(!items.length){document.getElementById('pgrid').innerHTML=`<div style="grid-column:1/-1;padding:1.5rem;color:var(--ember)">暂无数据，点「跳过」继续。</div>`;return;}
-  renderCards(type,items,state[type]);
+  renderCards(type,allItems,state[type]);
 }
+
 function renderCards(type,items,sel){
   const g=document.getElementById('pgrid');if(!g)return;
-  g.innerHTML=items.map(item=>`<div class="pc${sel.includes(item.id)?' sel':''}" id="pc-${item.id}"><div class="pc-tick">✓</div><div class="pc-img-w" onclick="togglePlace('${type}','${item.id}')">${item.photo?`<img src="${item.photo}" alt="${item.name}" onerror="this.style.display='none'">`:''}<span class="pc-emoji">${item.e}</span></div><div class="pc-body"><div class="pc-cat">${item.cat}</div><div class="pc-name">${item.name}</div><div class="pc-desc">${item.desc}</div><div class="pc-foot"><span class="pc-rat">${item.rating!=='N/A'?'★ '+item.rating:'—'}</span><span class="pc-price">${item.price}</span></div><div class="pc-more" onclick="openDr('${type}','${item.id}',event)">详细介绍 →</div></div></div>`).join('');
+  if(!items.length){g.innerHTML=`<div style="grid-column:1/-1;padding:1.5rem;color:var(--mist)">暂无数据，点「跳过」继续。</div>`;return;}
+  g.innerHTML=items.map(item=>`<div class="pc${sel.includes(item.id)?' sel':''}" id="pc-${item.id}"><div class="pc-tick">✓</div><div class="pc-img" onclick="togglePlace('${type}','${item.id}')" style="background:linear-gradient(135deg,#1e3a2f,#3d6b4a)">${item.img?`<img src="${item.img}" alt="${item.name}" onerror="this.style.display='none'">`:''}<span class="pc-emoji">${item.e}</span></div><div class="pc-body"><div class="pc-cat">${item.cat}</div><div class="pc-name">${item.name}</div><div class="pc-desc">${item.desc}</div><div class="pc-foot"><span class="pc-rat">★ ${item.rating}</span><span class="pc-price">${item.price}</span></div><div class="pc-more" onclick="openDr('${type}','${item.id}',event)">详细介绍 →</div></div></div>`).join('');
 }
-function applyFilter(type,chip,el){
-  filters[type]=chip;
+
+function applyF(type,chip,el){
   document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
-  const g=document.getElementById('pgrid');
-  if(g)g.innerHTML=`<div style="grid-column:1/-1;padding:2rem;display:flex;align-items:center;gap:.7rem;color:var(--mist)"><div class="spin"></div>加载中…</div>`;
-  const q=chip==='全部'?state.dest:`${chip} ${state.dest}`;
-  const tk=`${q}__${type}`;delete cache[tk];
-  fetchPlaces(q,type).then(items=>{
-    if(items.length)renderCards(type,items,state[type]);
-    else{const g=document.getElementById('pgrid');if(g)g.innerHTML=`<div style="grid-column:1/-1;padding:1.5rem;color:var(--ember)">暂无数据。</div>`;}
-    document.getElementById('bbar').classList.add('show');updateBbar(type);
-  });
+  const all=getPlaces(state.dest,type);
+  const filtered=filterPlaces(all,chip);
+  renderCards(type,filtered,state[type]);
+  document.getElementById('bbar').classList.add('show');
+  updateBbar(type);
 }
+
 function togglePlace(type,id){
   const a=state[type];a.includes(id)?state[type]=a.filter(x=>x!==id):state[type].push(id);
   document.getElementById('pc-'+id)?.classList.toggle('sel',state[type].includes(id));
   updateBbar(type);document.getElementById('bbar').classList.add('show');
 }
 function updateBbar(type){const n=state[type].length;const lb={attractions:'个景点',restaurants:'家餐厅',hotels:'家住宿'};document.getElementById('bbarN').textContent=n;document.querySelector('.bbar-info').innerHTML=`已选 <strong>${n}</strong> ${lb[type]||'项'}`;}
+
+// ── DRAWER ──
 function openDr(type,id,e){
   if(e)e.stopPropagation();
-  const items=cache[`${state.dest||'Melbourne'}__${type}`]||[];
-  const item=items.find(x=>x.id===id);if(!item)return;
+  const all=getPlaces(state.dest,type);
+  const item=all.find(x=>x.id===id);if(!item)return;
   const isSel=state[type].includes(id);
-  document.getElementById('drContent').innerHTML=`<div class="dr-hero">${item.photo?`<img src="${item.photo}" alt="${item.name}" onerror="this.style.display='none'">`:''}<span class="dr-emoji">${item.e}</span><button class="dr-close" onclick="closeDr()">✕</button></div><div class="dr-body"><div class="dr-cat">${item.cat}</div><div class="dr-name">${item.name}</div><div class="dr-rating"><span class="dr-stars">★★★★★</span><span>${item.rating}/5.0</span><span>·</span><span>${item.price}</span></div><div class="dr-div"></div><div class="dr-sec">地址</div><div class="dr-text">${item.address||'—'}</div><div class="dr-grid"><div class="dr-cell"><div class="dr-cl">评分</div><div class="dr-cv">${item.rating}</div></div><div class="dr-cell"><div class="dr-cl">营业状态</div><div class="dr-cv">${item.hours}</div></div></div>${item.reviews?.length?`<div class="dr-div"></div><div class="dr-sec">真实评价</div><div class="dr-reviews">${item.reviews.map(r=>`<div class="rv"><div class="rv-top"><span class="rv-a">${r.a}</span><span class="rv-s">${r.s}</span></div><div class="rv-t">${r.t}</div></div>`).join('')}</div>`:''}<div class="dr-div"></div><div class="dr-acts"><button class="btn-add" id="drBtn" onclick="togglePlace('${type}','${id}');updateDrBtn('${type}','${id}')">${isSel?'✓ 已加入行程':'＋ 加入行程'}</button><button class="btn-closdr" onclick="closeDr()">关闭</button></div></div>`;
+  document.getElementById('drContent').innerHTML=`
+    <div class="dr-hero">
+      ${item.img?`<img src="${item.img}" alt="${item.name}" onerror="this.style.display='none'">`:'' }
+      <span class="dr-emoji">${item.e}</span>
+      <button class="dr-close" onclick="closeDr()">✕</button>
+    </div>
+    <div class="dr-body">
+      <div class="dr-cat">${item.cat}</div>
+      <div class="dr-name">${item.name}</div>
+      <div class="dr-rating"><span class="dr-stars">★★★★★</span><span>${item.rating}/5.0</span><span>·</span><span>${item.price}</span></div>
+      <div class="dr-div"></div>
+      <div class="dr-sec">简介</div>
+      <div class="dr-text">${item.desc}</div>
+      <div class="dr-facts">
+        <div class="dr-fact"><div class="dr-fl">价格</div><div class="dr-fv">${item.price}</div></div>
+        <div class="dr-fact"><div class="dr-fl">开放时间</div><div class="dr-fv">${item.hours||'—'}</div></div>
+      </div>
+      ${item.tips?`<div class="dr-sec">旅行小贴士</div><div class="dr-text">💡 ${item.tips}</div>`:''}
+      <div class="dr-acts">
+        <button class="btn-add" id="drBtn" onclick="togglePlace('${type}','${id}');updateDrBtn('${type}','${id}')">${isSel?'✓ 已加入行程':'＋ 加入行程'}</button>
+        <button class="btn-closdr" onclick="closeDr()">关闭</button>
+      </div>
+    </div>`;
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drBg').classList.add('show');
 }
 function updateDrBtn(type,id){const b=document.getElementById('drBtn');if(b)b.textContent=state[type].includes(id)?'✓ 已加入行程':'＋ 加入行程';}
 function closeDr(){document.getElementById('drawer').classList.remove('open');document.getElementById('drBg').classList.remove('show');}
+
+// ── RESULT ──
 async function renderResult(el){
   document.getElementById('bbar').classList.remove('show');
   const dest=state.dest||'维多利亚州';
-  const cA=cache[`${dest}__attractions`]||[];
-  const cR=cache[`${dest}__restaurants`]||[];
-  const cH=cache[`${dest}__hotels`]||[];
-  const selA=cA.filter(x=>state.attractions.includes(x.id)).map(x=>x.name);
-  const selR=cR.filter(x=>state.restaurants.includes(x.id)).map(x=>x.name);
-  const selH=cH.filter(x=>state.hotels.includes(x.id)).map(x=>x.name);
-  el.innerHTML=`<div class="res-hd"><h2>${dest} · 专属旅行攻略</h2><p>由 AI 综合景点路线、餐饮安排与住宿推荐生成</p><div class="res-tags"><span class="rtag">📅 ${state.days}</span><span class="rtag">👥 成人${state.adults}人${state.children>0?` · 儿童${state.children}人`:''}</span><span class="rtag">💰 ${state.budget}</span><span class="rtag">🚗 ${state.transport}</span></div></div><div class="res-body" id="resBody"><div class="spin-row"><div class="spin"></div>&nbsp;正在规划最优行程路线…</div></div><div style="display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem"><button class="btn-o" onclick="step=0;renderStep()">← 重新规划</button><button class="btn-p" onclick="closeWiz()">完成</button></div>`;
-  const prompt=`你是澳大利亚维多利亚州专业旅游顾问，用优雅的中文撰写实用攻略。\n目的地：${dest} | 天数：${state.days} | 成人：${state.adults}人${state.children>0?` | 儿童：${state.children}人`:''} | 预算：${state.budget} | 交通：${state.transport}\n已选景点：${selA.length?selA.join('、'):'（请推荐2-3个核心景点）'}\n已选餐厅：${selR.length?selR.join('、'):'（请推荐2-3家合适餐厅）'}\n已选住宿：${selH.length?selH.join('、'):'（请推荐最适合的住宿）'}\n\n**✦ 行程概览**\n\n**📅 每日行程**（按天，上午/下午/晚上）\n\n**🍽 餐饮安排**\n\n**🏨 住宿建议**\n\n**🚗 交通路线**\n\n**✦ 旅行贴士**（5条具体建议）`;
+  const allA=getPlaces(dest,'attractions');
+  const allR=getPlaces(dest,'restaurants');
+  const allH=getPlaces(dest,'hotels');
+  const selA=allA.filter(x=>state.attractions.includes(x.id)).map(x=>x.name);
+  const selR=allR.filter(x=>state.restaurants.includes(x.id)).map(x=>x.name);
+  const selH=allH.filter(x=>state.hotels.includes(x.id)).map(x=>x.name);
+  el.innerHTML=`<div class="res-hd"><h2>${dest} · 专属旅行攻略</h2><p>由 AI 根据你的选择生成个性化攻略</p><div class="res-tags"><span class="rtag">📅 ${state.days}</span><span class="rtag">👥 成人${state.adults}人${state.children>0?` · 儿童${state.children}人`:''}</span><span class="rtag">💰 ${state.budget}</span><span class="rtag">🚗 ${state.transport}</span></div></div><div class="res-body" id="resBody"><div class="spin-row"><div class="spin"></div>&nbsp;正在为你规划最优行程…</div></div><div style="display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem"><button class="btn-o" onclick="step=0;renderStep()">← 重新规划</button><button class="btn-p" onclick="closeWiz()">完成</button></div>`;
+  const prompt=`你是澳大利亚维多利亚州专业旅游顾问，用精致优雅的中文为游客撰写详细实用的旅行攻略。
+
+目的地：${dest}
+旅行天数：${state.days}
+成人：${state.adults}人${state.children>0?`，儿童：${state.children}人`:''}
+预算：${state.budget}
+交通：${state.transport}
+
+已选景点：${selA.length?selA.join('、'):'（请根据目的地推荐2-3个最值得去的景点）'}
+已选餐厅：${selR.length?selR.join('、'):'（请推荐2-3家符合预算的餐厅）'}
+已选住宿：${selH.length?selH.join('、'):'（请推荐最合适的住宿）'}
+
+请按以下结构生成攻略：
+
+**✦ 行程概览**
+简要介绍${dest}的亮点和这次行程的整体安排。
+
+**📅 每日行程安排**
+按天详细规划（上午/下午/晚上），标注每个地点的建议停留时长和预计费用。注意景点间的地理位置，合理安排顺序减少不必要的来回。
+
+**🍽 餐饮安排**
+将选定的餐厅合理安排在行程中，说明推荐菜品和预订建议。
+
+**🏨 住宿建议**
+说明住宿位置优势和入住注意事项。
+
+**🚗 交通路线**
+详细说明${state.transport}的路线规划和注意事项。
+
+**✦ 实用贴士**
+5条针对${dest}的具体旅行建议，包括最佳游览时间、注意事项、省钱技巧等。`;
+
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,stream:true,messages:[{role:'user',content:prompt}]})});
-    if(!res.ok)throw new Error('API error');
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2500,stream:true,messages:[{role:'user',content:prompt}]})
+    });
+    if(!res.ok)throw new Error('API error '+res.status);
     const body=document.getElementById('resBody');body.innerHTML='';
     const reader=res.body.getReader();const dec=new TextDecoder();let full='';
-    while(true){const{done,value}=await reader.read();if(done)break;for(const line of dec.decode(value).split('\n')){if(line.startsWith('data: ')){const d=line.slice(6);if(d==='[DONE]')continue;try{const j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta?.text){full+=j.delta.text;body.innerHTML=fmt(full)+'<span class="cursor"></span>';}}catch{}}}}
+    while(true){
+      const{done,value}=await reader.read();if(done)break;
+      for(const line of dec.decode(value).split('\n')){
+        if(line.startsWith('data: ')){
+          const d=line.slice(6);if(d==='[DONE]')continue;
+          try{const j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta?.text){full+=j.delta.text;body.innerHTML=fmt(full)+'<span class="cursor"></span>';}}catch{}
+        }
+      }
+    }
     document.getElementById('resBody').innerHTML=fmt(full);
-  }catch(e){document.getElementById('resBody').innerHTML=`<div style="color:var(--ember);padding:1rem">AI生成失败。</div>`;}
+  }catch(e){
+    document.getElementById('resBody').innerHTML=`<div style="color:var(--ember);padding:1rem">AI生成失败。请确认网络连接后重试。<br><br><small>注：AI行程生成功能需要Anthropic API密钥。如需开通，请访问 console.anthropic.com</small></div>`;
+  }
 }
 function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
+
+// ── INIT ──
 document.addEventListener('DOMContentLoaded',()=>{initHero();initFeatured();});
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',scrollY>60);});
 </script>
+
 </body>
 </html>
