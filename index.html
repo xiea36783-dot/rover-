@@ -275,11 +275,11 @@ nav.solid .nc:hover{background:var(--sage);color:#fff;}
 <script>
 // ── HERO DATA ──
 const SLIDES=[
-  {url:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=1600&q=85',loc:'大洋路 · 十二门徒岩'},
+  {url:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1600&q=85',loc:'大洋路 · 十二门徒岩'},
   {url:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=85',loc:'墨尔本 · Flinders Street车站'},
-  {url:'https://images.unsplash.com/photo-1611813200700-f6b5cd3aa3e0?w=1600&q=85',loc:'维多利亚 · 袋鼠原野'},
-  {url:'https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=1600&q=85',loc:'墨尔本 · 雅拉河畔'},
-  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=85',loc:'Wilson Promontory · 最南端海岬'},
+  {url:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=1600&q=85',loc:'丹德农山脉 · 薄雾森林'},
+  {url:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=1600&q=85',loc:'Wilson Promontory · 最南端'},
+  {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85',loc:'格兰坪 · 国家公园'},
 ];
 
 // ── ALL DESTINATIONS ──
@@ -299,6 +299,8 @@ const CITIES=[
   {n:'Hepburn Springs',r:'矿泉温泉',e:'🛁',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80'},
   {n:'Lorne',r:'大洋路小镇',e:'🌅',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80'},
   {n:'Halls Gap',r:'格兰坪山村',e:'🦘',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80'},
+  {n:'Echuca',r:'墨累河历史港',e:'🚢',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80'},
+  {n:'Eildon',r:'山下水库小镇',e:'⛺',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80'},
 ];
 
 // ── BUILT-IN PLACES DATA ──
@@ -447,6 +449,39 @@ const PLACES_DB = {
       {id:'blh1',name:'Craig\'s Royal Hotel',cat:'历史酒店',e:'👑',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'1853年历史酒店，曾接待无数名人，维多利亚时代的奢华建筑',rating:'4.6',price:'$$$',hours:'',tips:'历史酒吧值得一坐'},
     ]
   },
+  'Echuca': {
+    attractions:[
+      {id:'ec1',name:'Port of Echuca历史港口',cat:'历史文化',e:'🚢',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'维多利亚时代保存最完好的内河港口，1865年全盛时期是南半球第二繁忙的港口',rating:'4.7',price:'$15',hours:'9:00-17:00',tips:'门票包含木质码头和博物馆参观'},
+      {id:'ec2',name:'墨累河蒸汽船游览',cat:'历史体验',e:'⚙️',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'乘坐19世纪真实蒸汽明轮船游览墨累河，船长现场讲解历史',rating:'4.8',price:'$30',hours:'每天多班出发',tips:'强烈推荐，Echuca必做体验，提前网上订票'},
+      {id:'ec3',name:'墨累河日落皮划艇',cat:'自然景观',e:'🛶',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'沿着世界最长的可通航河流之一划行，两岸红桉树和野生动物',rating:'4.5',price:'$45',hours:'清晨或傍晚',tips:'傍晚时分能看到众多野生动物来河边饮水'},
+      {id:'ec4',name:'Port of Echuca探索',cat:'历史文化',e:'🏛',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'由历史砖石仓库和旅馆构成的精彩街区，充满维多利亚殖民时代风情',rating:'4.4',price:'免费',hours:'全天',tips:'周末有马车游览，夜晚灯光下别有风情'},
+    ],
+    restaurants:[
+      {id:'ecr1',name:'Beechworth Bakery Echuca',cat:'咖啡早午餐',e:'🥐',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=80',desc:'澳大利亚最著名连锁面包坊，自制肉馅饼和咖啡极受好评',rating:'4.4',price:'$',hours:'6:00-18:00',tips:'早餐首选，自制面包香气扑鼻'},
+      {id:'ecr2',name:'Ceres on the Murray',cat:'河景餐厅',e:'🍽',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'俯瞰墨累河的餐厅，澳洲牛排和新鲜龙虾螯虾是招牌',rating:'4.5',price:'$$$',hours:'12:00-21:00',tips:'订靠窗座位欣赏河景'},
+      {id:'ecr3',name:'Oscar W's Wharfside',cat:'酒吧餐厅',e:'🍺',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'历史码头旁的老式酒吧，冷饮和简餐在木质露台上享用',rating:'4.2',price:'$$',hours:'11:00-23:00',tips:'码头边的黄金位置，看蒸汽船来往'},
+    ],
+    hotels:[
+      {id:'ech1',name:'Echuca Gardens B&B',cat:'精品民宿',e:'🌿',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'维多利亚时代建筑改建的精品民宿，花园幽静，步行可达港口',rating:'4.7',price:'$$$',hours:'',tips:'免费自行车出借，骑行探索小镇最佳'},
+      {id:'ech2',name:'All Seasons Echuca',cat:'度假酒店',e:'🏊',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'设施齐全的度假酒店，有室内泳池和温泉设施',rating:'4.3',price:'$$',hours:'',tips:'家庭旅行好选择'},
+    ]
+  },
+  'Eildon': {
+    attractions:[
+      {id:'ei1',name:'Lake Eildon国家公园',cat:'自然景观',e:'🏞',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'维多利亚最大水库，四周环绕高山森林，是露营、钓鱼和水上运动的天堂',rating:'4.7',price:'$15',hours:'全天',tips:'秋季湖边枫叶最美，夏季适合游泳'},
+      {id:'ei2',name:'墨累河上游泛舟',cat:'自然景观',e:'🚣',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'在墨累河源头附近的清澈山溪上皮划艇，景色原始迷人',rating:'4.6',price:'$40',hours:'全年',tips:'冬季水位最高最刺激，夏季悠闲'},
+      {id:'ei3',name:'Snobs Creek鳟鱼养殖场',cat:'自然体验',e:'🎣',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=80',desc:'参观澳大利亚最古老的鳟鱼研究站，还可以在旁边的溪流钓鱼',rating:'4.3',price:'$10',hours:'9:00-16:00',tips:'可购买鱼饵现场钓鱼'},
+      {id:'ei4',name:'Cathedral Range州立公园',cat:'自然景观',e:'⛰',img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',desc:'壮观的砂岩山脊，徒步路线难度多样，山顶俯瞰Eildon水库全景',rating:'4.8',price:'$15',hours:'全天',tips:'North-South Track徒步需整天，量力而行'},
+    ],
+    restaurants:[
+      {id:'eir1',name:'Eildon Hotel',cat:'酒吧餐厅',e:'🍻',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'小镇中心的老式酒吧，澳洲经典牛排和薯条，价格实惠',rating:'4.1',price:'$$',hours:'11:00-21:00',tips:'当地渔民聚集地，可打听最佳钓鱼点'},
+      {id:'eir2',name:'Lake Eildon Houseboat',cat:'特色体验',e:'🛥',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'在租来的船屋上自己烧烤，湖边用餐，维多利亚最独特的用餐体验之一',rating:'4.8',price:'$$$',hours:'需预订',tips:'至少提前两周预订，旺季很快订满'},
+    ],
+    hotels:[
+      {id:'eih1',name:'Lake Eildon Houseboat租赁',cat:'特色住宿',e:'⛵',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',desc:'在水库上的船屋里过夜，清晨在甲板看日出，维多利亚最独特的住宿体验',rating:'4.8',price:'$$$',hours:'',tips:'4人及以上最划算，含钓鱼装备'},
+      {id:'eih2',name:'Eildon Pondage Holiday Park',cat:'营地',e:'🏕',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',desc:'湖边的家庭营地，小屋和露营位都有，设施齐全',rating:'4.2',price:'$',hours:'',tips:'钓鱼爱好者的天堂，营地旁直接垂钓'},
+    ]
+  },
   '墨尔本': {
     attractions:[
       {id:'mel1',name:'Flinders Street车站',cat:'历史文化',e:'🚉',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80',desc:'墨尔本的标志性建筑，1905年建造的巴洛克式火车站',rating:'4.6',price:'免费',hours:'全天',tips:'可以进入大厅拍照，上方有咖啡馆'},
@@ -469,14 +504,16 @@ const PLACES_DB = {
 
 // ── FEATURED ──
 const FEATURED=[
-  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=800&q=85',wide:true},
+  {n:'大洋路',r:'西南海岸',img:'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=85',wide:true},
   {n:'雅拉谷',r:'葡萄酒产区',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=85'},
-  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=85'},
-  {n:'丹德농山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=600&q=85'},
+  {n:'菲利普岛',r:'企鹅圣地',img:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=600&q=85'},
+  {n:'丹德农山脉',r:'薄雾森林',img:'https://images.unsplash.com/photo-1597953601374-1ff2d5640c85?w=600&q=85'},
   {n:'本迪戈',r:'金矿历史城',img:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=85'},
-  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=800&q=85',wide:true},
+  {n:'莫宁顿半岛',r:'温泉海湾',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=800&q=85',wide:true},
   {n:'Wilson Promontory',r:'最南端海岬',img:'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&q=85'},
-  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=85'},
+  {n:'格兰坪',r:'国家公园',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=85'},
+  {n:'Echuca',r:'墨累河历史港',img:'https://images.unsplash.com/photo-1504871099582-26ca9dd52e5d?w=600&q=85'},
+  {n:'Eildon',r:'山下水库小镇',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=85'},
 ];
 
 const VIBES=[
